@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P06.Architect", "P06.Architect\P06.Architect.csproj", "{7373C9C1-71D3-4D7A-863D-11C57EDB063D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7373C9C1-71D3-4D7A-863D-11C57EDB063D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7373C9C1-71D3-4D7A-863D-11C57EDB063D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7373C9C1-71D3-4D7A-863D-11C57EDB063D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7373C9C1-71D3-4D7A-863D-11C57EDB063D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3FEC4205-69E3-40FA-AB25-2FF6D69A15C2}
+	EndGlobalSection
+EndGlobal

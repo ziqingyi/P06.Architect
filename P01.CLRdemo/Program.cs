@@ -6,6 +6,8 @@ namespace P01.CLRdemo
     {
         static void Main(string[] args)
         {
+
+            GCTestWithTimer.Show();
             Console.WriteLine("Hello World!");
         }
     }

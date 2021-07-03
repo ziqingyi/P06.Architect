@@ -7,7 +7,8 @@ namespace P01.CLRdemo
         static void Main(string[] args)
         {
 
-            GCTestWithTimer.Show();
+            //GCTestWithTimer.Show();
+            AllocatorTest.Show();
             Console.WriteLine("Hello World!");
         }
     }

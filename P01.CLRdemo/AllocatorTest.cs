@@ -8,8 +8,14 @@ namespace P01.CLRdemo
     {
         public static void Show()
         {
+            TestClass testClass = new TestClass(11,"user1");
 
+            TestStruct testStruct = new TestStruct(7,"userStruct");
 
+            GC.Collect(2);//garbage collection to generation 2
+
+            testClass = null;
+            GC.Collect();
 
         }
 

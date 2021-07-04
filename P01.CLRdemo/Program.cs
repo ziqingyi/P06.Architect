@@ -9,6 +9,7 @@ namespace P01.CLRdemo
 
             //GCTestWithTimer.Show();
             AllocatorTest.Show();
+            GCTypeTest.Show();
             Console.WriteLine("Hello World!");
         }
     }

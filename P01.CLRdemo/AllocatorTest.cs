@@ -12,10 +12,24 @@ namespace P01.CLRdemo
 
             TestStruct testStruct = new TestStruct(7,"userStruct");
 
-            GC.Collect(2);//garbage collection to generation 2
-
+            #region Old way to free up memory 
+            //free up memory quickly, but will affect CLR Collect process,
+            //and produce more 2nd generation objects. 
+            //blocking process
             testClass = null;
             GC.Collect();
+
+            #endregion
+
+            #region recommendation of gc scenario. 
+
+            //if you know there are big objects in 2nd generation, can collect manually.
+            //as CLR normally only collect 0 and 1st generation,except memory not enough.
+
+             GC.Collect(2);//garbage collection to generation 2           
+
+            #endregion
+
 
         }
 

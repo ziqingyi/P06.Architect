@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using P02.ORMExplore.Framework.SqlFilter;
+using P02.ORMExplore.Framework.SqlMapping;
+
+namespace P02.ORMExplore.Model.DbModels
+{
+    [ORMdbTable("Company")]
+    public class CompanyModel : BaseModel
+    {
+        [ORMdbColumn("Name")]
+        public string CompanyName { get; set; }
+
+        public DateTime CreateTime { get; set; }
+
+        public int CreatorId { get; set; }
+
+        public Nullable<int> LastModifierId { get; set; }
+
+        public DateTime? LastModifyTime { get; set; }
+    }
+}

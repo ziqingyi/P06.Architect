@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\P02.ORMExplore.Framework\P02.ORMExplore.Framework.csproj" />
+  </ItemGroup>
+
 </Project>

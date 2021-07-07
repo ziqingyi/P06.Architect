@@ -10,15 +10,19 @@ namespace P02.ORMExplore.Framework.SqlMapping
 {
     public static class MappingExtend
     {
-
-        //member info can be type of property
+        /*   member info can be type or property
+         *
+         * abstract class: Type : MemberInfo, IReflect
+         *
+         * abstract class: PropertyInfo : MemberInfo
+         */
         public static string GetMappingName(this MemberInfo memberInfo)
         {
             if (memberInfo.IsDefined(typeof(ORMAbstractMappingAttribute), true))
             {
                 var attribute = memberInfo.GetCustomAttribute<ORMAbstractMappingAttribute>();
 
-                return attribute.GetName();
+                return attribute.GetMappingName();
             }
             else
             {
@@ -31,7 +35,7 @@ namespace P02.ORMExplore.Framework.SqlMapping
             if (type.IsDefined(typeof(ORMdbTableAttribute), true))
             {
                 ORMdbTableAttribute attribute = type.GetCustomAttribute<ORMdbTableAttribute>();
-                return attribute.GetName();
+                return attribute.GetMappingName();
             }
             else
             {
@@ -44,7 +48,7 @@ namespace P02.ORMExplore.Framework.SqlMapping
             if (prop.IsDefined(typeof(ORMdbColumnAttribute), true))
             {
                 ORMdbColumnAttribute attribute = prop.GetCustomAttribute<ORMdbColumnAttribute>();
-                return attribute.GetName();
+                return attribute.GetMappingName();
             }
             else
             {
@@ -53,17 +57,17 @@ namespace P02.ORMExplore.Framework.SqlMapping
 
         }
 
-        #region old Extension
+        #region old Extension for PropertyInfo
 
         //1 use this method to display more user friendly property's name.
-        public static string GetDisplayName(this PropertyInfo property)
+        public static string GetPropertyMappingNameOld(this PropertyInfo property)
         {
             //method 1, without delegate
-            //if(property.IsDefined(typeof(DisplayAttribute), true))
+            //if(property.IsDefined(typeof(ORMAbstractMappingAttribute), true))
             //{
-            //    DisplayAttribute attribute =
-            //        (DisplayAttribute) property.GetCustomAttribute(typeof(DisplayAttribute), true);
-            //    return attribute.GetDisplayName();
+            //    ORMAbstractMappingAttribute attribute =
+            //        (ORMAbstractMappingAttribute) property.GetCustomAttribute(typeof(ORMAbstractMappingAttribute), true);
+            //    return attribute.GetMappingName();
             //}
             //else
             //{
@@ -71,11 +75,11 @@ namespace P02.ORMExplore.Framework.SqlMapping
             //    return property.Name;
             //}
             // method 2, use with delegate
-            Func<PropertyInfo, bool> funcParam1 = p => p.IsDefined(typeof(DisplayAttribute), true);
+            Func<PropertyInfo, bool> funcParam1 = p => p.IsDefined(typeof(ORMAbstractMappingAttribute), true);
             Func<PropertyInfo, string> funcParam2 = p =>
             {
-                DisplayAttribute attribute = (DisplayAttribute)p.GetCustomAttribute(typeof(DisplayAttribute), true);
-                return attribute.GetDisplayName();
+                ORMAbstractMappingAttribute attribute = (ORMAbstractMappingAttribute)p.GetCustomAttribute(typeof(ORMAbstractMappingAttribute), true);
+                return attribute.GetMappingName();
             };
 
             return property.GetAttributeName(funcParam1, funcParam2);
@@ -90,7 +94,7 @@ namespace P02.ORMExplore.Framework.SqlMapping
             {
                 ORMdbColumnAttribute attribute =
                 (ORMdbColumnAttribute)property.GetCustomAttribute(typeof(ORMdbColumnAttribute), true);
-                return attribute.GetName();// no format
+                return attribute.GetMappingName();// no format
             }
             else
             {
@@ -105,7 +109,7 @@ namespace P02.ORMExplore.Framework.SqlMapping
         /// <typeparam name="T"></typeparam>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static string GetAttributeName(this PropertyInfo property, Func<PropertyInfo, bool> func, Func<PropertyInfo, string> funcString)
+        private static string GetAttributeName(this PropertyInfo property, Func<PropertyInfo, bool> func, Func<PropertyInfo, string> funcString)
         {
             if (func.Invoke(property))
             {
@@ -116,14 +120,17 @@ namespace P02.ORMExplore.Framework.SqlMapping
                 return property.Name;
             }
         }
+
+        //---------------------------------for Instance mapping to class------------------------------------------------
+
         // can not limit the T because this will not allow MySqlBuilder's type to get this mapping
         public static string ClassMapping<T>(this T t) //where T:BaseModel
         {
             Type type = t.GetType();
-            if (type.IsDefined(typeof(MappingClassAttribute), true))
+            if (type.IsDefined(typeof(ORMdbTableAttribute), true))
             {
-                MappingClassAttribute att = (MappingClassAttribute)type.GetCustomAttribute(typeof(MappingClassAttribute), true);
-                return att.MappingName;
+                ORMdbTableAttribute att = (ORMdbTableAttribute)type.GetCustomAttribute(typeof(ORMdbTableAttribute), true);
+                return att.GetMappingName();
             }
             else
             {

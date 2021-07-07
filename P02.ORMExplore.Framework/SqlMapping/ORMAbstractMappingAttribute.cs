@@ -6,14 +6,14 @@ namespace P02.ORMExplore.Framework.SqlMapping
 {
     public abstract class ORMAbstractMappingAttribute:Attribute
     {
-        private string _name;
+        private string _mappingName;
         public ORMAbstractMappingAttribute(string name)
         {
-            this._name = name;
+            this._mappingName = name;
         }
-        public string GetName()
+        public string GetMappingName()
         {
-            return this._name;
+            return this._mappingName;
         }
     }
 }

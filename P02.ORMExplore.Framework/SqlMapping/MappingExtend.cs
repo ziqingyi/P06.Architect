@@ -16,7 +16,7 @@ namespace P02.ORMExplore.Framework.SqlMapping
          *
          * abstract class: PropertyInfo : MemberInfo
          */
-        public static string GetMappingName(this MemberInfo memberInfo)
+        public static string GetMappingNameFromAttr(this MemberInfo memberInfo)
         {
             if (memberInfo.IsDefined(typeof(ORMAbstractMappingAttribute), true))
             {
@@ -30,7 +30,7 @@ namespace P02.ORMExplore.Framework.SqlMapping
             }
         }
 
-        public static string GetTableName(this Type type)
+        public static string GetTableNameFromAttr(this Type type)
         {
             if (type.IsDefined(typeof(ORMdbTableAttribute), true))
             {
@@ -43,7 +43,7 @@ namespace P02.ORMExplore.Framework.SqlMapping
             }
         }
 
-        public static string GetColumnName(this PropertyInfo prop)
+        public static string GetColumnNameFromAttr(this PropertyInfo prop)
         {
             if (prop.IsDefined(typeof(ORMdbColumnAttribute), true))
             {

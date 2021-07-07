@@ -18,15 +18,15 @@ namespace P02.ORMExplore.DAL
         {
             Type type = typeof(T);
             {
-                string columnsString = string.Join(",", type.GetProperties().Select(p => $"[{p.GetMappingName()}]"));
-                _findSql = $"Select {columnsString} from [{type.GetMappingName()}] where Id = ";
+                string columnsString = string.Join(",", type.GetProperties().Select(p => $"[{p.GetMappingNameFromAttr()}]"));
+                _findSql = $"Select {columnsString} from [{type.GetMappingNameFromAttr()}] where Id = ";
             }
 
             {
-                string columnString = string.Join(",", type.GetPropertiesWithoutKey().Select(p => $"[{p.GetMappingName()}]"));
-                string valuesString = string.Join(",", type.GetPropertiesWithoutKey().Select(p => $"@{p.GetMappingName()}"));
+                string columnString = string.Join(",", type.GetPropertiesWithoutKey().Select(p => $"[{p.GetMappingNameFromAttr()}]"));
+                string valuesString = string.Join(",", type.GetPropertiesWithoutKey().Select(p => $"@{p.GetMappingNameFromAttr()}"));
 
-                _insertSql = $"Insert into [{type.GetMappingName()}] ({columnString})  values ({valuesString})";
+                _insertSql = $"Insert into [{type.GetMappingNameFromAttr()}] ({columnString})  values ({valuesString})";
             }
 
         }

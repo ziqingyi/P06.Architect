@@ -28,7 +28,7 @@ namespace P02.ORMExplore.DAL
                     T t = (T) Activator.CreateInstance(type);
                     foreach (PropertyInfo propertyInfo in type.GetProperties())
                     {
-                        string propName = propertyInfo.GetColumnName();
+                        string propName = propertyInfo.GetColumnNameFromAttr();
                         var pValue = reader[propName] is DBNull ? null : reader[propName];
                         propertyInfo.SetValue(t,pValue);
                     }
@@ -47,7 +47,7 @@ namespace P02.ORMExplore.DAL
             string sql = SqlBuilder<T>.GetInsertSql();
             var properties = type.GetProperties();
 
-            SqlParameter[] paraArray = properties.Select(p => new SqlParameter($"@{p.GetMappingName()}", p.GetValue(t)?? DBNull.Value    )).ToArray();
+            SqlParameter[] paraArray = properties.Select(p => new SqlParameter($"@{p.GetMappingNameFromAttr()}", p.GetValue(t)?? DBNull.Value    )).ToArray();
 
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.SqlConnectionString))
             {

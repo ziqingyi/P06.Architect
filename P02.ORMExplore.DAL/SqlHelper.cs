@@ -12,6 +12,7 @@ namespace P02.ORMExplore.DAL
 {
     public class SqlHelper
     {
+        //must be implemented from BaseModel, for Key (id)
         public T Find<T>(int id) where T : BaseModel
         {
             Type type = typeof(T);

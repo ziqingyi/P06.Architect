@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using P02.ORMExplore.Framework;
+using P02.ORMExplore.Framework.SqlFilter;
 using P02.ORMExplore.Framework.SqlMapping;
 using P02.ORMExplore.Model;
 
@@ -45,7 +46,7 @@ namespace P02.ORMExplore.DAL
         {
             Type type = typeof(T);
             string sql = SqlBuilder<T>.GetInsertSql();
-            var properties = type.GetProperties();
+            var properties = type.GetPropertiesWithoutKey();//not insert db self increase key
 
             SqlParameter[] paraArray = properties.Select(p => new SqlParameter($"@{p.GetMappingNameFromAttr()}", p.GetValue(t)?? DBNull.Value    )).ToArray();
 

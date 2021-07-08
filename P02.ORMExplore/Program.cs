@@ -10,9 +10,15 @@ namespace P02.ORMExplore
         {
             Console.WriteLine("ORM implementation");
             SqlHelper helper = new SqlHelper();
-            CompanyModel company = helper.Find<CompanyModel>(1);
-            company.CompanyName = company.CompanyName + "updated";
-            helper.Insert(company);
+            //first time use generic type SqlBuilder will generate sql with that type, will use for next time with same class type. 
+            CompanyModel company1 = helper.Find<CompanyModel>(1);
+            User u1 = helper.Find<User>(1);
+
+
+            //reuse sql, generic type cache. 
+            CompanyModel company3 = helper.Find<CompanyModel>(1);
+            company3.CompanyName = company3.CompanyName + "updated";
+            helper.Insert(company3);
 
 
 

@@ -2,22 +2,30 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace P02.ORMExplore.Framework
 {
     public class ConfigurationManager
     {
-        private static string _sqlConnectionString;
-
-        public static string SqlConnectionString
+        private static string _sqlConnectionStringWrite;
+        public static string SqlConnectionStringWrite
         {
             get
             {
-                return _sqlConnectionString;
+                return _sqlConnectionStringWrite;
             }
         }
 
+        private static string[] _sqlConnectionStringRead;
+        public static string[] SqlConnectionStringRead
+        {
+            get
+            {
+                return _sqlConnectionStringRead;
+            }
+        }
 
         static ConfigurationManager()
         {
@@ -27,7 +35,26 @@ namespace P02.ORMExplore.Framework
                 .AddJsonFile("appsettings.json");
 
             IConfigurationRoot configurationRoot = builder.Build();
-            _sqlConnectionString = configurationRoot["connectionString"];
+
+            #region connection strings to one write database only.
+
+            _sqlConnectionStringWrite = configurationRoot["connectionStrings:Write"];
+            
+            #endregion
+            
+
+            #region connection strings to multiple read database.
+
+            _sqlConnectionStringRead = configurationRoot.GetSection("connectionStrings")
+                .GetSection("Read")
+                .GetChildren()
+                .Select(s => s.Value)
+                .ToArray();
+
+            #endregion
+
+
+
         }
 
 

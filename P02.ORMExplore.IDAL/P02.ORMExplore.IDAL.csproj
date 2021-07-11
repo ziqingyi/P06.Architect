@@ -1,16 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Library</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\P02.ORMExplore.IDAL\P02.ORMExplore.IDAL.csproj" />
     <ProjectReference Include="..\P02.ORMExplore.Model\P02.ORMExplore.Model.csproj" />
   </ItemGroup>
 

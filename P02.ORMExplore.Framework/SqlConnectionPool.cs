@@ -17,7 +17,7 @@ namespace P02.ORMExplore.Framework
             switch (sqlConnectionType)
             {
                 case SqlConnectionType.Read:
-                    conn = Dispatcher(ConfigurationManager.SqlConnectionStringRead));
+                    conn = Dispatcher(ConfigurationManager.SqlConnectionStringRead);
                     break;
                 case SqlConnectionType.Write:
                     conn = ConfigurationManager.SqlConnectionStringWrite;

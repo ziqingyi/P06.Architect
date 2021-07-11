@@ -13,12 +13,15 @@ namespace P02.ORMExplore.DAL
 {
     public class SqlHelper
     {
+        private string connStringRead = SqlConnectionPool.GetConnectionString(SqlConnectionType.Read);
+        private string connStringWrite = SqlConnectionPool.GetConnectionString(SqlConnectionType.Write);
+
         //must be implemented from BaseModel, for Key (id)
         public T Find<T>(int id) where T : BaseModel
         {
             Type type = typeof(T);
             string sql = $"{SqlBuilder<T>.GetFindSql()}{id}";
-            using (SqlConnection conn = new SqlConnection(ConfigurationManager.SqlConnectionString))
+            using (SqlConnection conn = new SqlConnection(connStringRead))
             {
                 SqlCommand command = new SqlCommand(sql,conn);
                 conn.Open();
@@ -26,7 +29,7 @@ namespace P02.ORMExplore.DAL
                 if (reader.Read())
                 {
                     T t1 = Activator.CreateInstance<T>();
-                    T t = (T) Activator.CreateInstance(type);
+                    T t = (T)Activator.CreateInstance(type);
                     foreach (PropertyInfo propertyInfo in type.GetProperties())
                     {
                         string propName = propertyInfo.GetColumnNameFromAttr();
@@ -50,7 +53,7 @@ namespace P02.ORMExplore.DAL
 
             SqlParameter[] paraArray = properties.Select(p => new SqlParameter($"@{p.GetMappingNameFromAttr()}", p.GetValue(t)?? DBNull.Value    )).ToArray();
 
-            using (SqlConnection conn = new SqlConnection(ConfigurationManager.SqlConnectionString))
+            using (SqlConnection conn = new SqlConnection(connStringWrite))
             {
                 SqlCommand command = new SqlCommand(sql,conn);
                 command.Parameters.AddRange(paraArray);

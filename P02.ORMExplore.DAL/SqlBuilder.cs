@@ -13,6 +13,8 @@ namespace P02.ORMExplore.DAL
 
         private static string _findSql;
         private static string _insertSql;
+        private static string _updateSql;
+        private static string _deleteSql;
 
         static SqlBuilder()
         {
@@ -28,6 +30,17 @@ namespace P02.ORMExplore.DAL
 
                 _insertSql = $"Insert into [{type.GetMappingNameFromAttr()}] ({columnString})  values ({valuesString}); select @@Identity";
             }
+            {
+                //databaseName = @typeFieldName
+                string valuesString = string.Join(",", type.GetPropertiesWithoutKey().Select(p => $"{p.GetMappingNameFromAttr()} = @{p.Name}"));
+
+                _updateSql = $"update  [{type.GetMappingNameFromAttr()}] set {valuesString} where Id = @id ; ";
+            }
+            {
+                _deleteSql = $"delete from [{type.GetMappingNameFromAttr()}] where Id = @id ; ";
+            }
+
+
 
         }
 
@@ -41,7 +54,14 @@ namespace P02.ORMExplore.DAL
             return _insertSql;
         }
 
-
+        public static string GetUpdateSql()
+        {
+            return _updateSql;
+        }
+        public static string GetDeleteSql()
+        {
+            return _deleteSql;
+        }
 
     }
 }

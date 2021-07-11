@@ -10,8 +10,8 @@ namespace P02.ORMExplore
         static void Main(string[] args)
         {
             Console.WriteLine("ORM implementation");
-            #region Test find and update and generic cache
-            
+            #region Test find and update and generic cache, then search, insert, update (new row), delete
+
             SqlHelper helper = new SqlHelper();
             //first time use generic type SqlBuilder will generate sql with that type, will use for next time with same class type. 
             CompanyModel company1 = helper.Find<CompanyModel>(1);
@@ -20,15 +20,15 @@ namespace P02.ORMExplore
             //reuse sql, generic type cache. 
             //read from subscription database, write to write-db, check in subscription database
             CompanyModel company3 = helper.Find<CompanyModel>(1);
-            company3.CompanyName = company3.CompanyName + "updated";
+            company3.CompanyName = company3.CompanyName + "-new";
             company3.CreateTime = DateTime.Now;
             int newCompanyId = helper.Insert(company3);
 
             for (int i = 0; i < 10; i++)
             {
-                CompanyModel newCompany = helper.Find<CompanyModel>(newCompanyId);
+                CompanyModel newCompanyTemp = helper.Find<CompanyModel>(newCompanyId);
 
-                if (newCompany == null)
+                if (newCompanyTemp == null)
                 {
                     Console.WriteLine("not sync yet");
                 }
@@ -40,7 +40,13 @@ namespace P02.ORMExplore
                 Thread.Sleep(500);
             }
 
+            //update new value 
+            CompanyModel newCompany = helper.Find<CompanyModel>(newCompanyId);
+            newCompany.CompanyName = newCompany.CompanyName + "-update";
+            helper.Update(newCompany);
 
+            //then delete
+            helper.Delete(newCompany);
 
             #endregion
 

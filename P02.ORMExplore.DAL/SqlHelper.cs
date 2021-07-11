@@ -17,7 +17,7 @@ namespace P02.ORMExplore.DAL
         private string connStringWrite = SqlConnectionPool.GetConnectionString(SqlConnectionType.Write);
 
         //must be implemented from BaseModel, for Key (id)
-        public T Find<T>(int id) where T : BaseModel
+        public T Find<T>(int id) where T : BaseModel,new()
         {
             Type type = typeof(T);
             string sql = $"{SqlBuilder<T>.GetFindSql()}{id}";
@@ -29,6 +29,8 @@ namespace P02.ORMExplore.DAL
                 if (reader.Read())
                 {
                     T t1 = Activator.CreateInstance<T>();
+                    T t2 = new T();//if T must have new()
+
                     T t = (T)Activator.CreateInstance(type);
                     foreach (PropertyInfo propertyInfo in type.GetProperties())
                     {
@@ -66,8 +68,38 @@ namespace P02.ORMExplore.DAL
             }
         }
 
+        public int Update<T>(T t) where T : BaseModel
+        {
+            Type type = typeof(T);
+            string sql = SqlBuilder<T>.GetUpdateSql();
+            var properties = type.GetProperties();//include db self increase key, update sql has id as parameter.
 
+            SqlParameter[] paraArray = properties.Select(p => new SqlParameter($"@{p.GetMappingNameFromAttr()}", p.GetValue(t) ?? DBNull.Value)).ToArray();
 
+            using (SqlConnection conn = new SqlConnection(connStringWrite))
+            {
+                SqlCommand command = new SqlCommand(sql, conn);
+                command.Parameters.AddRange(paraArray);
+                conn.Open();
+                return command.ExecuteNonQuery();
+            }
+        }
+        public int Delete<T>(T t) where T : BaseModel
+        {
+            Type type = typeof(T);
+            string sql = SqlBuilder<T>.GetDeleteSql();
+            var properties = type.GetProperties();//include db self increase key, update sql has id as parameter.
+
+            SqlParameter[] paraArray = properties.Select(p => new SqlParameter($"@{p.GetMappingNameFromAttr()}", p.GetValue(t) ?? DBNull.Value)).ToArray();
+
+            using (SqlConnection conn = new SqlConnection(connStringWrite))
+            {
+                SqlCommand command = new SqlCommand(sql, conn);
+                command.Parameters.AddRange(paraArray);
+                conn.Open();
+                return command.ExecuteNonQuery();
+            }
+        }
 
     }
 }

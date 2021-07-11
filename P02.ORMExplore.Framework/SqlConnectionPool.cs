@@ -11,6 +11,7 @@ namespace P02.ORMExplore.Framework
     }
     public class SqlConnectionPool
     {
+        private static readonly object _lock = new object(); 
         public static string GetConnectionString(SqlConnectionType sqlConnectionType)
         {
             string conn;
@@ -30,25 +31,25 @@ namespace P02.ORMExplore.Framework
 
         //randomly pick a connection string from subscribers' database. 
         //need to choose different num for different access , use _seed
-        private static int _seed = 0;
+        private static volatile int _seed = 0;
 
         private static string Dispatcher(string[] connectionStrings)
         {
-            int num = new Random(_seed++).Next(0,connectionStrings.Length);
-            //reset
-            if (_seed == 2147483647)
+            lock (_lock)
             {
-                _seed = 0;
+                
+                //int num = new Random(_seed++).Next(0, connectionStrings.Length);//average frequency
+
+                int num = _seed++ % connectionStrings.Length;//poll, in turn, need lock
+
+                //reset
+                if (_seed == 2147483647)
+                {
+                    _seed = 0;
+                }
+                return connectionStrings[num];
             }
-
-            return connectionStrings[num];
-
         }
-
-
-
-
-
 
     }
 }

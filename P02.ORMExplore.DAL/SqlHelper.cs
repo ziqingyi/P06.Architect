@@ -45,7 +45,7 @@ namespace P02.ORMExplore.DAL
             }
         }
 
-        public bool Insert<T>(T t) where T : BaseModel
+        public int Insert<T>(T t) where T : BaseModel
         {
             Type type = typeof(T);
             string sql = SqlBuilder<T>.GetInsertSql();
@@ -58,8 +58,11 @@ namespace P02.ORMExplore.DAL
                 SqlCommand command = new SqlCommand(sql,conn);
                 command.Parameters.AddRange(paraArray);
                 conn.Open();
-                int reuslt =command.ExecuteNonQuery();
-                return reuslt == 1;
+                object result = command.ExecuteScalar();
+
+                int resultKey = int.TryParse(result?.ToString(), out int key) ? key : -1;
+
+                return resultKey;
             }
         }
 

@@ -26,7 +26,7 @@ namespace P02.ORMExplore.DAL
                 string columnString = string.Join(",", type.GetPropertiesWithoutKey().Select(p => $"[{p.GetMappingNameFromAttr()}]"));
                 string valuesString = string.Join(",", type.GetPropertiesWithoutKey().Select(p => $"@{p.GetMappingNameFromAttr()}"));
 
-                _insertSql = $"Insert into [{type.GetMappingNameFromAttr()}] ({columnString})  values ({valuesString})";
+                _insertSql = $"Insert into [{type.GetMappingNameFromAttr()}] ({columnString})  values ({valuesString}); select @@Identity";
             }
 
         }

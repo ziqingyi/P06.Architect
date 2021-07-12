@@ -8,6 +8,11 @@ namespace P02.ORMExplore.Framework.Validation
     {
         private Func<object, ValidateErrorModel> _func;
 
+        public AbstractValidateAttribute()
+        {
+
+        }
+
         public AbstractValidateAttribute(Func<object, ValidateErrorModel> func)
         {
             this._func = func;

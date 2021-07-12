@@ -12,6 +12,7 @@ namespace P02.ORMExplore.Model.DbModels
     {
         [ORMdbColumn("Name")]
         [StringLength(5, 20)]
+        [Required]
         public string CompanyName { get; set; }
 
         public DateTime CreateTime { get; set; }

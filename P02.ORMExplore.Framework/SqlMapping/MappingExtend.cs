@@ -141,7 +141,7 @@ namespace P02.ORMExplore.Framework.SqlMapping
         //-----------------------------validate -----------------------------------------------
 
 
-        public static ValidateErrorModel Validate<T>(this T t)
+        public static ValidateErrorModel ValidateAll<T>(this T t)
         {
             Type type = t.GetType();
             foreach (var prop in type.GetProperties())
@@ -159,7 +159,7 @@ namespace P02.ORMExplore.Framework.SqlMapping
             }
             return new ValidateErrorModel() { Result = true, Message = "Success" };
         }
-        public static List<ValidateErrorModel> ValidateAll<T>(this T t)
+        public static List<ValidateErrorModel> ValidateAllResults<T>(this T t)
         {
             List<ValidateErrorModel> validates = new List<ValidateErrorModel>();
             Type type = t.GetType();

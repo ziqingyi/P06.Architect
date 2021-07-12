@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using P02.ORMExplore.Framework.SqlFilter;
 using P02.ORMExplore.Framework.SqlMapping;
+using P02.ORMExplore.Framework.Validation;
 
 namespace P02.ORMExplore.Model.DbModels
 {
@@ -10,6 +11,7 @@ namespace P02.ORMExplore.Model.DbModels
     public class CompanyModel : BaseModel
     {
         [ORMdbColumn("Name")]
+        [StringLength(10, 20)]
         public string CompanyName { get; set; }
 
         public DateTime CreateTime { get; set; }

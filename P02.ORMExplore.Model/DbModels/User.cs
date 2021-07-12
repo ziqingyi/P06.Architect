@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using P02.ORMExplore.Framework.Validation;
 
 namespace P02.ORMExplore.Model.DbModels
 {
     public class User : BaseModel
     {
+        [StringLength(10, 50)]
         public string Name { get; set; }
         public string Account { get; set; }
         public string Password { get; set; }

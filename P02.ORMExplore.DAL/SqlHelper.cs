@@ -7,6 +7,7 @@ using System.Text;
 using P02.ORMExplore.Framework;
 using P02.ORMExplore.Framework.SqlFilter;
 using P02.ORMExplore.Framework.SqlMapping;
+using P02.ORMExplore.Framework.Validation;
 using P02.ORMExplore.Model;
 
 namespace P02.ORMExplore.DAL
@@ -49,6 +50,11 @@ namespace P02.ORMExplore.DAL
 
         public int Insert<T>(T t) where T : BaseModel
         {
+            if (t.ValidateAll().Result == false)
+            {
+                throw new Exception(t.ValidateAll().Message);
+            }
+
             Type type = typeof(T);
             string sql = SqlBuilder<T>.GetInsertSql();
             var properties = type.GetPropertiesWithoutKey();//not insert db self increase key
@@ -70,6 +76,11 @@ namespace P02.ORMExplore.DAL
 
         public int Update<T>(T t) where T : BaseModel
         {
+            if (t.ValidateAll().Result == false)
+            {
+                throw  new Exception(t.ValidateAll().Message);
+            }
+
             Type type = typeof(T);
             string sql = SqlBuilder<T>.GetUpdateSql();
             var properties = type.GetProperties();//include db self increase key, update sql has id as parameter.

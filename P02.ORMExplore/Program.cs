@@ -40,7 +40,7 @@ namespace P02.ORMExplore
                 Thread.Sleep(500);
             }
 
-            //update new value 
+            //update new value , note: the validation process 
             CompanyModel newCompany = helper.Find<CompanyModel>(newCompanyId);
             newCompany.CompanyName = newCompany.CompanyName + "-update";
             helper.Update(newCompany);

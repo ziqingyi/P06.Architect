@@ -11,7 +11,7 @@ namespace P02.ORMExplore.Model.DbModels
     public class CompanyModel : BaseModel
     {
         [ORMdbColumn("Name")]
-        [StringLength(10, 20)]
+        [StringLength(5, 20)]
         public string CompanyName { get; set; }
 
         public DateTime CreateTime { get; set; }

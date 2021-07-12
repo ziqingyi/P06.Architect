@@ -32,7 +32,7 @@ namespace P02.ORMExplore.DAL
             }
             {
                 //databaseName = @typeFieldName
-                string valuesString = string.Join(",", type.GetPropertiesWithoutKey().Select(p => $"{p.GetMappingNameFromAttr()} = @{p.Name}"));
+                string valuesString = string.Join(",", type.GetPropertiesWithoutKey().Select(p => $"{p.GetMappingNameFromAttr()} = @{p.GetMappingNameFromAttr()}"));
 
                 _updateSql = $"update  [{type.GetMappingNameFromAttr()}] set {valuesString} where Id = @id ; ";
             }

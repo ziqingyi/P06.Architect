@@ -36,6 +36,8 @@ namespace P02.ORMExplore.DAL
 
                 _updateSql = $"update  [{type.GetMappingNameFromAttr()}] set {valuesString} where Id = @id ; ";
             }
+
+
             {
                 _deleteSql = $"delete from [{type.GetMappingNameFromAttr()}] where Id = @id ; ";
             }
@@ -58,6 +60,8 @@ namespace P02.ORMExplore.DAL
         {
             return _updateSql;
         }
+
+
         public static string GetDeleteSql()
         {
             return _deleteSql;

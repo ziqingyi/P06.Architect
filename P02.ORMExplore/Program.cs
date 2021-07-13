@@ -10,6 +10,38 @@ namespace P02.ORMExplore
         static void Main(string[] args)
         {
             Console.WriteLine("ORM implementation");
+            Test2();
+
+        }
+
+        private static void Test2()
+        {
+            #region Test with updating in demand, only update few columns
+            SqlHelper helper = new SqlHelper();
+            CompanyModel company3 = helper.Find<CompanyModel>(1);
+            company3.CompanyName = company3.CompanyName + "-newUpdate";
+            company3.LastModifyTime = DateTime.Now;
+
+            //prepare json, only for updated columns
+            string newItemJson = Newtonsoft.Json.JsonConvert.SerializeObject(new {
+
+                CompanyName = company3.CompanyName,
+                lastModifyTime = company3.LastModifyTime
+            });
+
+            helper.Update(newItemJson,company3);
+
+            //then delete
+            helper.Delete(company3);
+
+
+            #endregion
+        }
+
+
+        private static void Test1()
+        {
+
             #region Test find and update and generic cache, then search, insert, update (new row), delete
 
             SqlHelper helper = new SqlHelper();
@@ -34,7 +66,7 @@ namespace P02.ORMExplore
                 }
                 else
                 {
-                    Console.WriteLine($"find new in subscription database in {i*500} ms" );
+                    Console.WriteLine($"find new in subscription database in {i * 500} ms");
                     break;
                 }
                 Thread.Sleep(500);
@@ -50,14 +82,7 @@ namespace P02.ORMExplore
 
             #endregion
 
-
-
-
-
-
         }
-
-
 
     }
 }

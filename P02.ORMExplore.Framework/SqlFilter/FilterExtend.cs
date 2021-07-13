@@ -17,6 +17,14 @@ namespace P02.ORMExplore.Framework.SqlFilter
 
         }
 
+        public static IEnumerable<PropertyInfo> GetPropertiesInJson(this Type type, string json)
+        {
+            return type.GetPropertiesWithoutKey().Where(p => json.Contains($"'{p.Name}':") || json.Contains($"\"{p.Name}\":"));
+
+        }
+
+
+
 
     }
 }

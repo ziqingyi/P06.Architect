@@ -95,6 +95,43 @@ namespace P02.ORMExplore.DAL
                 return command.ExecuteNonQuery();
             }
         }
+
+
+        public int Update<T>(string json, T t) where T : BaseModel
+        {
+            if (t.ValidateAll().Result == false)
+            {
+                throw new Exception(t.ValidateAll().Message);
+            }
+
+
+
+            Type type = typeof(T);
+
+     
+            string valuesString = string.Join(",", type.GetPropertiesInJson(json).Select(p => $"{p.GetMappingNameFromAttr()} = @{p.GetMappingNameFromAttr()}"));
+
+            string updateSqlForSomeColumns = $"update  [{type.GetMappingNameFromAttr()}] set {valuesString} where Id = @id ; ";
+
+
+            string sql = updateSqlForSomeColumns;
+            var properties = type.GetPropertiesInJson(json);//include db self increase key, update sql has id as parameter.
+
+            //prepare sql parameter, must add @Id
+            SqlParameter[] paraArray = properties.Select(p => new SqlParameter($"@{p.GetMappingNameFromAttr()}", p.GetValue(t) ?? DBNull.Value)).ToArray();
+            paraArray.Append(new SqlParameter("@Id", t.Id));
+
+            using (SqlConnection conn = new SqlConnection(connStringWrite))
+            {
+                SqlCommand command = new SqlCommand(sql, conn);
+                command.Parameters.AddRange(paraArray);
+                conn.Open();
+                return command.ExecuteNonQuery();
+            }
+        }
+
+
+
         public int Delete<T>(T t) where T : BaseModel
         {
             Type type = typeof(T);

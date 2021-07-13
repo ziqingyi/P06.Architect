@@ -10,13 +10,40 @@ namespace P02.ORMExplore
         static void Main(string[] args)
         {
             Console.WriteLine("ORM implementation");
-            Test2();
+            //Test1();
+            //Test2();
+            Test3();
+
+
+
+        }
+
+        private static void Test3()
+        {
+            #region insert by transaction
+
+            using (SqlHelperTransaction helper = new SqlHelperTransaction())
+            {
+                CompanyModel company1 = helper.Find<CompanyModel>(1);
+                User u1 = helper.Find<User>(1);
+                company1.CompanyName += "-Tran";
+                u1.Name = "error777777777777777777777777777777777777" +
+                          "777777777777777777777777777777777777" +
+                          "7777777777777777777777777777777";//test transaction error
+
+                helper.Insert(company1);
+                helper.Insert(u1);
+                helper.SaveAllChangesInOneTransaction();
+            }
+
+            #endregion
+
 
         }
 
         private static void Test2()
         {
-            #region Test with updating in demand, only update few columns
+            #region Test with updating in demand, only update few columns from Json
             SqlHelper helper = new SqlHelper();
             CompanyModel company3 = helper.Find<CompanyModel>(1);
             company3.CompanyName = company3.CompanyName + "-newUpdate";
@@ -34,14 +61,11 @@ namespace P02.ORMExplore
             //then delete
             helper.Delete(company3);
 
-
             #endregion
         }
 
-
         private static void Test1()
         {
-
             #region Test find and update and generic cache, then search, insert, update (new row), delete
 
             SqlHelper helper = new SqlHelper();
@@ -81,7 +105,6 @@ namespace P02.ORMExplore
             helper.Delete(newCompany);
 
             #endregion
-
         }
 
     }

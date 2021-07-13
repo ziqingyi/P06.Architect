@@ -26,7 +26,7 @@ namespace P02.ORMExplore
             string newItemJson = Newtonsoft.Json.JsonConvert.SerializeObject(new {
 
                 CompanyName = company3.CompanyName,
-                lastModifyTime = company3.LastModifyTime
+                LastModifyTime = company3.LastModifyTime
             });
 
             helper.Update(newItemJson,company3);

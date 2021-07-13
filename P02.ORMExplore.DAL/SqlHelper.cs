@@ -111,7 +111,7 @@ namespace P02.ORMExplore.DAL
      
             string valuesString = string.Join(",", type.GetPropertiesInJson(json).Select(p => $"{p.GetMappingNameFromAttr()} = @{p.GetMappingNameFromAttr()}"));
 
-            string updateSqlForSomeColumns = $"update  [{type.GetMappingNameFromAttr()}] set {valuesString} where Id = @id ; ";
+            string updateSqlForSomeColumns = $"update  [{type.GetMappingNameFromAttr()}] set {valuesString} where Id = @Id ; ";
 
 
             string sql = updateSqlForSomeColumns;
@@ -119,7 +119,7 @@ namespace P02.ORMExplore.DAL
 
             //prepare sql parameter, must add @Id
             SqlParameter[] paraArray = properties.Select(p => new SqlParameter($"@{p.GetMappingNameFromAttr()}", p.GetValue(t) ?? DBNull.Value)).ToArray();
-            paraArray.Append(new SqlParameter("@Id", t.Id));
+            paraArray=paraArray.Append(new SqlParameter("@Id", t.Id)).ToArray();
 
             using (SqlConnection conn = new SqlConnection(connStringWrite))
             {

@@ -1,6 +1,7 @@
 ﻿using P02.ORMExplore.DAL;
 using System;
 using System.Threading;
+using P02.ORMExplore.Framework.SqlTransactionInConns;
 using P02.ORMExplore.Model.DbModels;
 
 namespace P02.ORMExplore
@@ -12,15 +13,36 @@ namespace P02.ORMExplore
             Console.WriteLine("ORM implementation");
             //Test1();
             //Test2();
-            Test3();
+            //Test3();
+            Test4();
 
 
+        }
+
+        private static void Test4()
+        {
+            //use transaction scope for keeping transaction in different connections.
+            SqlHelper helper = new SqlHelper();
+            CompanyModel company1 = helper.Find<CompanyModel>(1);
+            CompanyModel company2 = helper.Find<CompanyModel>(2);
+            company1.CompanyName += "-Transcope";
+            company2.CompanyName += "-Transcope" +
+                "error777777777777777777777777777777777777777777777777777777777777777777777777" +
+                "7777777777777777777777777777777"; ;
+            using (IUnitOfWork unitOfWork = new UnitOfWork())
+            {
+                unitOfWork.Invoke(() =>
+                {
+                    helper.Insert<CompanyModel>(company1);
+                    helper.Insert(company2);
+                });
+            }
 
         }
 
         private static void Test3()
         {
-            #region insert by transaction
+            #region insert by SqlTransaction
 
             using (SqlHelperTransaction helper = new SqlHelperTransaction())
             {

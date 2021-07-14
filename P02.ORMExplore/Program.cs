@@ -14,14 +14,39 @@ namespace P02.ORMExplore
             //Test1();
             //Test2();
             //Test3();
-            Test4();
+            //Test4();
+            Test5();
+
+        }
+
+        private static void Test5()
+        {
+            //distributed databases, MSDTC service(db in same/diff server) (NOT Supported after core 2.1,test in Framework). 
+            //use transaction scope for keeping transaction in different connections in different database.
+            SqlHelper helper = new SqlHelper();
+            CompanyModel company1 = helper.Find<CompanyModel>(1);
+            CompanyModel company2 = helper.Find<CompanyModel>(2);
+            company1.CompanyName += "-TranscopeInDiffDB";
+            company2.CompanyName += "-TranscopeInDiffDB" +
+                                    "error777777777777777777777777777777777777777777777777777777777777777777777777" +
+                                    "7777777777777777777777777777777"; ;
+            using (IUnitOfWork unitOfWork = new UnitOfWork())
+            {
+                unitOfWork.Invoke(() =>
+                {
+                    helper.Insert<CompanyModel>(company1);
+                    helper.InsertInDuplicateDB(company2);
+                });
+            }
 
 
         }
 
+
         private static void Test4()
         {
-            //use transaction scope for keeping transaction in different connections.
+            //same database, different connecitons
+            //use transaction scope for keeping transaction in different connections in same database.
             SqlHelper helper = new SqlHelper();
             CompanyModel company1 = helper.Find<CompanyModel>(1);
             CompanyModel company2 = helper.Find<CompanyModel>(2);

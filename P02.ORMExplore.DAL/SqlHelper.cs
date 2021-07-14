@@ -73,7 +73,31 @@ namespace P02.ORMExplore.DAL
                 return resultKey;
             }
         }
+        public int InsertInDuplicateDB<T>(T t) where T : BaseModel
+        {
+            if (t.ValidateAll().Result == false)
+            {
+                throw new Exception(t.ValidateAll().Message);
+            }
 
+            Type type = typeof(T);
+            string sql = SqlBuilder<T>.GetInsertSql();
+            var properties = type.GetPropertiesWithoutKey();//not insert db self increase key
+
+            SqlParameter[] paraArray = properties.Select(p => new SqlParameter($"@{p.GetMappingNameFromAttr()}", p.GetValue(t) ?? DBNull.Value)).ToArray();
+
+            using (SqlConnection conn = new SqlConnection(connStringRead))
+            {
+                SqlCommand command = new SqlCommand(sql, conn);
+                command.Parameters.AddRange(paraArray);
+                conn.Open();
+                object result = command.ExecuteScalar();
+
+                int resultKey = int.TryParse(result?.ToString(), out int key) ? key : -1;
+
+                return resultKey;
+            }
+        }
         public int Update<T>(T t) where T : BaseModel
         {
             if (t.ValidateAll().Result == false)

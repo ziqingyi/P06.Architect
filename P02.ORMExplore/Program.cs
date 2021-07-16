@@ -1,5 +1,6 @@
 ﻿using P02.ORMExplore.DAL;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using P02.ORMExplore.Framework.SqlTransactionInConns;
 using P02.ORMExplore.Model.DbModels;
@@ -15,9 +16,19 @@ namespace P02.ORMExplore
             //Test2();
             //Test3();
             //Test4();
-            Test5();
+            //Test5();
+            Test6();
+        }
+
+
+        private static void Test6()
+        {
+            SqlHelper helper = new SqlHelper();
+            IList<CompanyModel> cList = helper.FindCondition<CompanyModel>(c=>c.Id == 1);
 
         }
+
+
 
         private static void Test5()
         {

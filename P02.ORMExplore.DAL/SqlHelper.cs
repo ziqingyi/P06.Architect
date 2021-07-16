@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using P02.ORMExplore.DAL.ExpressionExtend;
 using P02.ORMExplore.Framework;
 using P02.ORMExplore.Framework.SqlFilter;
 using P02.ORMExplore.Framework.SqlMapping;
@@ -47,6 +49,50 @@ namespace P02.ORMExplore.DAL
                 }
             }
         }
+
+
+        public IList<T> FindCondition<T>(Expression<Func<T,bool>> func) where T : BaseModel, new()
+        {
+            Type type = typeof(T);
+            string columnsString = string.Join(",", type.GetProperties().Select(p => $"[{p.GetMappingNameFromAttr()}]"));
+            string where = func.ToWhere(out List<SqlParameter> parameters);
+
+            string _findSql = $"Select {columnsString} from [{type.GetMappingNameFromAttr()}] where {where}";
+
+            IList<T> result = new List<T>();
+
+            using (SqlConnection conn = new SqlConnection(connStringRead))
+            {
+                SqlCommand command = new SqlCommand(_findSql, conn);
+                command.Parameters.AddRange(parameters.ToArray());
+                conn.Open();
+                var reader = command.ExecuteReader();
+                
+                while(reader.Read())
+                {
+                    T t1 = Activator.CreateInstance<T>();
+                    T t2 = new T();//if T must have new()
+
+                    T t = (T)Activator.CreateInstance(type);
+                    foreach (PropertyInfo propertyInfo in type.GetProperties())
+                    {
+                        string propName = propertyInfo.GetColumnNameFromAttr();
+                        var pValue = reader[propName] is DBNull ? null : reader[propName];
+                        propertyInfo.SetValue(t, pValue);
+                    }
+                    result.Add(t); 
+                }
+
+                return result;
+            }
+        }
+
+
+
+
+
+
+
 
         public int Insert<T>(T t) where T : BaseModel
         {

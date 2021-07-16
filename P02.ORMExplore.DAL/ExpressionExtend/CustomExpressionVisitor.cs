@@ -49,6 +49,8 @@ namespace P02.ORMExplore.DAL.ExpressionExtend
         protected override Expression VisitMember(MemberExpression node)
         {
             Console.WriteLine($"VisitMember：{node.NodeType} {node.Type} {node.ToString()}");
+
+
             if (node.Expression is ConstantExpression)
             {
                 var value1 = this.InvokeValue(node);

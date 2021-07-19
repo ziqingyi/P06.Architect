@@ -17,15 +17,27 @@ namespace P02.ORMExplore
             //Test3();
             //Test4();
             //Test5();
-            Test6();
+            //Test6();
+
+            Test7();
+
         }
 
-
+        private static void Test7()
+        {
+            int paraId1 = 10;
+            int paraId2 = 20;
+            SqlHelper helper = new SqlHelper();
+            IList<CompanyModel> cList = helper.FindCondition<CompanyModel>(c => c.Id >= 10 
+                                                                                && c.Id >= paraId2);
+        }
         private static void Test6()
         {
             SqlHelper helper = new SqlHelper();
-            IList<CompanyModel> cList = helper.FindCondition<CompanyModel>(c=>c.Id == 1);
-
+            IList<CompanyModel> cList = helper.FindCondition<CompanyModel>(c=>c.Id >= 1 
+                                                                              && c.CompanyName.StartsWith("2")
+                                                                              && c.CompanyName.Contains("2")
+                                                                              && c.CompanyName.EndsWith("3"));
         }
 
 

@@ -50,9 +50,10 @@ namespace P02.ORMExplore.DAL.ExpressionExtend
         {
             Console.WriteLine($"VisitMember：{node.NodeType} {node.Type} {node.ToString()}");
 
-
+            //fix variable or constant parameter issue
             if (node.Expression is ConstantExpression)
             {
+                //two ways to get value from constant 
                 var value1 = this.InvokeValue(node);
                 var value2 = this.ReflectionValue(node);
                 this._tempValue = value1;
@@ -61,12 +62,15 @@ namespace P02.ORMExplore.DAL.ExpressionExtend
             {
                 if (this._tempValue != null)
                 {
-                    string name = node.Member.GetMappingNameFromAttr();
+                    string name = node.Member.GetMappingNameFromAttr();//mapping name
+
                     string paraName = $"@{name}{this._sqlParameterList.Count}";
                     string sOperator = this.ConditionStack.Pop();
                     this.ConditionStack.Push(paraName);
                     this.ConditionStack.Push(sOperator);
-                    this.ConditionStack.Push(name);
+
+                    this.ConditionStack.Push(name);//push mapping name to stack
+
 
                     var tempValue = this._tempValue;
                     this._sqlParameterList.Add(new SqlParameter(paraName,tempValue));

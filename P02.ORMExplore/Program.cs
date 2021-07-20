@@ -28,8 +28,8 @@ namespace P02.ORMExplore
             int paraId1 = 10;
             int paraId2 = 20;
             SqlHelper helper = new SqlHelper();
-            IList<CompanyModel> cList = helper.FindCondition<CompanyModel>(c => c.Id >= 10 
-                                                                                && c.Id >= paraId2);
+            IList<CompanyModel> cList = helper.FindCondition<CompanyModel>(c => c.Id >= paraId2 
+                                                                                && c.Id >= 10);
         }
         private static void Test6()
         {

@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P02.ORMExplore.Model", "P02
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P02.ORMExplore.Framework", "P02.ORMExplore.Framework\P02.ORMExplore.Framework.csproj", "{BDFB66E9-C778-4FCD-8388-342B57225C83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P02.ORMExplore.IDAL", "P02.ORMExplore.IDAL\P02.ORMExplore.IDAL.csproj", "{25CAFEDC-75CC-4D5D-8AA6-AFE6E5F366E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P02.ORMExplore.IDAL", "P02.ORMExplore.IDAL\P02.ORMExplore.IDAL.csproj", "{25CAFEDC-75CC-4D5D-8AA6-AFE6E5F366E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03.DotNetCoreMVC", "P03.DotNetCoreMVC\P03.DotNetCoreMVC.csproj", "{48B2E7B4-0DD8-458F-81EF-6117B81D062E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{25CAFEDC-75CC-4D5D-8AA6-AFE6E5F366E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25CAFEDC-75CC-4D5D-8AA6-AFE6E5F366E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25CAFEDC-75CC-4D5D-8AA6-AFE6E5F366E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48B2E7B4-0DD8-458F-81EF-6117B81D062E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48B2E7B4-0DD8-458F-81EF-6117B81D062E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48B2E7B4-0DD8-458F-81EF-6117B81D062E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48B2E7B4-0DD8-458F-81EF-6117B81D062E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

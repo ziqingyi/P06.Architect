@@ -18,15 +18,13 @@ namespace P03.DotNetCoreMVC.Controllers
 
 
             #region Test Session
-
+            //GetString is extension method in SessionExtensions class
             string result = base.HttpContext.Session.GetString("User5");
 
             if (string.IsNullOrWhiteSpace(result))
             {
                 base.HttpContext.Session.SetString("User5", "UserInSession");
             }
-
-
             #endregion
 
 

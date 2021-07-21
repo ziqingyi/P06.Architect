@@ -23,7 +23,11 @@ namespace P03.DotNetCoreMVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            #region add session
             services.AddSession();
+            #endregion
+
+
             services.AddControllersWithViews();
         }
 
@@ -41,7 +45,13 @@ namespace P03.DotNetCoreMVC
                 app.UseHsts();
             }
 
+            #region add session
             app.UseSession();
+            #endregion
+
+
+
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

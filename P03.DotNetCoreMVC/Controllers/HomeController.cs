@@ -20,6 +20,7 @@ namespace P03.DotNetCoreMVC.Controllers
 
         public IActionResult Index()
         {
+            this._logger.LogInformation("This is HomeController Index() --logger");
             return View();
         }
 

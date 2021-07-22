@@ -18,11 +18,11 @@ namespace P03.DotNetCoreMVC
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureLogging(loggingBuilder =>
-                {
-                    loggingBuilder.AddLog4Net("CfgFiles\\log4net.config");//add configuration file with default location. 
+                //.ConfigureLogging(loggingBuilder =>
+                //{
+                //    loggingBuilder.AddLog4Net("CfgFiles\\log4net.config");//add configuration file with default location. 
 
-                })
+                //})
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

@@ -61,17 +61,26 @@ namespace P03.DotNetCoreMVC
 
 
             #region UseStaticFiles update with static file options
-           
 
-            StaticFileOptions sfo = new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(),
-                        @"wwwroot"))
-            };
+            #region config 1
+            //wwwroot folder is must
+            //StaticFileOptions sfo = new StaticFileOptions()
+            //{
+            //    FileProvider = new PhysicalFileProvider(
+            //        Path.Combine(Directory.GetCurrentDirectory(),
+            //            @"wwwroot"))
+            //};
+            //app.UseStaticFiles(sfo);
+            #endregion
 
-
-            app.UseStaticFiles(sfo);
+            #region config 2, self-host
+            //dotnet P03.DotNetCoreMVC.dll            access by: http://localhost:5000/, port from launch setting
+            //dotnet P03.DotNetCoreMVC.dll --urls="http:/*:5177" --127.0.0.1 --port=5177 access by: http://localhost:5177/
+            
+            //by default, the static file is in wwwroot, but if no such file, program still run and accept request
+            //if in config 1, the missing of wwwroot will lead to failure of the program. 
+            app.UseStaticFiles();
+            #endregion
 
             #endregion
             

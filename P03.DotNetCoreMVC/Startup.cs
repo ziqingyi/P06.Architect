@@ -53,7 +53,7 @@ namespace P03.DotNetCoreMVC
             #endregion
 
             #region add log factory
-            loggerFactory.AddLog4Net("CfgFiles\\log4net.config");
+            loggerFactory.AddLog4Net("CfgFiles\\log4net.config");//replace or override .net core internal Logger, so no need to add service. 
             #endregion
 
 
@@ -62,28 +62,32 @@ namespace P03.DotNetCoreMVC
 
             #region UseStaticFiles update with static file options
 
+            //difference between debug and publish: publish has web.config file and may has wwwroot folder.
+            //web.config file is required for IIS.
+
             #region config 1
-            //wwwroot folder is must
-            //StaticFileOptions sfo = new StaticFileOptions()
-            //{
-            //    FileProvider = new PhysicalFileProvider(
-            //        Path.Combine(Directory.GetCurrentDirectory(),
-            //            @"wwwroot"))
-            //};
-            //app.UseStaticFiles(sfo);
+            //wwwroot folder is must for running in console
+            StaticFileOptions sfo = new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(),
+                        @"wwwroot"))
+            };
+            app.UseStaticFiles(sfo);
             #endregion
 
             #region config 2, self-host
             //dotnet P03.DotNetCoreMVC.dll            access by: http://localhost:5000/, port from launch setting
             //dotnet P03.DotNetCoreMVC.dll --urls="http:/*:5177" --127.0.0.1 --port=5177 access by: http://localhost:5177/
-            
+
             //by default, the static file is in wwwroot, but if no such file, program still run and accept request
             //if in config 1, the missing of wwwroot will lead to failure of the program. 
-            app.UseStaticFiles();
+            //app.UseStaticFiles();
+
             #endregion
 
             #endregion
-            
+
 
             app.UseRouting();
 

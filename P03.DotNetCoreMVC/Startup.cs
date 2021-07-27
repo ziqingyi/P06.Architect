@@ -38,81 +38,96 @@ namespace P03.DotNetCoreMVC
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            #region application builder process 
-
-            Func<RequestDelegate, RequestDelegate> func1 = new Func<RequestDelegate, RequestDelegate>(
-            next =>
-            {
-                Console.WriteLine("This is middleware 1 ");
-                return new RequestDelegate(
-                    async context =>
-                    {
-                        await context.Response.WriteAsync("This is hello world in HttpContext Response 1 begin ");
-
-                        await next.Invoke(context);
-
-                        await context.Response.WriteAsync("This is hello world in HttpContext Response 1 end ");
-                    });
-            }
-            );
-            
-            app.Use(func1);
-
-
-
-            Func<RequestDelegate, RequestDelegate> func2 = new Func<RequestDelegate, RequestDelegate>(
-                next =>
-                {
-                    Console.WriteLine("This is middleware 2 ");
-                    return new RequestDelegate(
-                        async context =>
-                        {
-                            await context.Response.WriteAsync("This is hello world in HttpContext 2 Response begin ");
-
-                            await next.Invoke(context);
-
-                            await context.Response.WriteAsync("This is hello world in HttpContext 2 Response end ");
-                        });
-                }
-            );
-
-            app.Use(func2);
 
 
 
 
-            Func<RequestDelegate, RequestDelegate> func3 = new Func<RequestDelegate, RequestDelegate>(
-                next =>
-                {
-                    Console.WriteLine("This is middleware 3 ");
-                    return new RequestDelegate(
-                        async context =>
-                        {
-                            await context.Response.WriteAsync("This is hello world in HttpContext 3 Response begin ");
 
-                            //await next.Invoke(context); //no next 
+            #region 1 test Use() ,  use middleware and  test application builder process 
+            //ApplicationBuilder.cs
+            //Func<RequestDelegate, RequestDelegate> func1 = new Func<RequestDelegate, RequestDelegate>(
+            //next =>
+            //{
+            //    Console.WriteLine("This is middleware 1 ");
+            //    return new RequestDelegate(
+            //        async context =>
+            //        {
+            //            await context.Response.WriteAsync("This is hello world in HttpContext Response 1 begin ");
 
-                            await context.Response.WriteAsync("This is hello world in HttpContext 3 Response end ");
-                        });
-                }
-            );
+            //            await next.Invoke(context);
 
-            app.Use(func3);
+            //            await context.Response.WriteAsync("This is hello world in HttpContext Response 1 end ");
+            //        });
+            //}
+            //);
 
+            //app.Use(func1);
 
+            //Func<RequestDelegate, RequestDelegate> func2 = new Func<RequestDelegate, RequestDelegate>(
+            //    next =>
+            //    {
+            //        Console.WriteLine("This is middleware 2 ");
+            //        return new RequestDelegate(
+            //            async context =>
+            //            {
+            //                await context.Response.WriteAsync("This is hello world in HttpContext 2 Response begin ");
+
+            //                await next.Invoke(context);
+
+            //                await context.Response.WriteAsync("This is hello world in HttpContext 2 Response end ");
+            //            });
+            //    }
+            //);
+
+            //app.Use(func2);
+
+            //Func<RequestDelegate, RequestDelegate> func3 = new Func<RequestDelegate, RequestDelegate>(
+            //    next =>
+            //    {
+            //        Console.WriteLine("This is middleware 3 ");
+            //        return new RequestDelegate(
+            //            async context =>
+            //            {
+            //                await context.Response.WriteAsync("This is hello world in HttpContext 3 Response begin ");
+
+            //                //await next.Invoke(context); //no next , the final.
+
+            //                await context.Response.WriteAsync("This is hello world in HttpContext 3 Response end ");
+            //            });
+            //    }
+            //);
+
+            //app.Use(func3);
 
             #endregion
 
 
+            #region 2 test  run   middleware , Adds a terminal middleware delegate
 
+            ////  test Run()
+            //app.Run(c=> c.Response.WriteAsync("hello"));
 
+            /*  source code RunExtensions.cs :  just run the delegate and return , without following steps
 
+            //Adds a terminal middleware delegate to the application's request pipeline.
 
+            public static void Run(this IApplicationBuilder app, RequestDelegate handler)
+            {
+                if (app == null)
+                {
+                    throw new ArgumentNullException(nameof(app));
+                }
 
+                if (handler == null)
+                {
+                    throw new ArgumentNullException(nameof(handler));
+                }
 
+                app.Use(_ => handler);
+            }
+            */
 
-
-
+            #endregion
 
 
 

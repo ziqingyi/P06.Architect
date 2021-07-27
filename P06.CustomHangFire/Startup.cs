@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using P06.CustomHangFire.Interface;
+
 //using Hangfire.MemoryStorage;
 
 
@@ -80,7 +82,9 @@ namespace P06.CustomHangFire
                 ()=> serviceProvider.GetService<IPrintJob>().Print(),
                 "* * * * *");
 
-
+            recurringJobManager.AddOrUpdate("TestService",
+                () => serviceProvider.GetService<ITest>().Show(),
+                "* * * * *");
         }
     }
 }

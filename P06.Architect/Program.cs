@@ -8,7 +8,7 @@ namespace P06.Architect
         static void Main(string[] args)
         {
            
-
+            MiddlewareProcess.Show1();
 
 
         }

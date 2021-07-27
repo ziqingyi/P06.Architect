@@ -71,6 +71,13 @@ namespace P06.Architect
             app.Use(func3);
 
 
+            MyRequestDelegate resultDelegate =  app.Build();
+
+            resultDelegate.Invoke("HttpContext is coming......");
+
+
+
+            Console.WriteLine("all middleware is completed");
         }
 
 
@@ -96,7 +103,6 @@ namespace P06.Architect
             MyRequestDelegate app = context =>
             {
                 Console.WriteLine("initial request delegate app");
-                return Task.CompletedTask;
             };
 
             foreach (var component in _components.Reverse())

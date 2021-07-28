@@ -131,6 +131,131 @@ namespace P03.DotNetCoreMVC
 
 
 
+            #region Use with Func  
+
+            app.Use(async (context, next) => { await context.Response.WriteAsync("hello"); });
+
+            /* source code
+             
+             *         /// <param name="app">The <see cref="IApplicationBuilder"/> instance.</param>
+                        /// <param name="middleware">A function that handles the request and calls the given next function.</param>
+                        /// <returns>The <see cref="IApplicationBuilder"/> instance.</returns>
+                        public static IApplicationBuilder Use(this IApplicationBuilder app, Func<HttpContext, Func<Task>, Task> middleware)
+                        {
+                            return app.Use(next =>
+                            {
+                                return context =>
+                                {
+                                    Func<Task> simpleNext = () => next(context);
+                                    return middleware(context, simpleNext);
+                                };
+                            });
+                        }
+
+             */
+
+            #endregion
+
+            #region other implementation of Use()
+
+            
+
+           
+            #region UseWhen     /index?name=123
+
+            app.UseWhen(context =>
+                {
+                    return context.Request.Query.ContainsKey("Name");
+                },
+                appBuilder =>
+                {
+                    appBuilder.Use(async (context, next) =>
+                    {
+                        await context.Response.WriteAsync("hello world UseWhen");
+                        await next();
+                    });
+                });
+            /*
+            /// Conditionally creates a branch in the request pipeline that is rejoined to the main pipeline.
+            /// </summary>
+            /// <param name="app"></param>
+            /// <param name="predicate">Invoked with the request environment to determine if the branch should be taken</param>
+            /// <param name="configuration">Configures a branch to take</param>
+            /// <returns></returns>
+            public static IApplicationBuilder UseWhen(this IApplicationBuilder app, Predicate predicate, Action<IApplicationBuilder> configuration)
+            {
+                if (app == null)
+                {
+                    throw new ArgumentNullException(nameof(app));
+                }
+
+                if (predicate == null)
+                {
+                    throw new ArgumentNullException(nameof(predicate));
+                }
+
+                if (configuration == null)
+                {
+                    throw new ArgumentNullException(nameof(configuration));
+                }
+
+                // Create and configure the branch builder right away; otherwise,
+                // we would end up running our branch after all the components
+                // that were subsequently added to the main builder.
+                var branchBuilder = app.New();
+                configuration(branchBuilder);
+
+                return app.Use(main =>
+                {
+                    // This is called only when the main application builder
+                    // is built, not per request.
+                    branchBuilder.Run(main);
+                    var branch = branchBuilder.Build();
+
+                    return context =>
+                    {
+                        if (predicate(context))
+                        {
+                            return branch(context);
+                        }
+                        else
+                        {
+                            return main(context);
+                        }
+                    };
+                });
+            }
+
+            */
+            #endregion
+
+            #region Map 
+
+            //app.Map("/Test", MapTest);
+
+            //app.Map("/mapTest",
+            //    a => a.Run(async context =>
+            //    {
+            //        await context.Response.WriteAsync("This is map to maptext page");
+            //    }));
+
+            //app.MapWhen(context =>
+            //{
+            //    return context.Request.Query.ContainsKey("Name");
+
+            //}, MapTest);
+
+
+
+            #endregion
+
+
+
+            #endregion
+
+
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -194,5 +319,25 @@ namespace P03.DotNetCoreMVC
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+
+        #region test assist method
+
+        private static void MapTest(IApplicationBuilder app)
+        {
+            app.Run(async context =>
+            {
+                await context.Response.WriteAsync($"Url is {context.Request.Path.Value}");
+            });
+        }
+       
+
+        #endregion
+
+
+
+
+
+
     }
 }

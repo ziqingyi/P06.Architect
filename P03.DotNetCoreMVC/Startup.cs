@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using P03.DotNetCoreMVC.Utility.CusMiddleWare;
 
 namespace P03.DotNetCoreMVC
 {
@@ -131,9 +132,9 @@ namespace P03.DotNetCoreMVC
 
 
 
-            #region Use with Func  
+            #region 3 Use with Func  
 
-            app.Use(async (context, next) => { await context.Response.WriteAsync("hello"); });
+            //app.Use(async (context, next) => { await context.Response.WriteAsync("hello"); });
 
             /* source code
              
@@ -158,23 +159,23 @@ namespace P03.DotNetCoreMVC
 
             #region other implementation of Use()
 
-            
 
-           
-            #region UseWhen     /index?name=123
 
-            app.UseWhen(context =>
-                {
-                    return context.Request.Query.ContainsKey("Name");
-                },
-                appBuilder =>
-                {
-                    appBuilder.Use(async (context, next) =>
-                    {
-                        await context.Response.WriteAsync("hello world UseWhen");
-                        await next();
-                    });
-                });
+
+            #region 4 UseWhen     /index?name=123
+
+            //app.UseWhen(context =>
+            //    {
+            //        return context.Request.Query.ContainsKey("Name");
+            //    },
+            //    appBuilder =>
+            //    {
+            //        appBuilder.Use(async (context, next) =>
+            //        {
+            //            await context.Response.WriteAsync("hello world UseWhen");
+            //            await next();
+            //        });
+            //    });
             /*
             /// Conditionally creates a branch in the request pipeline that is rejoined to the main pipeline.
             /// </summary>
@@ -229,7 +230,7 @@ namespace P03.DotNetCoreMVC
             */
             #endregion
 
-            #region Map 
+            #region 5 Map 
 
             //app.Map("/Test", MapTest);
 
@@ -249,6 +250,13 @@ namespace P03.DotNetCoreMVC
 
             #endregion
 
+            #region 6 Middleware class, UseMiddlewareExtensions.cs, use reflections
+
+            //app.UseMiddleware<FirstMiddleWare>();
+            //app.UseMiddleware<SecondMiddleWare>();
+            //app.UseMiddleware<ThirdMiddleWare>();
+
+            #endregion
 
 
             #endregion

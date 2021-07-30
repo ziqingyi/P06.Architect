@@ -11,6 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\P03.DotNetCoreMVC.Interface\P03.DotNetCoreMVC.Interface.csproj" />
+    <ProjectReference Include="..\P03.DotNetCoreMVC.Services\P03.DotNetCoreMVC.Services.csproj" />
     <ProjectReference Include="..\P03.DotNetCoreMVC.Utility\P03.DotNetCoreMVC.Utility.csproj" />
   </ItemGroup>
 

@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using P03.DotNetCoreMVC.Interface.TestServiceInterface;
+using P03.DotNetCoreMVC.Services;
 using P03.DotNetCoreMVC.Utility.CusMiddleWare;
 
 namespace P03.DotNetCoreMVC
@@ -31,6 +33,14 @@ namespace P03.DotNetCoreMVC
             #region add session
             services.AddSession();
             #endregion
+
+
+            #region Add service IOC
+
+            services.AddTransient<ITestServiceA, TestServiceA>();
+
+            #endregion
+
 
 
             services.AddControllersWithViews();
@@ -305,7 +315,7 @@ namespace P03.DotNetCoreMVC
 
             #region config 2, self-host
             //dotnet P03.DotNetCoreMVC.dll            access by: http://localhost:5000/, port from launch setting
-            //dotnet P03.DotNetCoreMVC.dll --urls="http:/*:5177" --127.0.0.1 --port=5177 access by: http://localhost:5177/
+            //dotnet P03.DotNetCoreMVC.dll --urls="http://*:5177" --ip="127.0.0.1" --port=5177 access by: http://localhost:5177/
 
             //by default, the static file is in wwwroot, but if no such file, program still run and accept request
             //if in config 1, the missing of wwwroot will lead to failure of the program. 

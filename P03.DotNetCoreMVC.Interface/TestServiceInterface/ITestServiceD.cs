@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace P03.DotNetCoreMVC.Interface.TestService
+namespace P03.DotNetCoreMVC.Interface.TestServiceInterface
 {
     public interface ITestServiceD
     {

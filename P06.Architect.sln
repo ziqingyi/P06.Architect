@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.Utility",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03.DotNetCoreMVC.Interface", "P03.DotNetCoreMVC.Interface\P03.DotNetCoreMVC.Interface.csproj", "{608473D4-CE06-4471-B987-3505A7A00AAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03.DotNetCoreMVC.Services", "P03.DotNetCoreMVC.Services\P03.DotNetCoreMVC.Services.csproj", "{6E7B53A9-C2C8-4102-8C90-93CCEF8D2EAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{608473D4-CE06-4471-B987-3505A7A00AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{608473D4-CE06-4471-B987-3505A7A00AAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{608473D4-CE06-4471-B987-3505A7A00AAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E7B53A9-C2C8-4102-8C90-93CCEF8D2EAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E7B53A9-C2C8-4102-8C90-93CCEF8D2EAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E7B53A9-C2C8-4102-8C90-93CCEF8D2EAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E7B53A9-C2C8-4102-8C90-93CCEF8D2EAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

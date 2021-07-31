@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -42,7 +44,7 @@ namespace P03.DotNetCoreMVC
             services.AddSingleton<ITestServiceB, TestServiceB>();
             services.AddScoped<ITestServiceC, TestServiceC>();//singleton in scope
             services.AddTransient<ITestServiceD, TestServiceD>();
-            services.AddTransient<ITestServiceE, TestServiceE>();
+            //services.AddTransient<ITestServiceE, TestServiceE>();//move to configure container
 
             #endregion
 
@@ -50,6 +52,16 @@ namespace P03.DotNetCoreMVC
 
             services.AddControllersWithViews();
         }
+
+        #region update contianer to Autofac and configure
+        public void ConfigureContainer(ContainerBuilder containerBuilder)
+        {
+            containerBuilder.RegisterType<TestServiceE>().As<ITestServiceE>().SingleInstance();
+
+        }
+        #endregion
+
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)

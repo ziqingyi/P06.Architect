@@ -36,8 +36,13 @@ namespace P03.DotNetCoreMVC
 
 
             #region Add service IOC
+            //default container: inject by ctor only.  find superset of all ctors. 
 
             services.AddTransient<ITestServiceA, TestServiceA>();
+            services.AddSingleton<ITestServiceB, TestServiceB>();
+            services.AddScoped<ITestServiceC, TestServiceC>();//singleton in scope
+            services.AddTransient<ITestServiceD, TestServiceD>();
+            services.AddTransient<ITestServiceE, TestServiceE>();
 
             #endregion
 

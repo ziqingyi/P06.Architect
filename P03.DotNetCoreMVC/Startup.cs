@@ -16,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using P03.DotNetCoreMVC.Interface.TestServiceInterface;
 using P03.DotNetCoreMVC.Services;
+using P03.DotNetCoreMVC.Utility.AutofacUtility;
 using P03.DotNetCoreMVC.Utility.CusMiddleWare;
 
 namespace P03.DotNetCoreMVC
@@ -38,6 +39,7 @@ namespace P03.DotNetCoreMVC
 
 
             #region Add service IOC
+
             //default container: inject by ctor only.  find superset of all ctors. 
 
             services.AddTransient<ITestServiceA, TestServiceA>();
@@ -56,6 +58,10 @@ namespace P03.DotNetCoreMVC
         #region update contianer to Autofac and configure
         public void ConfigureContainer(ContainerBuilder containerBuilder)
         {
+
+            containerBuilder.RegisterModule<CustomAutofacModule>();
+
+            //Register type for Interface.
             containerBuilder.RegisterType<TestServiceE>().As<ITestServiceE>().SingleInstance();
 
         }

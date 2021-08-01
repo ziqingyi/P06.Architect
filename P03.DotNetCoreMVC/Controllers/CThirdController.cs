@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,10 +55,29 @@ namespace P03.DotNetCoreMVC.Controllers
 
 
 
-
+            #region test configuration
             string AllowedHost = this._configuration["AllowedHosts"];
+            string writeConn = this._configuration["connectionStrings:Write"];
+            string[] _readConn = this._configuration.GetSection("connectionStrings")
+                .GetSection("Read").GetChildren().Select(s => s.Value).ToArray();
+
             this._logger.LogWarning("this is CThirdController Index");
+            #endregion
+
             return View();
         }
+
+        //[ExceptionFilter]
+        public IActionResult TestException()
+        {
+
+
+            return View();
+        }
+
+
+
+
+
     }
 }

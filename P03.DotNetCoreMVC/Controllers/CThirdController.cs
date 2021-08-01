@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using P03.DotNetCoreMVC.Interface.TestServiceInterface;
+using P03.DotNetCoreMVC.Utility.Filters;
 
 namespace P03.DotNetCoreMVC.Controllers
 {
@@ -67,10 +68,10 @@ namespace P03.DotNetCoreMVC.Controllers
             return View();
         }
 
-        //[ExceptionFilter]
+        [CustomExceptionFilter]
         public IActionResult TestException()
         {
-
+            string AllowedHost = this._configuration["AllowedHost"].ToString();
 
             return View();
         }

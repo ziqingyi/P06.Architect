@@ -68,7 +68,9 @@ namespace P03.DotNetCoreMVC.Controllers
             return View();
         }
 
-        [CustomExceptionFilter]
+        //attribute is initialized when compile, so cannot have reference type parameter or use service filter. 
+        [ServiceFilter(typeof(CustomExceptionFilterAttribute))]//filter factory,
+        //[TypeFilter(typeof(CustomExceptionFilterAttribute))]
         public IActionResult TestException()
         {
             string AllowedHost = this._configuration["AllowedHost"].ToString();

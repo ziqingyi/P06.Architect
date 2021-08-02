@@ -4,18 +4,34 @@ using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
+
+
 
 namespace P03.DotNetCoreMVC.Utility.Filters
 {
     public class CustomExceptionFilterAttribute : ExceptionFilterAttribute
     {
-        
 
+        #region Identity, use for logging when error
+
+        private readonly ILogger<CustomExceptionFilterAttribute> _logger;
+
+        public CustomExceptionFilterAttribute(ILogger<CustomExceptionFilterAttribute> logger)
+        {
+            this._logger = logger;
+        }
+
+
+        #endregion
 
         public override void OnException(ExceptionContext context)
         {
             if (!context.ExceptionHandled)
             {
+                //log first
+                this._logger.LogError($"{context.HttpContext.Request.RouteValues["controller"]} has Error");
+
                 //check request: whether it is Ajax request. 
                 //if (context.HttpContext.Request.IsAjax())//.net framework: check header: XMLHttpRequest
                 if(this.IsAjaxReqeust(context.HttpContext.Request))
@@ -32,16 +48,10 @@ namespace P03.DotNetCoreMVC.Utility.Filters
                 {
                     context.Result = new RedirectResult("/Home/Error");
                 }
-
-
-
-
-
-
+                context.ExceptionHandled = true;
             }
             //base.OnException(context);
         }
-
 
 
 

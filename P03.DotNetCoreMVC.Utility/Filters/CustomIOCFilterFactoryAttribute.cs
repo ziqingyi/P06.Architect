@@ -9,9 +9,40 @@ namespace P03.DotNetCoreMVC.Utility.Filters
     {
         public bool IsReusable => true;
 
+        //create filter by IOC instance serviceProvider
         public IFilterMetadata CreateInstance(IServiceProvider serviceProvider)
         {
-            return (IFilterMetadata)serviceProvider.GetService(typeof(CustomExceptionFilterNewAttribute));
+            return (IFilterMetadata)serviceProvider.GetService(typeof(CustomExceptionFilterIOCAttribute));
         }
+
+
+
+
+        /*  update to: 
+
+        private readonly Type _FilterType = null;
+
+        public CustomIOCFilterFactoryAttribute(Type type)
+        {
+            this._FilterType = type;
+        }
+        public bool IsReusable => true;
+
+        public IFilterMetadata CreateInstance(IServiceProvider serviceProvider)
+        {
+            //return (IFilterMetadata)serviceProvider.GetService(typeof(CustomExceptionFilterAttribute));
+
+            return (IFilterMetadata)serviceProvider.GetService(this._FilterType);
+        }
+
+
+        */
+
+
+
+
+
+
+
     }
 }

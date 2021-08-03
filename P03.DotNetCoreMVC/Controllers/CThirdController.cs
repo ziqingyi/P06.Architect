@@ -53,9 +53,6 @@ namespace P03.DotNetCoreMVC.Controllers
         public IActionResult Index()
         {
 
-
-
-
             #region test configuration
             string AllowedHost = this._configuration["AllowedHosts"];
             string writeConn = this._configuration["connectionStrings:Write"];
@@ -79,7 +76,13 @@ namespace P03.DotNetCoreMVC.Controllers
         }
 
 
+        [CustomIOCFilterFactoryAttribute]
+        public IActionResult TestExceptionIOC()
+        {
+            string AllowedHost = this._configuration["AllowedHost"].ToString();
 
+            return View();
+        }
 
 
     }

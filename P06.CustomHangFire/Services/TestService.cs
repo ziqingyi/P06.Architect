@@ -12,12 +12,24 @@ namespace P06.CustomHangFire.Services
         private string connStr = "Data Source=.;Initial Catalog=advanced7;User ID=adrian;Password=adrian";
 
 
-        public void Show()
-        { 
-            WriteToDB();
+        public void InsertToDBTest2()
+        {
+            string sql = @"insert into TestTable([Name], CreateTime)
+                              values ('testCompany', GETDATE())";
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    int i = cmd.ExecuteNonQuery();
+
+                }
+            }
         }
 
-        private void WriteToDB()
+   
+        public void InsertToDBTest1()
         {
             string sql = @"insert into Company([Name], CreateTime,CreatorId,LastModifierId,LastModifyTime)
                               values ('testCompany', GETDATE(), 2,2 ,getdate())";

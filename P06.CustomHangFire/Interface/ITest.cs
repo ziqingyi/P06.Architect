@@ -7,6 +7,7 @@ namespace P06.CustomHangFire.Interface
 {
     public interface ITest
     {
-        void Show();
+        void InsertToDBTest1();
+        void InsertToDBTest2();
     }
 }

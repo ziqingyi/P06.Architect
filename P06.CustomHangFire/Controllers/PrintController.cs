@@ -35,23 +35,42 @@ namespace P06.CustomHangFire.Controllers
         //[HttpGet]
         public string Index()
         {
+
+            return "Index";
+        }
+
+        public string Test1()
+        {
             #region add task
 
             //_backgroundJobClient.Enqueue(() => Console.WriteLine("Hello Hangfire Job 1"));
 
-
-            _backgroundJobClient.Enqueue(()=>_testService.Show());
+            _backgroundJobClient.Enqueue(()=>_testService.InsertToDBTest1());
 
             #endregion
-
-            System.Diagnostics.Debug.WriteLine("Print Index Page");
-            //return View();
-            return "print index";
+            
+            return "Insert DB Test 1";
         }
 
-        public string other()
+        public string Test2()
         {
+            #region add task
 
+            //_backgroundJobClient.Enqueue(() => Console.WriteLine("Hello Hangfire Job 1"));
+
+            _backgroundJobClient.Enqueue(() => _testService.InsertToDBTest2());
+
+            _recurringJobManager.AddOrUpdate("Insert Every Minute", () => _testService.InsertToDBTest2(), "0/1 8-22 * * 1-5");
+            #endregion
+
+            return "Insert DB Test 2";
+        }
+
+
+
+        public string other()
+        { 
+            //System.Diagnostics.Debug.WriteLine("Print Index Page");
             _recurringJobManager.AddOrUpdate(
                 "Run Every Minute",
                 () => Console.WriteLine("Test recurring job"), "* * * * *");
@@ -62,7 +81,7 @@ namespace P06.CustomHangFire.Controllers
                 "* * * * *");
 
             _recurringJobManager.AddOrUpdate("TestService",
-                () => _serviceProvider.GetService<ITest>().Show(),
+                () => _serviceProvider.GetService<ITest>().InsertToDBTest1(),
                 "* * * * *");
 
             return "other services";

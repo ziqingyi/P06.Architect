@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using P06.CustomHangFire.Interface;
+using P06.CustomHangFire.Services;
 
 //using Hangfire.MemoryStorage;
 
@@ -36,20 +37,18 @@ namespace P06.CustomHangFire
                 config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                     .UseSimpleAssemblyNameTypeSerializer()
                     .UseDefaultTypeSerializer()
-                    .UseSqlServerStorage("Data Source=.;Initial Catalog=advanced7;User ID=adrian;Password=adrian")
+                    .UseSqlServerStorage(Configuration["connectionStrings:write"])
             );
             services.AddHangfireServer();
 
-
+            services.AddControllersWithViews();
             services.AddSingleton<IPrintJob,PrintJob>();
+            services.AddSingleton<ITest, TestService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, 
-            IWebHostEnvironment env,
-            IBackgroundJobClient backgroundJobClient,
-            IRecurringJobManager recurringJobManager,
-            IServiceProvider serviceProvider)
+            IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -62,29 +61,19 @@ namespace P06.CustomHangFire
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllers();
+            //});
 
             app.UseHangfireDashboard();
 
-
-            backgroundJobClient.Enqueue(
-                () => Console.WriteLine("Hello Hangfire Job 1"));
-
-            recurringJobManager.AddOrUpdate(
-                "Run Every Minute",
-                ()=> Console.WriteLine("Test recurring job"), "* * * * *");
-
-
-            recurringJobManager.AddOrUpdate("Run Print Job",
-                ()=> serviceProvider.GetService<IPrintJob>().Print(),
-                "* * * * *");
-
-            recurringJobManager.AddOrUpdate("TestService",
-                () => serviceProvider.GetService<ITest>().Show(),
-                "* * * * *");
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Print}/{action=Index}");
+            });
         }
     }
 }

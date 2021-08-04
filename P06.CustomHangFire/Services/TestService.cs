@@ -9,7 +9,7 @@ namespace P06.CustomHangFire.Services
 {
     public class TestService:ITest
     {
-        private string connStr = @"";
+        private string connStr = "Data Source=.;Initial Catalog=advanced7;User ID=adrian;Password=adrian";
 
 
         public void Show()

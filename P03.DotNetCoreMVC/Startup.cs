@@ -59,7 +59,7 @@ namespace P03.DotNetCoreMVC
 
 
 
-            services.AddControllersWithViews();
+            //services.AddControllersWithViews();
 
             #region add attribute to all controller and actions 
 
@@ -70,7 +70,11 @@ namespace P03.DotNetCoreMVC
 
             //});
 
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add<CustomGlobalFilterAttribute>();
 
+            });
             #endregion
 
 

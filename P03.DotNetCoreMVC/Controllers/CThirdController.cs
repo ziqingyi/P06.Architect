@@ -11,6 +11,7 @@ using P03.DotNetCoreMVC.Utility.Filters;
 
 namespace P03.DotNetCoreMVC.Controllers
 {
+    [CustomControllerFilterAttribute]
     public class CThirdController : Controller
     {
         #region Identity

@@ -4,6 +4,8 @@ using System.Text;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 
 
@@ -16,10 +18,12 @@ namespace P03.DotNetCoreMVC.Utility.Filters
         #region Identity, use for logging when error
 
         private readonly ILogger<CustomExceptionFilterAttribute> _logger;
-
-        public CustomExceptionFilterAttribute(ILogger<CustomExceptionFilterAttribute> logger)
+        private readonly IModelMetadataProvider _modelMetadataProvider;
+        public CustomExceptionFilterAttribute(ILogger<CustomExceptionFilterAttribute> logger
+        , IModelMetadataProvider modelMetadataProvider)
         {
             this._logger = logger;
+            this._modelMetadataProvider = modelMetadataProvider;
         }
 
 
@@ -46,7 +50,17 @@ namespace P03.DotNetCoreMVC.Utility.Filters
                 }
                 else
                 {
-                    context.Result = new RedirectResult("/Home/Error");
+                    //context.Result = new RedirectResult("/Home/Error");
+                    ViewResult result = new ViewResult()
+                    {
+                        ViewName = "~/Views/Shared/Error.cshtml"
+                    };
+
+                    result.ViewData = new ViewDataDictionary(_modelMetadataProvider,context.ModelState);
+
+                    result.ViewData.Add("Exception",context.Exception);
+
+                    context.Result = result;
                 }
                 context.ExceptionHandled = true;
             }

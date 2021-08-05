@@ -1,17 +1,26 @@
 ﻿@model ErrorViewModel
+@inject P03.DotNetCoreMVC.Interface.TestServiceInterface.ITestServiceA _ITestServiceA;
 @{
     ViewData["Title"] = "Error";
+
+    Exception exception = (Exception)base.ViewData["Exception"];
+
+    _ITestServiceA.Show();
+
 }
 
 <h1 class="text-danger">Error.</h1>
 <h2 class="text-danger">An error occurred while processing your request.</h2>
+<h2> @exception.Message </h2>
 
-@if (Model.ShowRequestId)
+
+
+@*@if (Model.ShowRequestId)
 {
     <p>
         <strong>Request ID:</strong> <code>@Model.RequestId</code>
     </p>
-}
+}*@
 
 <h3>Development Mode</h3>
 <p>

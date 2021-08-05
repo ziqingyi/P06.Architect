@@ -65,6 +65,16 @@ namespace P03.DotNetCoreMVC.Controllers
             return View();
         }
 
+        [CustomActionFilter]
+        public IActionResult TestActionFilter()
+        {
+            Console.WriteLine($" this is {nameof(CThirdController)} TestActionFilter()");
+            return View();
+        }
+
+
+
+        #region Test  Exception handling filters
 
         public IActionResult TestException()
         {
@@ -100,6 +110,13 @@ namespace P03.DotNetCoreMVC.Controllers
 
             return View();
         }
+
+        #endregion
+
+
+
+
+
 
 
     }

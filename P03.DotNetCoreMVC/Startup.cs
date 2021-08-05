@@ -60,6 +60,21 @@ namespace P03.DotNetCoreMVC
 
 
             services.AddControllersWithViews();
+
+            #region add attribute to all controller and actions 
+
+            ////can remove AddScoped(), DI automatically. 
+            //services.AddControllersWithViews(options =>
+            //{
+            //    options.Filters.Add<CustomExceptionFilterAttribute>(); 
+
+            //});
+
+
+            #endregion
+
+
+
         }
 
         #region update contianer to Autofac and configure

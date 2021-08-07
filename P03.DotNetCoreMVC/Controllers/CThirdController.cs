@@ -65,7 +65,9 @@ namespace P03.DotNetCoreMVC.Controllers
 
             return View();
         }
-
+        //order: 0,1,2   2,1,0
+        [CustomActionFilter(Order = 1)]
+        [CustomActionFilter(Order = 2)]
         [CustomActionFilter]
         public IActionResult TestActionFilter()
         {

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -65,6 +66,8 @@ namespace P03.DotNetCoreMVC.Controllers
 
             return View();
         }
+
+        #region Action filters and order
         //order: 0,1,2   2,1,0
         [CustomActionFilter(Order = 1)]
         [CustomActionFilter(Order = 2)]
@@ -74,6 +77,30 @@ namespace P03.DotNetCoreMVC.Controllers
             Console.WriteLine($" this is {nameof(CThirdController)} TestActionFilter()");
             return View();
         }
+        #endregion
+
+
+        #region Resource Filter and cache actionResult in Dictionary and Browser cache. 
+        [CustomActionCacheFilter]
+        [CustomResourceFilter]
+        public IActionResult TestResourceFilter()
+        {
+            Console.WriteLine($" this is {nameof(CThirdController)} TestResourceFilter()");
+
+            base.ViewBag.Now = DateTime.Now;
+
+            Thread.Sleep(2000);
+
+            return View();
+        }
+
+        #endregion
+
+
+
+
+
+
 
 
 

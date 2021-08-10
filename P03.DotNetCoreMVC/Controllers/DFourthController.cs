@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 using P03.DotNetCoreMVC.Utility.WebHelper;
 using System.Drawing;
 using System.Drawing.Imaging;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
+using P03.DotNetCoreMVC.Utility.Extensions;
+using P03.DotNetCoreMVC.Utility.Models;
 
 namespace P03.DotNetCoreMVC.Controllers
 {
@@ -25,14 +28,50 @@ namespace P03.DotNetCoreMVC.Controllers
             return View();
         }
 
+        #region Login and log out
 
-        public ActionResult Login(string name, string password, string verify)
+
+        
+
+
+
+        //by pass authorize if authorize is configured globally or whole controller. 
+        [HttpGet]
+        public ViewResult Login()
         {
-
-
             return View();
         }
 
+        [HttpPost]
+   
+        public ActionResult Login(string name, string password)
+        {
+            string formName = base.HttpContext.Request.Form["Name"];
+
+
+            LoginResult result = base.HttpContext.Login(name, password, GetUser, CheckPass, CheckStatusActive);
+
+            if (result == LoginResult.Success)
+            {
+
+                return base.Redirect("/DFourth/Index");
+
+            }
+            else
+            {
+                return View();
+            }
+
+
+        }
+        public ActionResult Logout()
+        {
+            base.HttpContext.SignOutAsync().Wait();
+            return this.Redirect("~/DFourth/Login");
+        }
+
+        #endregion
+    
 
 
 
@@ -74,6 +113,53 @@ namespace P03.DotNetCoreMVC.Controllers
         }
         #endregion
 
+
+
+
+        #region user check methods
+
+        /// <summary>
+        /// Get user from database with same name, and use this user's information to check log in information.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        //[ChildActionOnly]
+        public TempDatabaseUser GetUser(string name)
+        {
+            //get user by IOC, this is Framework version
+            //using (IUserCompanyService service = DIFactory.GetContainer().Resolve<IUserCompanyService>())
+            //{
+            //    User user = service.Set<User>().FirstOrDefault(u => u.Name.Equals(name) || u.Account.Equals(name));
+
+            //    return user;
+            //}
+
+            //get user from database 
+            return new TempDatabaseUser()
+            {
+                Id = 1,
+                Name = "User1",
+                Account = "Administrator",
+                Password = "123456",
+                Email = "werqfasdf@gmail.com",
+                Role = "Admin",
+                LastLoginTime = DateTime.Now,
+                State = 1
+            };
+
+        }
+        //[ChildActionOnly]
+        public bool CheckPass(TempDatabaseUser user, string password)
+        {
+            return user.Password == password;
+        }
+        //[ChildActionOnly]
+        public bool CheckStatusActive(TempDatabaseUser user)
+        {
+            return user.State == 1;
+        }
+
+        #endregion
 
 
 

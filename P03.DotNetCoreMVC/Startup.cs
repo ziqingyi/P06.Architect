@@ -74,7 +74,8 @@ namespace P03.DotNetCoreMVC
             {
                 options.Filters.Add<CustomGlobalFilterAttribute>();
 
-            });
+            })
+                .AddRazorRuntimeCompilation(); //add runtimecompilation package, for cshtml compilation
             #endregion
 
 

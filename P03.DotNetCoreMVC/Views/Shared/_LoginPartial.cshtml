@@ -1,36 +1,40 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using P03.DotNetCoreMVC.Utility.Models;
+@using P03.DotNetCoreMVC.Utility.WebHelper
 
-@if (base.Context.Session.Get("CurrentUser") != null && !string.IsNullOrEmpty(base.Context.Session.GetString("CurrentUser")))
-{
-    string user = base.Context.Session.GetString("CurrentUser");
-    CurrentUserCore currentUser = Newtonsoft.Json.JsonConvert.DeserializeObject<CurrentUserCore>(user);
-    using (Html.BeginForm("Logout", "DFourth", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+@*if (base.Context.Session != null && !string.IsNullOrEmpty(base.Context.Session.GetString("CurrentUser")))*@
+@*check session and cookie*@
+@if (base.Context.GetCurrentUserBySession() != null)
     {
-        @Html.AntiForgeryToken()
+        //string user = base.Context.Session.GetString("CurrentUser");
+        //CurrentUserCore currentUser = Newtonsoft.Json.JsonConvert.DeserializeObject<CurrentUserCore>(user);
+        CurrentUserCore currentUser = base.Context.GetCurrentUserBySession();
+        using (Html.BeginForm("Logout", "DFourth", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+            @Html.AntiForgeryToken()
 
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    @Html.ActionLink("Hello Session: " + currentUser.Name + "!", "Index", "Home", routeValues: null, htmlAttributes: new { title = currentUser.Name })
+                </li>
+                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log out</a></li>
+            </ul>
+        }
+    }
+    else if (base.Context.User?.Identity?.IsAuthenticated ?? false)
+    {
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink("Hello Session: " + currentUser.Name + "!", "Index", "Home", routeValues: null, htmlAttributes: new { title = currentUser.Name })
+                @Html.ActionLink("Hello Cookie:  " + base.Context.User.Identity.Name + "!", "Index", "Home", routeValues: null, htmlAttributes: new { title = base.Context.User.Identity.Name })
             </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log out</a></li>
+            <li><a href="~/DFourth/Logout">Log out</a></li>
         </ul>
     }
-}
-else if (base.Context.User?.Identity?.IsAuthenticated ?? false)
-{
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello Cookie:  " + base.Context.User.Identity.Name + "!", "Index", "Home", routeValues: null, htmlAttributes: new { title = base.Context.User.Identity.Name })
-        </li>
-        <li><a href="~/DFourth/Logout">Log out</a></li>
-    </ul>
-}
-else
-{
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            <a href="~/DFourth/Login"> Log in </a>
-        </li>
-    </ul>
-}
+    else
+    {
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="~/DFourth/Login"> Log in </a>
+            </li>
+        </ul>
+    }

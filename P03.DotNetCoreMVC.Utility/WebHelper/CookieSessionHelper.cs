@@ -32,7 +32,7 @@ namespace P03.DotNetCoreMVC.Utility.WebHelper
         public static CurrentUserCore GetCurrentUserBySession(this HttpContext context)
         {
             string sUser = context.Session.GetString("CurrentUser");
-            if (sUser == null)
+            if (sUser == null || string.IsNullOrEmpty(sUser) )
             {
                 return null;
             }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace P03.DotNetCoreMVC.Utility.ImageHelper
+namespace P03.DotNetCoreMVC.Utility.WebHelper
 {
     public class CaptchaHelper
     {

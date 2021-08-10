@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using P03.DotNetCoreMVC.Utility.ImageHelper;
+using P03.DotNetCoreMVC.Utility.WebHelper;
 using System.Drawing;
 using System.Drawing.Imaging;
 using Microsoft.AspNetCore.Http;
@@ -24,6 +24,23 @@ namespace P03.DotNetCoreMVC.Controllers
         {
             return View();
         }
+
+
+        public ActionResult Login(string name, string password, string verify)
+        {
+
+
+            return View();
+        }
+
+
+
+
+
+
+
+
+
 
 
         #region Captcha Verification

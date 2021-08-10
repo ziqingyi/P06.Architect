@@ -44,12 +44,12 @@ namespace P03.DotNetCoreMVC.Controllers
 
         [HttpPost]
    
-        public ActionResult Login(string name, string password)
+        public ActionResult Login(string name, string password,string captcha)
         {
             string formName = base.HttpContext.Request.Form["Name"];
 
 
-            LoginResult result = base.HttpContext.Login(name, password, GetUser, CheckPass, CheckStatusActive);
+            LoginResult result = base.HttpContext.Login(name, password, captcha, GetUser, CheckPass, CheckStatusActive);
 
             if (result == LoginResult.Success)
             {
@@ -107,7 +107,7 @@ namespace P03.DotNetCoreMVC.Controllers
             }
 
             base.HttpContext.Session.SetString("CheckCode", code);
-            //bitmap.Save(base.Response.co, ImageFormat.Gif);
+            //bitmap.Save(base.Response.OutputStream, ImageFormat.Gif);
 
             base.Response.ContentType = "image/gif";
         }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using P03.DotNetCoreMVC.Utility.Models;
 using P03.DotNetCoreMVC.Utility.AttributesFolder;
+using P03.DotNetCoreMVC.Utility.WebHelper;
 
 namespace P03.DotNetCoreMVC.Utility.Extensions
 {
@@ -18,14 +19,17 @@ namespace P03.DotNetCoreMVC.Utility.Extensions
 
 
         public static LoginResult Login<T>(this HttpContext context, string name,
-            string password, //string CaptchaCode,
+            string password, string CaptchaCode,
             Func<string, T> funcToGetT,
             Func<T, string, bool> checkPassFunc,
             Func<T, bool> checkStatusFunc)
         {
-            //if (context.Session["CheckCode"] != null
-            //   && !string.IsNullOrEmpty(context.Session["CheckCode"].ToString())
-            //   && context.Session["CheckCode"].ToString().Equals(CaptchaCode, StringComparison.CurrentCultureIgnoreCase))
+
+            string SessionCaptcha = context.Session.Get("CheckCode") == null? null:System.Text.Encoding.Default.GetString(context.Session.Get("CheckCode"));
+
+            if (context.Session.Get("CheckCode") != null
+              && !string.IsNullOrEmpty(SessionCaptcha)
+               && SessionCaptcha.Equals(CaptchaCode, StringComparison.CurrentCultureIgnoreCase))
             {
                 T t = funcToGetT.Invoke(name);
                 if (t == null)
@@ -112,27 +116,32 @@ namespace P03.DotNetCoreMVC.Utility.Extensions
 
 
                     #region Cookie
-                    //old MVC cookie use
+                    //in asp .net MVC cookie use
                     //HttpCookie myCookie = new HttpCookie("CurrentUser");
                     //myCookie.Value = JsonHelper.ObjectToString<CurrentUser>(currentUser);
                     ////with expiry date, cookie saved in hard disk rather than save in memory
                     ////myCookie.Expires = DateTime.Now.AddMinutes(5);
 
-                    ////cookie in core , use claimIdentity
-                    {
-                        var claimIdentity = new ClaimsIdentity("Cookie");
-                        claimIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, currentUser.Id.ToString()));
-                        claimIdentity.AddClaim(new Claim(ClaimTypes.Name, currentUser.Name));
-                        claimIdentity.AddClaim(new Claim(ClaimTypes.Email, currentUser.Email));
-                        //role is used for checking [Authorize(Roles = "Admin")]
-                        claimIdentity.AddClaim(new Claim(ClaimTypes.Role,currentUser.Role ));
+                    //.net core MVC Cookie, use extend method, keep 30 minutes
+                    context.SetCookies("CurrentUser",
+                        Newtonsoft.Json.JsonConvert.SerializeObject(currentUser));
 
-                        claimIdentity.AddClaim(new Claim(ClaimTypes.Sid, currentUser.Id.ToString()));
 
-                        var claimsPrincipal = new ClaimsPrincipal(claimIdentity);
+                    //////cookie in core , use claimIdentity
+                    //{
+                    //    var claimIdentity = new ClaimsIdentity("Cookie");
+                    //    claimIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, currentUser.Id.ToString()));
+                    //    claimIdentity.AddClaim(new Claim(ClaimTypes.Name, currentUser.Name));
+                    //    claimIdentity.AddClaim(new Claim(ClaimTypes.Email, currentUser.Email));
+                    //    //role is used for checking [Authorize(Roles = "Admin")]
+                    //    claimIdentity.AddClaim(new Claim(ClaimTypes.Role,currentUser.Role ));
 
-                        context.SignInAsync(claimsPrincipal).Wait();//write into cookie. from //app.UseAuthentication(); in start up
-                    }
+                    //    claimIdentity.AddClaim(new Claim(ClaimTypes.Sid, currentUser.Id.ToString()));
+
+                    //    var claimsPrincipal = new ClaimsPrincipal(claimIdentity);
+
+                    //    context.SignInAsync(claimsPrincipal).Wait();//write into cookie. from //app.UseAuthentication(); in start up
+                    //}
 
 
 
@@ -145,8 +154,8 @@ namespace P03.DotNetCoreMVC.Utility.Extensions
                     //context.Session.Timeout = 3;//3 minutes, session will be abandoned if "gap time" exceed 3 minutes
 
                     ////set session in core
-                    //context.Session.SetString("CurrentUser",
-                    //    Newtonsoft.Json.JsonConvert.SerializeObject(currentUser));
+                    context.Session.SetString("CurrentUser",
+                        Newtonsoft.Json.JsonConvert.SerializeObject(currentUser));
 
                     #endregion
 
@@ -158,10 +167,10 @@ namespace P03.DotNetCoreMVC.Utility.Extensions
                 }
 
             }
-            //else
-            //{
-            //    return LoginResult.WrongCaptcha;
-            //}
+            else
+            {
+                return LoginResult.WrongCaptcha;
+            }
 
 
         }

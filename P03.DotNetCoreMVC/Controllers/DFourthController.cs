@@ -10,19 +10,18 @@ using System.Drawing.Imaging;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using P03.DotNetCoreMVC.Utility.Extensions;
+using P03.DotNetCoreMVC.Utility.Filters;
 using P03.DotNetCoreMVC.Utility.Models;
 
 namespace P03.DotNetCoreMVC.Controllers
 {
+   
     public class DFourthController : Controller
     {
 
 
 
-
-
-
-
+        [TypeFilter(typeof(CustomActionCheckFilterAttribute))]
         public IActionResult Index()
         {
             return View();
@@ -43,7 +42,6 @@ namespace P03.DotNetCoreMVC.Controllers
         }
 
         [HttpPost]
-   
         public ActionResult Login(string name, string password,string captcha)
         {
             string formName = base.HttpContext.Request.Form["Name"];

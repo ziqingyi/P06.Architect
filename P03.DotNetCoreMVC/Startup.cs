@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -76,6 +77,17 @@ namespace P03.DotNetCoreMVC
 
             })
                 .AddRazorRuntimeCompilation(); //add runtimecompilation package, for cshtml compilation
+            #endregion
+
+            #region add Authentication
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = new PathString("/DFourth/Login");
+                    options.AccessDeniedPath = new PathString("/Home/Privacy");//not authenticated
+                });
+
             #endregion
 
 
@@ -375,10 +387,17 @@ namespace P03.DotNetCoreMVC
 
             #endregion
 
+            #region add Authentication
+
+            app.UseAuthentication();//check login or not,update http context  user field
+
+            #endregion
+
+
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthorization();//authorize 
 
             app.UseEndpoints(endpoints =>
             {

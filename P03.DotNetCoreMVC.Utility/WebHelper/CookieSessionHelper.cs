@@ -43,7 +43,17 @@ namespace P03.DotNetCoreMVC.Utility.WebHelper
             }
         }
 
+        public static CurrentUserCore GetCurrentUserByUserIdentity(this HttpContext context)
+        {
+            CurrentUserCore currentUser = context.User.Identity.Name == null ? 
+                null
+                : new CurrentUserCore()
+                {
+                    Name = context.User.Identity.Name
+                };
 
+            return currentUser;
+        }
 
 
     }

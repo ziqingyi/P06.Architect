@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using P03.DotNetCoreMVC.Utility.Models;
 using P03.DotNetCoreMVC.Utility.AttributesFolder;
@@ -143,8 +144,6 @@ namespace P03.DotNetCoreMVC.Utility.Extensions
                     //    context.SignInAsync(claimsPrincipal).Wait();//write into cookie. from //app.UseAuthentication(); in start up
                     //}
 
-
-
                     #endregion
 
                     #region Session
@@ -158,6 +157,33 @@ namespace P03.DotNetCoreMVC.Utility.Extensions
                         Newtonsoft.Json.JsonConvert.SerializeObject(currentUser));
 
                     #endregion
+
+
+                    #region Core Authentication
+
+                    //claims is like a dictionary to keep essential information.
+                    var claims = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.Name, name),
+                        new Claim("password", password),
+                        new Claim("Account", "Admin")
+                    };
+
+                    var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims,"Customer"));
+
+                    context.SignInAsync(
+                        CookieAuthenticationDefaults.AuthenticationScheme,
+                        userPrincipal, new AuthenticationProperties()
+                        {
+                            ExpiresUtc = DateTime.UtcNow.AddMinutes(30)
+                        }).Wait();
+
+                    #endregion
+
+
+
+
+
 
 
 

@@ -9,6 +9,9 @@
         //string user = base.Context.Session.GetString("CurrentUser");
         //CurrentUserCore currentUser = Newtonsoft.Json.JsonConvert.DeserializeObject<CurrentUserCore>(user);
         CurrentUserCore currentUser = base.Context.GetCurrentUserBySession();
+
+        CurrentUserCore currentUserIdentity = base.Context.GetCurrentUserByUserIdentity();
+        
         using (Html.BeginForm("Logout", "DFourth", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
         {
             @Html.AntiForgeryToken()

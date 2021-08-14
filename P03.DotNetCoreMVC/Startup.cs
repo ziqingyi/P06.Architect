@@ -84,7 +84,7 @@ namespace P03.DotNetCoreMVC
             //string controllerName = context.Controller.GetType().Name;
             //string LoginAddress = "~/" + controllerName.Substring(0, controllerName.Length - 10) + "/Login";//"~/DFourth/Login"
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)//default cookie scheme
                 .AddCookie(options =>
                 {
                     //options.LoginPath = new PathString("/DFourth/Login");

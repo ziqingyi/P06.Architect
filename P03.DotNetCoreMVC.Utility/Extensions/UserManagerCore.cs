@@ -115,8 +115,8 @@ namespace P03.DotNetCoreMVC.Utility.Extensions
                      * If it was all based on cookies, a user (or hacker) could manipulate their cookie data and then play requests to your site.
                      */
 
-
                     #region Cookie
+
                     //in asp .net MVC cookie use
                     //HttpCookie myCookie = new HttpCookie("CurrentUser");
                     //myCookie.Value = JsonHelper.ObjectToString<CurrentUser>(currentUser);
@@ -158,6 +158,59 @@ namespace P03.DotNetCoreMVC.Utility.Extensions
 
                     #endregion
 
+                    logger.LogInformation(string.Format("user id={0} Name={1} log in system", currentUser.Id, currentUser.Name));
+
+                    return LoginResult.Success;
+                }
+            }
+            else
+            {
+                return LoginResult.WrongCaptcha;
+            }
+
+        }
+
+
+        public static LoginResult LoginInCoreAuthentication<T>(this HttpContext context, string name,
+            string password, string CaptchaCode,
+            Func<string, T> funcToGetT,
+            Func<T, string, bool> checkPassFunc,
+            Func<T, bool> checkStatusFunc)
+        {
+
+            string SessionCaptcha = context.Session.Get("CheckCode") == null ? null : System.Text.Encoding.Default.GetString(context.Session.Get("CheckCode"));
+
+            if (context.Session.Get("CheckCode") != null
+              && !string.IsNullOrEmpty(SessionCaptcha)
+               && SessionCaptcha.Equals(CaptchaCode, StringComparison.CurrentCultureIgnoreCase))
+            {
+                T t = funcToGetT.Invoke(name);
+                if (t == null)
+                {
+                    return LoginResult.NoUser;
+                }
+                else if (!checkPassFunc(t, password))
+                {
+                    return LoginResult.WrongPwd;
+                }
+                else if (!checkStatusFunc(t))
+                {
+                    return LoginResult.Frozen;
+                }
+                else
+                {
+                    Type type = typeof(T);
+                    //log in success, write in cookie and session
+                    CurrentUserCore currentUser = new CurrentUserCore()
+                    {
+                        Id = (int)(type.GetProperty("Id")?.GetValue(t)),
+                        Name = (string)(type.GetProperty("Name")?.GetValue(t)),
+                        Account = (string)(type.GetProperty("Account")?.GetValue(t)),
+                        Email = (string)(type.GetProperty("Email")?.GetValue(t)),
+                        Password = (string)(type.GetProperty("Password")?.GetValue(t)),
+                        Role = (string)(type.GetProperty("Role")?.GetValue(t)),
+                        LastLoginTime = DateTime.Now
+                    };
 
                     #region Core Authentication
 
@@ -169,11 +222,11 @@ namespace P03.DotNetCoreMVC.Utility.Extensions
                         new Claim("Account", "Admin")
                     };
 
-                    var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims,"Customer"));
+                    var userPrincipal = new ClaimsPrincipal(new ClaimsIdentity(claims, "Customer"));
 
                     context.SignInAsync(
                         CookieAuthenticationDefaults.AuthenticationScheme,
-                        userPrincipal, 
+                        userPrincipal,
                         new AuthenticationProperties()
                         {
                             ExpiresUtc = DateTime.UtcNow.AddMinutes(30)
@@ -181,25 +234,15 @@ namespace P03.DotNetCoreMVC.Utility.Extensions
 
                     #endregion
 
-
-
-
-
-
-
-
                     logger.LogInformation(string.Format("user id={0} Name={1} log in system", currentUser.Id, currentUser.Name));
 
                     return LoginResult.Success;
                 }
-
             }
             else
             {
                 return LoginResult.WrongCaptcha;
             }
-
-
         }
 
 

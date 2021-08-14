@@ -81,10 +81,14 @@ namespace P03.DotNetCoreMVC
 
             #region add Authentication
 
+            //string controllerName = context.Controller.GetType().Name;
+            //string LoginAddress = "~/" + controllerName.Substring(0, controllerName.Length - 10) + "/Login";//"~/DFourth/Login"
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.LoginPath = new PathString("/DFourth/Login");
+                    //options.LoginPath = new PathString("/DFourth/Login");
+                    options.LoginPath = new PathString("/DFourthAuthen/Login");
                     options.AccessDeniedPath = new PathString("/Home/Privacy");//not authenticated
                 });
 

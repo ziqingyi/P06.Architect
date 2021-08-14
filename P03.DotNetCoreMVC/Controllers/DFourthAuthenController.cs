@@ -42,7 +42,7 @@ namespace P03.DotNetCoreMVC.Controllers
         {
             string formName = base.HttpContext.Request.Form["Name"];
 
-            LoginResult result = base.HttpContext.Login(name, password, captcha,
+            LoginResult result = base.HttpContext.LoginInCoreAuthentication(name, password, captcha,
                 LoginHelper.GetUser, LoginHelper.CheckPass, LoginHelper.CheckStatusActive);
 
             if (result == LoginResult.Success)

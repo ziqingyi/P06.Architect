@@ -257,26 +257,45 @@ namespace P03.DotNetCoreMVC.Utility.Extensions
             //    context.Response.Cookies.Add(myCookie);
             //}
 
+            //Core: 
+            //context.Response.Cookies.Delete("CurrentUser");
+            context.DeleteCookies("CurrentUser");
             #endregion
 
 
             #region Session
 
+            //MVC:
             //var sessionUser = context.Session["CurrentUser"];
             //if (sessionUser != null && sessionUser is CurrentUserCore)
             //{
             //    CurrentUserCore currentUser = (CurrentUserCore)context.Session["CurrentUser"];
             //    logger.LogInformation(string.Format("user id={0} Name={1} leave the system", currentUser.Id, currentUser.Name));
             //}
-
             //context.Session["CurrentUser"] = null;//clear and remove key
-            //context.Session.Remove("CurrentUser");
-
             //context.Session.Clear();//session is kept  but all the keys are removed.
             //context.Session.RemoveAll();
             //context.Session.Abandon();//delete session object, next time will create a new Session.next time, new user
 
+            //Core: 
+            CurrentUserCore sessionUser = context.GetCurrentUserBySession();
+            if (sessionUser != null)
+            {
+                logger.LogDebug(string.Format("User id = {0} Name = {1} Log off", sessionUser.Id, sessionUser.Name));
+            }
+            context.Session.Remove("CurrentUser");
+            context.Session.Clear();//Remove all entries from the current session,if any.The session cookie is not removed.
+
             #endregion
+
+
+
+            #region Sign Out authentication scheme
+
+            context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme).Wait();
+
+            #endregion
+
         }
 
         public static LoginResult ApiLogin<T>(string name, string password,

@@ -59,7 +59,8 @@ namespace P03.DotNetCoreMVC.Controllers
 
         public ActionResult Logout()
         {
-            base.HttpContext.SignOutAsync().Wait();
+            //base.HttpContext.SignOutAsync().Wait();
+            UserManagerCore.UserLogout(this.HttpContext);
             return this.Redirect("~/DFourth/Login");
         }
         #endregion

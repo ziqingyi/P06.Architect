@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -56,8 +57,8 @@ namespace P03.DotNetCoreMVC.Controllers
         }
 
         public ActionResult Logout()
-        {
-            base.HttpContext.SignOutAsync().Wait();
+        { 
+            UserManagerCore.UserLogout(this.HttpContext);
             return this.Redirect("~/DFourthAuthen/Login");
         }
         #endregion

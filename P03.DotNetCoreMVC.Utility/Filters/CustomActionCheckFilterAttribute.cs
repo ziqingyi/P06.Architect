@@ -43,7 +43,9 @@ namespace P03.DotNetCoreMVC.Utility.Filters
                 }
                 else
                 {
-                    context.Result = new RedirectResult("~/DFourth/Login");
+                    string controllerName = context.Controller.GetType().Name;
+                    string LoginAddress = "~/" + controllerName.Substring(0, controllerName.Length-10) + "/Login";//"~/DFourth/Login"
+                    context.Result = new RedirectResult(LoginAddress);
                 }
             }
             else

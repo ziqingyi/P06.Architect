@@ -173,7 +173,8 @@ namespace P03.DotNetCoreMVC.Utility.Extensions
 
                     context.SignInAsync(
                         CookieAuthenticationDefaults.AuthenticationScheme,
-                        userPrincipal, new AuthenticationProperties()
+                        userPrincipal, 
+                        new AuthenticationProperties()
                         {
                             ExpiresUtc = DateTime.UtcNow.AddMinutes(30)
                         }).Wait();

@@ -1,30 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
-
 using System.Linq;
 using System.Threading.Tasks;
-using P03.DotNetCoreMVC.Utility.WebHelper;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using P03.DotNetCoreMVC.Utility;
 using P03.DotNetCoreMVC.Utility.Extensions;
-using P03.DotNetCoreMVC.Utility.Filters;
-using P03.DotNetCoreMVC.Utility.Models;
 
 namespace P03.DotNetCoreMVC.Controllers
 {
-   
-    public class DFourthController : Controller
+    public class DFourthAuthenController : Controller
     {
- 
+        
+        /// <summary>
+        /// Authorization:
+        ///        1 UseAuthorization in startup class, in Configure and Service Methods
+        ///        2 Use Claim Principle in HttpContext context instance
+        /// </summary>
+        /// <returns></returns>
 
 
-        [TypeFilter(typeof(CustomActionCheckFilterAttribute))]
+        [Authorize]
         public IActionResult Index()
         {
             return View();
@@ -40,16 +38,16 @@ namespace P03.DotNetCoreMVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(string name, string password,string captcha)
+        public ActionResult Login(string name, string password, string captcha)
         {
             string formName = base.HttpContext.Request.Form["Name"];
 
-            LoginResult result = base.HttpContext.Login(name, password, captcha, 
+            LoginResult result = base.HttpContext.Login(name, password, captcha,
                 LoginHelper.GetUser, LoginHelper.CheckPass, LoginHelper.CheckStatusActive);
 
             if (result == LoginResult.Success)
             {
-                return base.Redirect("/DFourth/Index");
+                return base.Redirect("/DFourthAuthen/Index");
             }
             else
             {
@@ -60,7 +58,7 @@ namespace P03.DotNetCoreMVC.Controllers
         public ActionResult Logout()
         {
             base.HttpContext.SignOutAsync().Wait();
-            return this.Redirect("~/DFourth/Login");
+            return this.Redirect("~/DFourthAuthen/Login");
         }
         #endregion
 
@@ -74,15 +72,10 @@ namespace P03.DotNetCoreMVC.Controllers
         }
         //[CustomAllowAnonymous]
         public void CreateCaptchaResponse(HttpContext httpContext)
-        { 
+        {
             LoginHelper.CreateCaptchaResponse(this);
         }
         #endregion
-
-
-
-
-
 
 
 

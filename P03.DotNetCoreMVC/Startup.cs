@@ -119,8 +119,6 @@ namespace P03.DotNetCoreMVC
 
 
 
-
-
             #region 1 test Use() ,  use middleware and  test application builder process 
             //ApplicationBuilder.cs
             //Func<RequestDelegate, RequestDelegate> func1 = new Func<RequestDelegate, RequestDelegate>(
@@ -138,8 +136,42 @@ namespace P03.DotNetCoreMVC
             //        });
             //}
             //);
-
             //app.Use(func1);
+
+
+            //if start to write in response, mvc will not be able to write. so use delegate to write when starting
+            Func<RequestDelegate, RequestDelegate> func1update = new Func<RequestDelegate, RequestDelegate>(
+                next =>
+                {
+                    Console.WriteLine("This is middleware 1 ");
+                    return new RequestDelegate(
+                        async context =>
+                        {
+                            context.Response.OnStarting(state =>
+                                {
+                                   HttpContext httpContext = (HttpContext)state;
+                                   httpContext.Response.Headers.Add("middleware1Start", "This is hello world in HttpContext Response 1 begin ");
+                                   return Task.CompletedTask;
+                                },
+                                context);
+
+                            await next.Invoke(context);
+
+                            context.Response.OnStarting(state =>
+                                {
+                                    HttpContext httpContext = (HttpContext)state;
+                                    httpContext.Response.Headers.Add("middleware1End", "This is hello world in HttpContext Response 1 end ");
+                                    return Task.CompletedTask;
+                                },
+                                context);
+                            //await context.Response.WriteAsync("This is hello world in HttpContext Response 1 end ");
+                        });
+                }
+            );
+
+            app.Use(func1update);
+
+
 
             //Func<RequestDelegate, RequestDelegate> func2 = new Func<RequestDelegate, RequestDelegate>(
             //    next =>

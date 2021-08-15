@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -84,7 +85,7 @@ namespace P03.DotNetCoreMVC
             //string controllerName = context.Controller.GetType().Name;
             //string LoginAddress = "~/" + controllerName.Substring(0, controllerName.Length - 10) + "/Login";//"~/DFourth/Login"
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)//default is cookie scheme
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)//default is cookie scheme, based on cookie
                 .AddCookie(options =>
                 {
                     //options.LoginPath = new PathString("/DFourth/Login");
@@ -393,7 +394,7 @@ namespace P03.DotNetCoreMVC
 
             #region add Authentication
 
-            app.UseAuthentication();//check login or not,update http context  user field
+            app.UseAuthentication();//check login or not,update httpContext:  base.Context.User  user field
 
             #endregion
 
@@ -401,7 +402,7 @@ namespace P03.DotNetCoreMVC
 
             app.UseRouting();
 
-            app.UseAuthorization();//authorize 
+            app.UseAuthorization();//authorize permissions
 
             app.UseEndpoints(endpoints =>
             {

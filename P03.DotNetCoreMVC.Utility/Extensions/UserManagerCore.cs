@@ -16,8 +16,13 @@ namespace P03.DotNetCoreMVC.Utility.Extensions
     {
         //copy from Framework version. 
         private static ILoggerFactory loggerFactory = new LoggerFactory();
-        private static ILogger logger = new Logger<string>(loggerFactory);
+        private static ILogger logger ;
 
+        static UserManagerCore()
+        {
+            loggerFactory.AddLog4Net("CfgFiles\\log4net.config");
+            logger = new Logger<string>(loggerFactory);
+        }
 
         public static LoginResult Login<T>(this HttpContext context, string name,
             string password, string CaptchaCode,

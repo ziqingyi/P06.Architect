@@ -1,11 +1,19 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using P03.DotNetCoreMVC.Utility.Models;
 @using P03.DotNetCoreMVC.Utility.WebHelper
+
+@{
+    CurrentUserCore currentUser = base.Context.User?.Identity?.Name == null ? null : new CurrentUserCore()
+    {
+        Name = base.Context.User.Identity.Name
+    };
+}
+
 @if (base.Context.User?.Identity?.IsAuthenticated ?? false)
 {
     <ul class="nav navbar-nav navbar-right">
         <li>
-            @Html.ActionLink("Hello Cookie:  " + base.Context.User.Identity.Name + "!", "Index", "Home", routeValues: null, htmlAttributes: new { title = base.Context.User.Identity.Name })
+            @Html.ActionLink("Hello Authenticated User: " + currentUser.Name + "!", "Index", "Home", routeValues: null, htmlAttributes: new { title = base.Context.User.Identity.Name })
         </li>
         <li><a href="~/DFourthAuthen/Logout">Log out</a></li>
     </ul>

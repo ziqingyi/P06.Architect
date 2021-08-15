@@ -14,11 +14,12 @@ namespace P03.DotNetCoreMVC.Controllers
 {
     public class DFourthAuthenController : Controller
     {
-        
+
         /// <summary>
         /// Authorization:
         ///        1 UseAuthorization in startup class, in Configure and Service Methods
-        ///        2 Use Claim Principle in HttpContext context instance
+        ///        2 Use Claim Principle in HttpContext context instance, eg. in method LoginInCoreAuthentication
+        ///        3 add attribute  [Authorize] in controller or methods
         /// </summary>
         /// <returns></returns>
 

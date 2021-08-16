@@ -18,6 +18,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using P03.DotNetCoreMVC.Interface.TestServiceInterface;
 using P03.DotNetCoreMVC.Services;
+using P03.DotNetCoreMVC.Utility;
 using P03.DotNetCoreMVC.Utility.AutofacUtility;
 using P03.DotNetCoreMVC.Utility.CusMiddleWare;
 using P03.DotNetCoreMVC.Utility.Filters;
@@ -29,6 +30,17 @@ namespace P03.DotNetCoreMVC
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+
+            #region  static class use delegate passed and string parameter    to read from configuration
+
+            //only need to keep the way to access configuration, library know what to read
+
+            StaticConstraint.Init(s => configuration[s]);
+
+            #endregion
+
+
         }
 
         public IConfiguration Configuration { get; }

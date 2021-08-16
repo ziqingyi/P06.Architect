@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using P03.DotNetCoreMVC.EntityFrameworkModels;
 using P03.DotNetCoreMVC.Utility.Models;
 using P03.DotNetCoreMVC.Utility.WebHelper;
-
-
 
 namespace P03.DotNetCoreMVC.Utility
 {
@@ -64,6 +65,9 @@ namespace P03.DotNetCoreMVC.Utility
             //    User user = service.Set<User>().FirstOrDefault(u => u.Name.Equals(name) || u.Account.Equals(name));
             //    return user;
             //}
+
+           
+
 
             //get user from database 
             return new TempDatabaseUser()

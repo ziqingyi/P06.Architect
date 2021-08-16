@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using P03.DotNetCoreMVC.EntityFrameworkModels;
+using P03.DotNetCoreMVC.EntityFrameworkModels.Models;
 using P03.DotNetCoreMVC.Utility;
 using P03.DotNetCoreMVC.Utility.Extensions;
 
@@ -26,7 +28,18 @@ namespace P03.DotNetCoreMVC.Controllers
 
         [Authorize]
         public IActionResult Index()
-        {
+        {            
+            
+            //1 instal EF packages and Use DbContext to execute
+            using (JDDbContext dbContext = new JDDbContext())
+            {
+                var list = dbContext.Users.Where(u => u.Id < 10);
+
+                var user = dbContext.Set<User>().Find(7);
+
+                base.ViewBag.Users = Newtonsoft.Json.JsonConvert.SerializeObject(list);
+            }
+
             return View();
         }
 

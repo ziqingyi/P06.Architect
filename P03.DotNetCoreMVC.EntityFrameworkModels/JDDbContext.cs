@@ -21,26 +21,35 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModels
         //    System.Data.Entity.Database.SetInitializer<JDDbContext>(null);
         //}
 
-        private IConfiguration _configuration = null;
+        public JDDbContext()
+        {
 
+        }
+
+        #region read connection string 3
+
+        private IConfiguration _configuration = null;
         public JDDbContext(IConfiguration configuration)
         {
             this._configuration = configuration;
-            
         }
+        #endregion 
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            ////way of reading connection string 2 : read from json file, but file location maybe changed. 
-            //var builder = new ConfigurationBuilder()
-            //    .SetBasePath(Directory.GetCurrentDirectory())
-            //    .AddJsonFile("appsettings.json");
-            //var configuration = builder.Build();
-            //var conn = configuration.GetConnectionString("JDDbConnectionString");
 
             //// read connection string 1
             //optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=advanced7;User ID=adrian;Password=adrian");
+
+            ////way of reading connection string 2 : read from json file, but file location maybe changed. 
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
+            var configuration = builder.Build();
+            var conn = configuration.GetConnectionString("JDDbConnectionString");
+            optionsBuilder.UseSqlServer(conn);
 
 
             ////read connection string 3, use configuration to get connection string. configuration is injected by container. 
@@ -49,7 +58,7 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModels
 
             //read connection string 4, try to avoid read configuration directly.
             //StaticConstraint is Init at project start up, so can read  here. 
-            optionsBuilder.UseSqlServer(StaticConstraint.connectionString);
+            //optionsBuilder.UseSqlServer(StaticConstraint.connectionString);
 
             #region Configure Logger for DBcontext
 

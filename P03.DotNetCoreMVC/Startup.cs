@@ -11,11 +11,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using P03.DotNetCoreMVC.EntityFrameworkModels;
 using P03.DotNetCoreMVC.Interface.TestServiceInterface;
 using P03.DotNetCoreMVC.Services;
 using P03.DotNetCoreMVC.Utility;
@@ -106,6 +108,19 @@ namespace P03.DotNetCoreMVC
                 });
 
             #endregion
+
+
+            #region add EF DbContext
+
+            services.AddScoped<DbContext, JDDbContext>();
+
+
+            //services.AddEntityFrameworkSqlServer()
+            //    .AddDbContext<JDDbContext>(options => { options.UseSqlServer(StaticConstraint.connectionString); });
+
+
+            #endregion
+
 
 
 

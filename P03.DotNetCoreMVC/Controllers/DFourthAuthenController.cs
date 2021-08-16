@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using P03.DotNetCoreMVC.EntityFrameworkModels;
 using P03.DotNetCoreMVC.EntityFrameworkModels.Models;
 using P03.DotNetCoreMVC.Utility;
@@ -25,20 +27,40 @@ namespace P03.DotNetCoreMVC.Controllers
         /// </summary>
         /// <returns></returns>
 
+        private readonly DbContext _dbContext;
+
+        public DFourthAuthenController(DbContext dbContext)
+        {
+            this._dbContext = dbContext;
+        }
+
+
 
         [Authorize]
         public IActionResult Index()
-        {            
-            
-            //1 instal EF packages and Use DbContext to execute
-            using (JDDbContext dbContext = new JDDbContext())
+        {
+
+            ////1 instal EF packages and Use DbContext to execute
+            //using (JDDbContext dbContext = new JDDbContext())
+            //{
+            //    var list = dbContext.Users.Where(u => u.Id < 10);
+
+            //    var user = dbContext.Set<User>().Find(7);
+
+            //    base.ViewBag.Users = Newtonsoft.Json.JsonConvert.SerializeObject(list);
+            //}
+
+            //2 access with IOC DbContext
             {
-                var list = dbContext.Users.Where(u => u.Id < 10);
-
-                var user = dbContext.Set<User>().Find(7);
-
+                var list = this._dbContext.Set<User>().Where(u => u.Id < 10);
                 base.ViewBag.Users = Newtonsoft.Json.JsonConvert.SerializeObject(list);
             }
+            
+
+
+
+
+
 
             return View();
         }

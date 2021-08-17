@@ -79,11 +79,11 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModels
             #region Configure Custom  Logger for DBcontext
             
             //1 use IOC logger factory
-            optionsBuilder.UseLoggerFactory(this._loggerFactory);
+            //optionsBuilder.UseLoggerFactory(this._loggerFactory);
 
 
             // 2 use custom logger
-            //optionsBuilder.UseLoggerFactory(new CustomEFLoggerFactory());
+            optionsBuilder.UseLoggerFactory(new CustomEFLoggerFactory());
 
 
 

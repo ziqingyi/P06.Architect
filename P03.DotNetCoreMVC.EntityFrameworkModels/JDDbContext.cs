@@ -59,12 +59,12 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModels
 
 
             ////read connection string 3, use configuration to get connection string. configuration is injected by container. 
-            //optionsBuilder.UseSqlServer(this._configuration.GetConnectionString("JDDbConnectionString"));
+            optionsBuilder.UseSqlServer(this._configuration.GetConnectionString("JDDbConnectionString"));
 
 
             //read connection string 4, try to avoid read configuration directly.
             //StaticConstraint is Init at project start up, so can read  here. 
-            optionsBuilder.UseSqlServer(StaticConstraint.connectionString);
+            //optionsBuilder.UseSqlServer(StaticConstraint.connectionString);
 
 
             // 5 AddDbContext in Startup class

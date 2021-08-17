@@ -41,6 +41,8 @@ namespace P03.DotNetCoreMVC.Controllers
         {
 
             ////1 instal EF packages and Use DbContext to execute
+            ////   the lifecycle is different with IOC _dbContext.
+            ////    list cannot be accessed by views due to dispose. need ToList() method at the end.
             //using (JDDbContext dbContext = new JDDbContext())
             //{
             //    var list = dbContext.Users.Where(u => u.Id < 10);

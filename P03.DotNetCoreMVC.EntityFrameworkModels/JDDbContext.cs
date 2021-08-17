@@ -1,12 +1,13 @@
 
 
 using System.IO;
+//using log4net.Repository.Hierarchy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using P03.DotNetCoreMVC.Utility;
 using P03.DotNetCoreMVC.EntityFrameworkModels.Models;
 using P03.DotNetCoreMVC.EntityFrameworkModels.EFSqlLog;
-
+using Microsoft.Extensions.Logging;
 
 namespace P03.DotNetCoreMVC.EntityFrameworkModels
 {
@@ -21,10 +22,13 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModels
         //    System.Data.Entity.Database.SetInitializer<JDDbContext>(null);
         //}
 
+
+        //// if OnConfiguring() can get configuration independently 
         //public JDDbContext()
         //{
-
         //}
+
+
 
         public JDDbContext(DbContextOptions options) : base(options)
         {
@@ -35,9 +39,11 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModels
         #region read connection string 3
 
         private IConfiguration _configuration = null;
-        public JDDbContext(IConfiguration configuration)
+        private ILoggerFactory _loggerFactory; //not log4 logger factory 
+        public JDDbContext(IConfiguration configuration, ILoggerFactory loggerFactory)
         {
             this._configuration = configuration;
+            this._loggerFactory = loggerFactory;
         }
         #endregion 
 
@@ -70,9 +76,18 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModels
             // 5 AddDbContext in Startup class
 
 
-            #region Configure Logger for DBcontext
+            #region Configure Custom  Logger for DBcontext
+            
+            //1 use IOC logger factory
+            optionsBuilder.UseLoggerFactory(this._loggerFactory);
 
-            optionsBuilder.UseLoggerFactory(new CustomEFLoggerFactory());
+
+            // 2 use custom logger
+            //optionsBuilder.UseLoggerFactory(new CustomEFLoggerFactory());
+
+
+
+
 
             #endregion
 

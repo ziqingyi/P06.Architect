@@ -6,13 +6,15 @@ using System.Text;
 using Autofac;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using P03.DotNetCoreMVC.Interface;
 
-namespace P03.DotNetCoreMVC.Utility.AutofacUtility
+namespace P03.DotNetCoreMVC.ProjectUtility.AutofacUtility
 {
     public class CustomAutofacModule: Autofac.Module
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {
+            #region for all controllers
             var assembly = this.GetType().GetTypeInfo().Assembly;
             var builder = new ContainerBuilder();
             var manager = new ApplicationPartManager();
@@ -22,9 +24,22 @@ namespace P03.DotNetCoreMVC.Utility.AutofacUtility
             manager.PopulateFeature(feature);
             builder.RegisterType<ApplicationPartManager>().AsSelf().SingleInstance();
             builder.RegisterTypes(feature.Controllers.Select(ti => ti.AsType()).ToArray()).PropertiesAutowired();
-            //containerBuilder.RegisterType<FirstController>().PropertiesAutowired();
 
-            //containerBuilder.Register(c => new CustomAutofacAop());//aop
+
+            #endregion
+
+
+
+            #region register AOP
+
+            containerBuilder.Register(c => new CustomAutofacAop());
+
+            #endregion
+
+
+            #region Register for IOC
+
+            //containerBuilder.RegisterType<FirstController>().PropertiesAutowired();
             //containerBuilder.RegisterType<TestServiceA>().As<ITestServiceA>().SingleInstance().PropertiesAutowired();
             //containerBuilder.RegisterType<TestServiceC>().As<ITestServiceC>();
             //containerBuilder.RegisterType<TestServiceB>().As<ITestServiceB>();
@@ -38,7 +53,10 @@ namespace P03.DotNetCoreMVC.Utility.AutofacUtility
             //containerBuilder.RegisterType<JDDbContext>().As<DbContext>();
             //containerBuilder.RegisterType<CategoryService>().As<ICategoryService>();
 
-            //containerBuilder.RegisterType<UserServiceTest>().As<IUserServiceTest>();
+            containerBuilder.RegisterType<UserService>().As<IUserService>();
+
+            #endregion
+
         }
 
 

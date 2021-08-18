@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using P03.DotNetCoreMVC.EntityFrameworkModels;
 using P03.DotNetCoreMVC.EntityFrameworkModels.Models;
+using P03.DotNetCoreMVC.Interface;
+using P03.DotNetCoreMVC.ProjectUtility;
 using P03.DotNetCoreMVC.Utility;
 using P03.DotNetCoreMVC.Utility.Extensions;
 
@@ -27,14 +29,18 @@ namespace P03.DotNetCoreMVC.Controllers
         /// </summary>
         /// <returns></returns>
 
-        private readonly DbContext _dbContext;
+        //not use dbcontext here, should encapsulate into service
+        //private readonly DbContext _dbContext;
+        //public DFourthAuthenController(DbContext dbContext)
+        //{
+        //    this._dbContext = dbContext;
+        //}
 
-        public DFourthAuthenController(DbContext dbContext)
+        private readonly IUserService _userService;
+        public DFourthAuthenController(IUserService userService)
         {
-            this._dbContext = dbContext;
+            this._userService = userService;
         }
-
-
 
         [Authorize]
         public IActionResult Index()
@@ -52,12 +58,17 @@ namespace P03.DotNetCoreMVC.Controllers
             //    base.ViewBag.Users = Newtonsoft.Json.JsonConvert.SerializeObject(list);
             //}
 
-            //2 access with IOC DbContext
-            {
-                var list = this._dbContext.Set<User>().Where(u => u.Id < 10);
-                base.ViewBag.Users = Newtonsoft.Json.JsonConvert.SerializeObject(list);
-            }
-            
+            ////2 access with IOC DbContext, initialise in constructor
+            //{
+            //    var list = this._dbContext.Set<User>().Where(u => u.Id < 10);
+            //    base.ViewBag.Users = Newtonsoft.Json.JsonConvert.SerializeObject(list);
+            //}
+
+
+            ////3 Register service in CustomAutofacModule, use service in controller. Service + DAL +  ORM + IOC
+            var list = this._userService.Query<User>(u => u.Id < 10);
+            base.ViewBag.Users = Newtonsoft.Json.JsonConvert.SerializeObject(list);
+
 
 
 

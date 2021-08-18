@@ -11,7 +11,7 @@ using P03.DotNetCoreMVC.EntityFrameworkModels;
 using P03.DotNetCoreMVC.Utility.Models;
 using P03.DotNetCoreMVC.Utility.WebHelper;
 
-namespace P03.DotNetCoreMVC.Utility
+namespace P03.DotNetCoreMVC.ProjectUtility
 {
     public static class LoginHelper
     {

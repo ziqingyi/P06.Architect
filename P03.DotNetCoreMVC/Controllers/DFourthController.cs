@@ -1,20 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-
-using System.Linq;
-using System.Threading.Tasks;
-using P03.DotNetCoreMVC.Utility.WebHelper;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using P03.DotNetCoreMVC.Utility;
+using P03.DotNetCoreMVC.ProjectUtility;
 using P03.DotNetCoreMVC.Utility.Extensions;
 using P03.DotNetCoreMVC.Utility.Filters;
-using P03.DotNetCoreMVC.Utility.Models;
 
 namespace P03.DotNetCoreMVC.Controllers
 {

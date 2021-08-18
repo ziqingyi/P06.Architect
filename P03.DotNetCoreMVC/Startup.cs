@@ -21,7 +21,7 @@ using P03.DotNetCoreMVC.EntityFrameworkModels;
 using P03.DotNetCoreMVC.Interface.TestServiceInterface;
 using P03.DotNetCoreMVC.Services;
 using P03.DotNetCoreMVC.Utility;
-using P03.DotNetCoreMVC.Utility.AutofacUtility;
+using P03.DotNetCoreMVC.ProjectUtility.AutofacUtility;
 using P03.DotNetCoreMVC.Utility.CusMiddleWare;
 using P03.DotNetCoreMVC.Utility.Filters;
 
@@ -63,15 +63,27 @@ namespace P03.DotNetCoreMVC
 
             #region Add service IOC
 
-            //default container: inject by ctor only.  find superset of all ctors. 
+            //default container IOC : inject by ctor only.  find superset of all ctors. 
 
-            services.AddTransient<ITestServiceA, TestServiceA>();
-            services.AddSingleton<ITestServiceB, TestServiceB>();
-            services.AddScoped<ITestServiceC, TestServiceC>();//singleton in scope
+            // A=>B   B=>C   D=>D           A+B+C=>E
+            services.AddTransient<ITestServiceA, TestServiceA>();//transient
+            services.AddSingleton<ITestServiceB, TestServiceB>(); // singleton, just build once
+            services.AddScoped<ITestServiceC, TestServiceC>();//singleton in action scope.
             services.AddTransient<ITestServiceD, TestServiceD>();
-            //services.AddTransient<ITestServiceE, TestServiceE>();//move to configure container
+            //services.AddTransient<ITestServiceE, TestServiceE>();//move to Autofac configure 
+
+            #region add EF DbContext
+
+            services.AddScoped<DbContext, JDDbContext>();
+
+            //services.AddEntityFrameworkSqlServer()
+            //    .AddDbContext<JDDbContext>(options => { options.UseSqlServer(StaticConstraint.connectionString); });
 
             #endregion
+
+            #endregion
+
+
 
 
 
@@ -110,30 +122,26 @@ namespace P03.DotNetCoreMVC
             #endregion
 
 
-            #region add EF DbContext
-
-            services.AddScoped<DbContext, JDDbContext>();
-
-
-            //services.AddEntityFrameworkSqlServer()
-            //    .AddDbContext<JDDbContext>(options => { options.UseSqlServer(StaticConstraint.connectionString); });
-
-
-            #endregion
-
-
 
 
         }
 
-        #region update contianer to Autofac and configure
+        #region update contianer to Autofac and configure, works together with ConfigureServices
         public void ConfigureContainer(ContainerBuilder containerBuilder)
         {
 
             containerBuilder.RegisterModule<CustomAutofacModule>();
 
-            //Register type for Interface.
-            containerBuilder.RegisterType<TestServiceE>().As<ITestServiceE>().SingleInstance();
+
+
+            #region Autofac IOC, move to Module
+
+            ////Register type for Interface. 
+            containerBuilder.RegisterType<TestServiceE>().As<ITestServiceE>().SingleInstance();            
+
+            #endregion
+
+
 
         }
         #endregion

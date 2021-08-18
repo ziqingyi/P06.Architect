@@ -7,6 +7,8 @@ using Autofac;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using P03.DotNetCoreMVC.Interface;
+using P03.DotNetCoreMVC.Interface.TestServiceInterface;
+using P03.DotNetCoreMVC.Services;
 
 namespace P03.DotNetCoreMVC.ProjectUtility.AutofacUtility
 {
@@ -15,16 +17,15 @@ namespace P03.DotNetCoreMVC.ProjectUtility.AutofacUtility
         protected override void Load(ContainerBuilder containerBuilder)
         {
             #region for all controllers
-            var assembly = this.GetType().GetTypeInfo().Assembly;
-            var builder = new ContainerBuilder();
-            var manager = new ApplicationPartManager();
-            manager.ApplicationParts.Add(new AssemblyPart(assembly));
-            manager.FeatureProviders.Add(new ControllerFeatureProvider());
-            var feature = new ControllerFeature();
-            manager.PopulateFeature(feature);
-            builder.RegisterType<ApplicationPartManager>().AsSelf().SingleInstance();
-            builder.RegisterTypes(feature.Controllers.Select(ti => ti.AsType()).ToArray()).PropertiesAutowired();
-
+            //var assembly = this.GetType().GetTypeInfo().Assembly;
+            //var builder = new ContainerBuilder();
+            //var manager = new ApplicationPartManager();
+            //manager.ApplicationParts.Add(new AssemblyPart(assembly));
+            //manager.FeatureProviders.Add(new ControllerFeatureProvider());
+            //var feature = new ControllerFeature();
+            //manager.PopulateFeature(feature);
+            //builder.RegisterType<ApplicationPartManager>().AsSelf().SingleInstance();
+            //builder.RegisterTypes(feature.Controllers.Select(ti => ti.AsType()).ToArray()).PropertiesAutowired();
 
             #endregion
 

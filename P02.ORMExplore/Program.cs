@@ -19,17 +19,19 @@ namespace P02.ORMExplore
             //Test5();
             //Test6();
 
-            Test7();
+            Test7Parameterization();
 
         }
 
-        private static void Test7()
+        private static void Test7Parameterization()
         {
             int paraId1 = 10;
             int paraId2 = 20;
             SqlHelper helper = new SqlHelper();
             IList<CompanyModel> cList = helper.FindCondition<CompanyModel>(c => c.Id >= paraId2 
                                                                                 && c.Id >= 10);
+
+            Test6();
         }
         private static void Test6()
         {

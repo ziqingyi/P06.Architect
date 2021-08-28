@@ -1,0 +1,347 @@
+﻿@{
+    Layout = null;
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Test Controller Info</title>
+</head>
+<body>
+
+    <form method="post" action="/api/FUsersApi/register?id=1">
+        <div class="row">
+            <div class="col-md-5">
+                <h2> Test</h2>
+                <p>
+                    <input type="text" id="txtAccount" name="Account" />
+                    <input type="text" id="txtPassword" name="Password" />
+                    <input type="button" id="btnLogin" value="Login" />
+                </p>
+
+                <p><input type="text" id="txtId" name="id"></p>
+                <p>
+                    <input type="button" id="btnGet1" value="Get1" />
+                    <input type="button" id="btnGet2" value="Get2" />
+                    <input type="button" id="btnGet3" value="Get3" />
+                    <input type="button" id="btnGet4" value="Get4" />
+                </p>
+                <p>
+                    <input type="button" id="btnGet5" value="Get5" />
+                    <input type="button" id="btnGet6" value="Get6" />
+                    <input type="button" id="btnGet7" value="Get7" />
+                    <input type="button" id="btnGet8" value="Get8" />
+                    <input type="button" id="btnGet9" value="Get9" />
+                </p>
+
+                <p>
+                    <input type="button" id="btnPost1" value="Post1" />
+                    <input type="button" id="btnPost2" value="Post2" />
+                    <input type="button" id="btnPost3" value="Post3" />
+                    <input type="button" id="btnPost4" value="Post4" />
+                </p>
+
+                <p>
+                    <input type="button" id="btnPost5" value="Post5" />
+                    <input type="button" id="btnPost6" value="Post6" />
+                </p>
+
+                <p>
+                    <input type="button" id="btnPut1" value="Put1" />
+                    <input type="button" id="btnPut2" value="Put2" />
+                    <input type="button" id="btnPut3" value="Put3" />
+                    <input type="button" id="btnPut4" value="Put4" />
+                    <input type="button" id="btnPut5" value="Put5" />
+                    <input type="button" id="btnPut6" value="Put6" />
+                </p>
+
+                <p>
+                    <input type="button" id="btnGetCors1" value="Cross-origin resource sharing-Get1" />
+                </p>
+
+            </div>
+        </div>
+
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script>
+        $(
+            function () {
+                var user = { UserID: "1", UserName: "Tom", UserEmail: "safdxdaf@gmail.com" };
+                var info = "this is muti model";
+
+                $("#btnGet1").on("click",
+                    function () {
+                        $.ajax({
+                            url: "/api/FUsersApi/GetUserByName", type: "get", data: { "username": "Superman" },
+                            beforeSend: function (XHR) {
+                                XHR.setRequestHeader('Authorization', 'BasicAuth ' + ticket);
+                            },
+                            success: function (data) {
+                                alert(data);
+                            },
+                            datatype: "json"
+                        });
+                    });
+
+
+                $("#btnGet2").on("click",
+                    function () {//one param
+                        $.ajax({
+                            url: "/api/FUsersApi/GetUserByID",
+                            type: "get",
+                            data: { "id": $("#txtId").val() },
+                            success: function (data) { alert(data); },
+                            datatype: "json"
+                        });
+                    });
+
+
+                $("#btnGet3").on("click",
+                    function () {//two param
+                        $.ajax({
+                            url: "/api/FUsersApi/GetUserByNameId",
+                            type: "get",
+                            data: { "userName": "Superman", "id": $("#txtId").val() },
+                            success: function (data) { alert(data); },
+                            datatype: "json"
+                        });
+                    });
+                $("#btnGet4").on("click",
+                    function () {//no param
+                        $.ajax({
+                            url: "/api/FUsersApi/Get",
+                            type: "get",
+                            data: "",
+                            success: function (data) {
+                                alert(data);
+                            },
+                            datatype: "json"
+                        });
+                    });
+
+                $("#btnGet5").on("click",
+                    function () {//pass json type of object
+                        $.ajax({
+                            url: "/api/FUsersApi/GetUserByModel",
+                            type: "get",
+                            data: user,
+                            success: function (data) { alert(data); },
+                            datatype: "json"
+                        });
+                    });
+                $("#btnGet6").on("click",
+                    function () {//pass object, must use FromUri to find
+                        $.ajax({
+                            url: "/api/FUsersApi/GetUserByModelUri",
+                            type: "get",
+                            data: user,
+                            success: function (data) { alert(data); },
+                            datatype: "json"
+                        });
+                    });
+                $("#btnGet7").on("click",
+                    function () {//pass obj after serialization
+                        $.ajax({
+                            url: "/api/FUsersApi/GetUserByModelSerialize",
+                            type: "get",
+                            data: { userString: JSON.stringify(user) },
+                            success: function (data) { alert(data); },
+                            datatype: "json"
+                        });
+                    });
+                $("#btnGet8").on("click", function () {//pass obj after serialization
+                    $.ajax({
+                        url: "/api/FUsersApi/GetUserByModelSerializeWithoutGet",
+                        type: "get",
+                        data: { userString: JSON.stringify(user) },
+                        success: function (data) { alert(data); },
+                        datatype: "json"
+                    });
+                });
+                $("#btnGet9").on("click", function () {//pass obj after serialization  405 Method Not Allowed    need to start with get if no httpget
+                    $.ajax({
+                        url: "/api/FUsersApi/NoGetUserByModelSerializeWithoutGet",
+                        type: "get",
+                        data: { userString: JSON.stringify(user) },
+                        success: function (data) { alert(data); }, datatype: "json"
+                    });
+                });
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+                $("#btnPost1").on("click", function () {//pass single value, no key for jason
+                    $.ajax({
+                        url: "/api/FUsersApi/RegisterNoKey",
+                        type: "post",
+                        data: { "": $("#txtId").val() },
+                        success: function (data) { alert(data); },
+                        datatype: "json"
+                    });
+                });
+                $("#btnPost2").on("click", function () {//key-value, if put "id" as key, will not able to get value
+                    $.ajax({
+                        url: "/api/FUsersApi/Register",
+                        type: "post",
+                        data: { "id": $("#txtId").val() },
+                        success: function (data) { alert(data); },
+                        datatype: "json"
+                    });
+                });
+                $("#btnPost3").on("click", function () {//json
+                    $.ajax({
+                        url: "/api/FUsersApi/RegisterUser",
+                        type: "post",
+                        data: user,
+                        success: function (data) { alert(data); },
+                        datatype: "json"
+                    });
+                });
+                $("#btnPost4").on("click", function () {//json, , contentType
+                    $.ajax({
+                        url: "/api/FUsersApi/RegisterUser",
+                        type: "post",
+                        data: JSON.stringify(user),
+                        success: function (data) { alert(data); },
+                        datatype: "json",
+                        contentType: 'application/json'
+                    });
+                });
+                $("#btnPost5").on("click", function () {//JObject
+                    $.ajax({
+                        url: "/api/FUsersApi/RegisterObject",
+                        type: "post",
+                        data: { "User": user, "Info": info },
+                        success: function (data) { alert(data); },
+                        datatype: "json"
+                    });
+                });
+                $("#btnPost6").on("click", function () {//Dynamic
+                    $.ajax({
+                        url: "/api/FUsersApi/RegisterObjectDynamic",
+                        type: "post",
+                        data: { "User": user, "Info": info },
+                        success: function (data) { alert(data); },
+                        datatype: "json",
+                        contentType: 'application/json'
+                    });
+                });
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+
+                $("#btnPut1").on("click", function () {//
+                    $.ajax({
+                        url: "/api/FUsersApi/RegisterNoKeyPut",
+                        type: "put",
+                        data: { "": $("#txtId").val() },
+                        success: function (data) { alert(data); },
+                        datatype: "json"
+                    });
+                });
+                $("#btnPut2").on("click", function () {//key-value
+                    $.ajax({
+                        url: "/api/FUsersApi/RegisterPut",
+                        type: "put",
+                        data: { "id": $("#txtId").val() },
+                        success: function (data) { alert(data); },
+                        datatype: "json"
+                    });
+                });
+                $("#btnPut3").on("click", function () {//json
+                    $.ajax({
+                        url: "/api/FUsersApi/RegisterUserPut",
+                        type: "put",
+                        data: user,
+                        success: function (data) { alert(data); },
+                        datatype: "json"
+                    });
+                });
+                $("#btnPut4").on("click", function () {//json, contentType
+                    $.ajax({
+                        url: "/api/FUsersApi/RegisterUserPut",
+                        type: "put",
+                        data: JSON.stringify(user),
+                        success: function (data) { alert(data); },
+                        datatype: "json", contentType: 'application/json',
+                    });
+                });
+                $("#btnPut5").on("click", function () {//JObject
+                    $.ajax({
+                        url: "/api/FUsersApi/RegisterObjectPut",
+                        type: "put",
+                        data: { "User": user, "Info": info },
+                        success: function (data) { alert(data); },
+                        datatype: "json"
+                    });
+                });
+                $("#btnPut6").on("click", function () {//Dynamic
+                    $.ajax({
+                        url: "/api/FUsersApi/RegisterObjectDynamicPut",
+                        type: "put",
+                        data: { "User": user, "Info": info },
+                        success: function (data) { alert(data); },
+                        datatype: "json",
+                        contentType: 'application/json'
+                    });
+                });
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+                $("#btnLogin").on("click",
+                    function () {
+                        $.ajax({
+                            url: "/api/FUsersApi/Login",
+                            type: "GET",
+                            data: { "Account": $("#txtAccount").val(), "Password": $("#txtPassword").val() },
+                            success: function (data) {
+                                var result = JSON.parse(data);
+                                if (result.Result) {
+                                    ticket = result.Ticket;
+                                    alert(result.Ticket);
+                                }
+                                else {
+                                    alert("failed");
+                                }
+                            }, datatype: "json"
+                        });
+
+                    });
+
+                var ticket = "";
+
+                //microsoft.aspnet.webapi.cors
+                jQuery.support.cors = true;
+                var location = "http://localhost:44322";
+                $("#btnGetCors1").on("click", function () {
+                    $.ajax({
+                        url: location + "/api/FUsersApi/GetUserByID",
+                        type: "get",
+                        data: { "id": 1 },
+                        success: function (data) { alert(data); },
+                        datatype: "json"
+                    });
+                });
+
+
+
+            }
+        );
+
+        </script>
+
+    </form>
+
+
+
+</body>
+</html>

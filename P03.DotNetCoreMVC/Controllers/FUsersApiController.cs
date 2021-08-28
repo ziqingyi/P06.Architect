@@ -11,6 +11,8 @@ using Newtonsoft.Json.Linq;
 using P03.DotNetCoreMVC.EntityFrameworkModels.Models;
 using P03.DotNetCoreMVC.Interface.TestServiceInterface;
 using System.Web.Http;
+using P03.DotNetCoreMVC.Interface;
+using P03.DotNetCoreMVC.Utility.Models;
 using FromBodyAttribute = Microsoft.AspNetCore.Mvc.FromBodyAttribute;
 using HttpDeleteAttribute = Microsoft.AspNetCore.Mvc.HttpDeleteAttribute;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
@@ -22,7 +24,7 @@ using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 namespace P03.DotNetCoreMVC.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class FUsersApiController : ControllerBase
     {
@@ -31,12 +33,7 @@ namespace P03.DotNetCoreMVC.Controllers
         #region Data
 
 
-        private List<User> _usersList = new List<User>()
-        {
-            new User() {Id = 1, Name = "Superman", Email = "Superman@google.com"},
-            new User() {Id = 2, Name = "Spiderman", Email = "Spiderman@google.com"},
-            new User() {Id = 3, Name = "Batman", Email = "Batman@google.com"}
-        };
+        private List<CurrentUserCore> _usersList;
 
         #endregion
 
@@ -48,19 +45,22 @@ namespace P03.DotNetCoreMVC.Controllers
         private ITestServiceB _ITestServiceB = null;
         private ITestServiceC _ITestServiceC = null;
         private ITestServiceD _ITestServiceD = null;
+        private IUserService _userService = null;
 
         //test AOP
         private IA _IA = null;
 
 
         public FUsersApiController(ILoggerFactory loggerFactory,
-            ILogger<FUsersApiController> logger
-            ,
+            ILogger<FUsersApiController> logger,
+            
             ITestServiceA testServiceA,
             ITestServiceB testServiceB,
             ITestServiceC testServiceC,
-            ITestServiceD testServiceD
-            ,
+            ITestServiceD testServiceD,
+
+            IUserService userService,
+            
             IA a
         )
         {
@@ -71,6 +71,28 @@ namespace P03.DotNetCoreMVC.Controllers
             this._ITestServiceC = testServiceC;
             this._ITestServiceD = testServiceD;
             this._IA = a;
+
+            this._userService = userService;
+
+
+            _usersList = this._userService.Query<User>(u => u.Id < 20)
+                .OrderBy(u=>u.Id)
+                .Skip(1)
+                .Take(5)
+                .Select(u => new CurrentUserCore()
+                {
+                    Id = u.Id,
+                    Name = u.Name,
+                    Account = u.Account,
+                    Password = u.Password,
+                    Email = u.Email,
+                    State = u.State==1?true:false,
+                    Role = "",
+                    LastLoginTime = u.LastLoginTime?? DateTime.Now,
+                    CreateTime = u.CreateTime,
+                    Datas = null
+                }).ToList();
+
         }
 
         #endregion
@@ -80,19 +102,19 @@ namespace P03.DotNetCoreMVC.Controllers
         // this is the rest way. but for test, we have multiple get names. 
         //GET api/User
         [HttpGet]
-        public IEnumerable<User> Get()
+        public IEnumerable<CurrentUserCore> Get()
         {
 
             return _usersList;
         }
 
         [HttpGet]
-        public User GetUserByID(int id)
+        public CurrentUserCore GetUserByID(int id)
         {
             //throw new Exception("23213131");
             string idParam = base.HttpContext.Request.Query["userId"];
 
-            User u = _usersList.FirstOrDefault(user => user.Id == id);
+            CurrentUserCore u = _usersList.FirstOrDefault(user => user.Id == id);
             if (u == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -102,7 +124,7 @@ namespace P03.DotNetCoreMVC.Controllers
 
         [HttpGet]
         //[CustomBasicAuthorize] //if place on method, only works for this method. 
-        public IEnumerable<User> GetUserByName(string username)
+        public IEnumerable<CurrentUserCore> GetUserByName(string username)
         {
             //throw new Exception("23213131");//test exception
             string userNameParam = base.HttpContext.Request.Query["userName"];
@@ -111,7 +133,7 @@ namespace P03.DotNetCoreMVC.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<User> GetUserByNameId(string username, int id)
+        public IEnumerable<CurrentUserCore> GetUserByNameId(string username, int id)
         {
             string idParam = base.HttpContext.Request.Query["userId"];
             string userNameParam = base.HttpContext.Request.Query["userName"]; 
@@ -121,7 +143,7 @@ namespace P03.DotNetCoreMVC.Controllers
 
         //btnGet5
         [HttpGet]
-        public IEnumerable<User> GetUserByModel(User user)
+        public IEnumerable<CurrentUserCore> GetUserByModel(CurrentUserCore user)
         {
             string idParam = base.HttpContext.Request.Query["userId"];
             string userNameParam = base.HttpContext.Request.Query["userName"];
@@ -131,7 +153,7 @@ namespace P03.DotNetCoreMVC.Controllers
         }
         //btnGet6
         [HttpGet]
-        public IEnumerable<User> GetUserByModelUri([FromUri] User user)
+        public IEnumerable<CurrentUserCore> GetUserByModelUri([FromUri] CurrentUserCore user)
         {
             string idParam = base.HttpContext.Request.Query["userId"];
             string userNameParam = base.HttpContext.Request.Query["userName"];
@@ -141,21 +163,21 @@ namespace P03.DotNetCoreMVC.Controllers
         }
         //btnGet7
         [HttpGet]
-        public IEnumerable<User> GetUserByModelSerialize(string userstring)
+        public IEnumerable<CurrentUserCore> GetUserByModelSerialize(string userstring)
         {
-            User user = JsonConvert.DeserializeObject<User>(userstring);
+            CurrentUserCore user = JsonConvert.DeserializeObject<CurrentUserCore>(userstring);
             return _usersList;
         }
         //btnGet8
-        public IEnumerable<User> GetUserByModelSerializeWithoutGet(string userstring)
+        public IEnumerable<CurrentUserCore> GetUserByModelSerializeWithoutGet(string userstring)
         {
-            User user = JsonConvert.DeserializeObject<User>(userstring);
+            CurrentUserCore user = JsonConvert.DeserializeObject<CurrentUserCore>(userstring);
             return _usersList;
         }
         //not begin with Get and no attribute([HttpGet]/[HttpPost]/[HttpPut]/[HttpDelete]), will return 405, not sure which request.
-        public IEnumerable<User> NoGetUserByModelSerializeWithoutGet(string userstring)
+        public IEnumerable<CurrentUserCore> NoGetUserByModelSerializeWithoutGet(string userstring)
         {
-            User user = JsonConvert.DeserializeObject<User>(userstring);
+            CurrentUserCore user = JsonConvert.DeserializeObject<CurrentUserCore>(userstring);
             return _usersList;
         }
 
@@ -165,13 +187,13 @@ namespace P03.DotNetCoreMVC.Controllers
         #region HttpPost
         //
         [HttpPost]
-        public User RegisterNone()
+        public CurrentUserCore RegisterNone()
         {
             return _usersList.FirstOrDefault();
         }
         //btnPost1
         [HttpPost]
-        public User RegisterNoKey([FromBody] int id)
+        public CurrentUserCore RegisterNoKey([FromBody] int id)
         {
             string idParam = base.HttpContext.Request.Query["UserID"];
 
@@ -184,10 +206,10 @@ namespace P03.DotNetCoreMVC.Controllers
         }
         //btnPost2
         [HttpPost]
-        public User Register([FromBody] int id)
+        public CurrentUserCore Register([FromBody] int id)
         {
             string idParam = base.HttpContext.Request.Query["ID"];
-            User user = _usersList.FirstOrDefault(u => u.Id == id);
+            CurrentUserCore user = _usersList.FirstOrDefault(u => u.Id == id);
 
             if (user == null)
             {
@@ -198,7 +220,7 @@ namespace P03.DotNetCoreMVC.Controllers
         }
         //btnPost3
         [HttpPost]
-        public User RegisterUser(User user)
+        public CurrentUserCore RegisterUser(CurrentUserCore user)
         {
             string idParam = base.HttpContext.Request.Query["UserID"];
             string nameParam = base.HttpContext.Request.Query["userName"];
@@ -220,7 +242,7 @@ namespace P03.DotNetCoreMVC.Controllers
             JObject juser = json.User;
             string info = json.Info;
 
-            var user = juser.ToObject<User>();
+            var user = juser.ToObject<CurrentUserCore>();
 
             string result = string.Format("{0}_{1}_{2}_{3}", user.Id, user.Name, user.Email, info);
             return result;
@@ -239,7 +261,7 @@ namespace P03.DotNetCoreMVC.Controllers
             JObject juser = json.User;
             string info = json.Info;
 
-            User user = juser.ToObject<User>();
+            CurrentUserCore user = juser.ToObject<CurrentUserCore>();
             string result = string.Format("{0}_{1}_{2}_{3}", user.Id, user.Name, user.Email, info);
             return result;
         }
@@ -251,19 +273,19 @@ namespace P03.DotNetCoreMVC.Controllers
         #region HttpPut
 
         [HttpPut]
-        public User RegisterNonPut()
+        public CurrentUserCore RegisterNonPut()
         {
-            User u = _usersList.FirstOrDefault();
+            CurrentUserCore u = _usersList.FirstOrDefault();
             return u;
         }
 
 
         [HttpPut]
-        public User RegisterNoKeyPut([FromBody] int id)
+        public CurrentUserCore RegisterNoKeyPut([FromBody] int id)
         {
             string idParam = base.HttpContext.Request.Query["userId"];
 
-            User user = _usersList.FirstOrDefault(u => u.Id == id);
+            CurrentUserCore user = _usersList.FirstOrDefault(u => u.Id == id);
             if (user == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -273,11 +295,11 @@ namespace P03.DotNetCoreMVC.Controllers
 
 
         [HttpPut]
-        public User RegisterPut([FromBody] int id)
+        public CurrentUserCore RegisterPut([FromBody] int id)
         {
             string idParam = base.HttpContext.Request.Query["userId"];
 
-            User user = _usersList.FirstOrDefault(u => u.Id == id);
+            CurrentUserCore user = _usersList.FirstOrDefault(u => u.Id == id);
             if (user == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -287,7 +309,7 @@ namespace P03.DotNetCoreMVC.Controllers
         }
 
         [HttpPut]
-        public User RegisterUserPut(User user)
+        public CurrentUserCore RegisterUserPut(CurrentUserCore user)
         {
             string idParam = base.HttpContext.Request.Query["userId"];
             string nameParam = base.HttpContext.Request.Query["userName"];
@@ -308,7 +330,7 @@ namespace P03.DotNetCoreMVC.Controllers
             JObject juser = json.User;
             string info = json.Info;
 
-            User user = juser.ToObject<User>();
+            CurrentUserCore user = juser.ToObject<CurrentUserCore>();
 
             string result = string.Format("{0}_{1}_{2}_{3}", user.Id, user.Name, user.Email, info);
             return result;
@@ -326,7 +348,7 @@ namespace P03.DotNetCoreMVC.Controllers
             JObject juser = json.User;
             string info = json.Info;
 
-            User user = juser.ToObject<User>();
+            CurrentUserCore user = juser.ToObject<CurrentUserCore>();
 
             string result = string.Format("{0}_{1}_{2}_{3}", user.Id, user.Name, user.Email, info);
             return result;
@@ -339,17 +361,17 @@ namespace P03.DotNetCoreMVC.Controllers
         #region HttpDelete
 
         [HttpDelete]
-        public User RegisterNoneDelete()
+        public CurrentUserCore RegisterNoneDelete()
         {
-            User u = _usersList.FirstOrDefault();
+            CurrentUserCore u = _usersList.FirstOrDefault();
             return u;
         }
 
         [HttpDelete]
-        public User RegisterNoKeyDelete([FromBody] int id)
+        public CurrentUserCore RegisterNoKeyDelete([FromBody] int id)
         {
             string idParam = base.HttpContext.Request.Query["userId"];
-            User user = _usersList.FirstOrDefault(u => u.Id == id);
+            CurrentUserCore user = _usersList.FirstOrDefault(u => u.Id == id);
 
             if (user == null)
             {
@@ -359,11 +381,11 @@ namespace P03.DotNetCoreMVC.Controllers
         }
 
         [HttpDelete]
-        public User RegisterDelete([FromBody] int id)
+        public CurrentUserCore RegisterDelete([FromBody] int id)
         {
             string idParam = base.HttpContext.Request.Query["userId"];
 
-            User user = _usersList.FirstOrDefault(u => u.Id == id);
+            CurrentUserCore user = _usersList.FirstOrDefault(u => u.Id == id);
             if (user == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
@@ -373,7 +395,7 @@ namespace P03.DotNetCoreMVC.Controllers
         }
 
         [HttpDelete]
-        public User RegisterUserDelete(User user)
+        public CurrentUserCore RegisterUserDelete(CurrentUserCore user)
         {
             string idParam = base.HttpContext.Request.Query["userId"];
             string nameParam = base.HttpContext.Request.Query["userName"];
@@ -392,7 +414,7 @@ namespace P03.DotNetCoreMVC.Controllers
             dynamic json = dynamicData;
             JObject juser = json.User;
             string info = json.Info;
-            User user = juser.ToObject<User>();
+            CurrentUserCore user = juser.ToObject<CurrentUserCore>();
 
             string result = string.Format("{0}_{1}_{2}_{3}", user.Id, user.Name, user.Email, info);
             return result;

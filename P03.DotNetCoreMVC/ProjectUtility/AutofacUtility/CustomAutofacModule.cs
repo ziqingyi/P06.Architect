@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using P03.DotNetCoreMVC.Interface;
 using P03.DotNetCoreMVC.Interface.TestServiceInterface;
+using P03.DotNetCoreMVC.ProjectUtility.InterceptService;
 using P03.DotNetCoreMVC.Services;
 
 namespace P03.DotNetCoreMVC.ProjectUtility.AutofacUtility
@@ -55,6 +56,8 @@ namespace P03.DotNetCoreMVC.ProjectUtility.AutofacUtility
             //containerBuilder.RegisterType<CategoryService>().As<ICategoryService>();
 
             containerBuilder.RegisterType<UserService>().As<IUserService>();
+
+            containerBuilder.RegisterType<A>().As<IA>();
 
             #endregion
 

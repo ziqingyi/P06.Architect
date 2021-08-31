@@ -58,6 +58,13 @@
                 <p>
                     <input type="button" id="btnGetCors1" value="Cross-origin resource sharing-Get1" />
                 </p>
+                
+                
+                <p>
+                    <input type="button" id="btnGetOtherApi" value="GetOtherApi" />
+                </p>
+                
+                
 
             </div>
         </div>
@@ -333,7 +340,18 @@
                 });
 
 
-
+                //other api
+                jQuery.support.cors = true;
+                var location2 = "http://localhost:44357";
+                $("#btnGetOtherApi").on("click", function () {
+                    $.ajax({
+                        url: location2 + "/api/FUsersApi/GetUserByID",
+                        type: "Get",
+                        data: { "id": 5 },
+                        success: function (data) { alert(data); },
+                        datatype: "json"
+                    });
+                });
             }
         );
 

@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = null;
+    //Layout = null;
     ViewData["Title"] = "ETest Controller InfoFromUriHttpClient";
 }
 
@@ -11,19 +11,23 @@
 <body>
     <h1>ETest Controller InfoFromHttpClient</h1>
 
-    <h1>@base.ViewBag.Data</h1>
 
 
 
-
-
-
-
+<h3>@base.ViewBag.Url</h3>
+<h3>@base.ViewBag.Data</h3>
+    @foreach (var user in base.ViewBag.Users)
+    {
+        <h4>********************</h4>
+        <h4>@user.Id</h4>
+        <h4>@user.Name</h4>
+        <h4>@user.Email</h4>
+    }
 
 </body>
 
 
-
+</html>
 
 
 

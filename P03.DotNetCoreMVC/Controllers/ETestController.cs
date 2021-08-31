@@ -25,8 +25,10 @@ namespace P03.DotNetCoreMVC.Controllers
 
             userList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CurrentUserCore>>(result);
 
-            ViewBag.Data = result;
 
+            ViewBag.Url = url;
+            ViewBag.Data = result;
+            ViewBag.Users = userList;
 
 
             return View();

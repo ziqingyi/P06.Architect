@@ -114,6 +114,12 @@ namespace P03.DotNetCoreMVC.WebApi.Controllers
         [HttpGet]
         public IEnumerable<CurrentUserCore> GetUserByNameId(string username, int id)
         {
+            #region if cors is not enabled, add to header directly, only for this method
+
+            //base.HttpContext.Response.Headers.Add("Access-Control-Allow-Origin","*");
+
+            #endregion
+
             string idParam = base.HttpContext.Request.Query["userId"];
             string userNameParam = base.HttpContext.Request.Query["userName"]; 
             _IA.Log(idParam,userNameParam);

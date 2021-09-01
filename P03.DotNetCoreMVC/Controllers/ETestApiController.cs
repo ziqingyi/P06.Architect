@@ -8,7 +8,7 @@ using P03.DotNetCoreMVC.Utility.Models;
 
 namespace P03.DotNetCoreMVC.Controllers
 {
-    public class ETestController : Controller
+    public class ETestApiController : Controller
     {
         public IActionResult Index()
         {
@@ -33,6 +33,9 @@ namespace P03.DotNetCoreMVC.Controllers
 
             return View();
         }
+
+
+
 
 
 

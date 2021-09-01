@@ -15,6 +15,7 @@ using Autofac;
 using P03.DotNetCoreMVC.Interface.TestServiceInterface;
 using P03.DotNetCoreMVC.Services;
 using P03.DotNetCoreMVC.Utility;
+using P03.DotNetCoreMVC.Utility.ApiHelper;
 using P03.DotNetCoreMVC.Utility.CusMiddleWare;
 using P03.DotNetCoreMVC.WebApi.ProjectUtility.AutofacUtility;
 using P03.DotNetCoreMVC.Utility.Filters;
@@ -26,6 +27,7 @@ namespace P03.DotNetCoreMVC.WebApi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
             #region  static class use delegate passed and string parameter    to read from configuration
 
             //only need to keep the way to access configuration, library know what to read
@@ -92,6 +94,13 @@ namespace P03.DotNetCoreMVC.WebApi
 
             app.UseAuthorization();
 
+            #region log ip and port
+
+            Console.WriteLine("ip is: " + this.Configuration["ip"]);
+            Console.WriteLine("port is: " + this.Configuration["port"]);            
+
+            #endregion
+
 
             #region cors between authorization and end points
 
@@ -99,6 +108,8 @@ namespace P03.DotNetCoreMVC.WebApi
             app.UseMiddleware<CorsMiddleware>();
 
             #endregion
+
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -110,7 +121,11 @@ namespace P03.DotNetCoreMVC.WebApi
             loggerFactory.AddLog4Net("CfgFiles\\log4net.config");//replace or override .net core internal Logger, so no need to add service. 
             #endregion
 
+            #region Register Consul after app started, only run onetime.
 
+            this.Configuration.ConsulRegister();
+
+            #endregion
         }
     }
 }

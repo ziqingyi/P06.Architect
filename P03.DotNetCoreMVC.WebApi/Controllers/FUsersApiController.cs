@@ -43,13 +43,13 @@ namespace P03.DotNetCoreMVC.WebApi.Controllers
         private IA _IA = null;
 
         public FUsersApiController(ILoggerFactory loggerFactory,
-            ILogger<FUsersApiController> logger,
+            //ILogger<FUsersApiController> logger,
             IUserService userService,
             IA a
         )
         {
             this._Factory = loggerFactory;
-            this._logger = logger;
+            this._logger = new Logger<FUsersApiController>(this._Factory);
 
             this._userService = userService;
             this._IA = a;
@@ -83,7 +83,7 @@ namespace P03.DotNetCoreMVC.WebApi.Controllers
         [HttpGet]
         public IEnumerable<CurrentUserCore> Get()
         {
-
+            this._logger.LogInformation("This is FUsersApiController  Get method");
             return _usersList;
         }
 

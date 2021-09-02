@@ -21,7 +21,7 @@ namespace P03.DotNetCoreMVC.Utility.ApiHelper
             int port = int.Parse(string.IsNullOrWhiteSpace(configuration["port"])? "44357": configuration["port"]);// commandline 
             int weight = string.IsNullOrWhiteSpace(configuration["weight"]) ? 1 : int.Parse(configuration["weight"]);
 
-            string serviceId = "service" + Guid.NewGuid();
+            string serviceId = "service" +ip+"Port"+port;//same ip and port will be one service, overwrite when reload
 
             client.Agent.ServiceRegister(new AgentServiceRegistration()
             {
@@ -30,13 +30,14 @@ namespace P03.DotNetCoreMVC.Utility.ApiHelper
                 Address = ip,
                 Port = port,
                 Tags = new string[] {weight.ToString()}
-                //,Check = new AgentServiceCheck()//heart beating monitor.
-                //{
-                //    Interval = TimeSpan.FromSeconds(12),
-                //    HTTP = $"http://{ip}:{port}/Api/Health/Index",
-                //    Timeout = TimeSpan.FromSeconds(5),
-                //    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5)
-                //}
+                ,
+                Check = new AgentServiceCheck()//heart beating monitor.
+                {
+                    Interval = TimeSpan.FromSeconds(12),
+                    HTTP = $"http://{ip}:{port}/api/HealthCheck/Index",
+                    Timeout = TimeSpan.FromSeconds(5),
+                    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5)
+                }
             });
             Console.WriteLine($"http://{ip}:{port} finish registering with service ID: {serviceId} ");
         }

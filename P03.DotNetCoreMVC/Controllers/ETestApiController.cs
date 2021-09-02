@@ -82,7 +82,47 @@ namespace P03.DotNetCoreMVC.Controllers
             return View();
         }
 
+        public IActionResult CallServiceFromConsul()
+        {
+            /*
+             * http://localhost:44357/api/fusersapi/Get
+             *
+             * http://localhost:44358/api/fusersapi/Get
+             */
 
+
+            string url = "http://UserServiceGroup/api/fusersapi/Get";
+
+            Uri uri = new Uri(url);
+            string groupName = uri.Host;
+
+
+
+            using (ConsulClient client = new ConsulClient(c =>
+            {
+                c.Address = new Uri("http://localhost:8500/");
+                c.Datacenter = "dc1";
+            }))
+            {
+                var consulDictionary = client.Agent.Services().Result.Response;
+                string message = "";
+
+                var list = consulDictionary.Where(k =>
+                    k.Value.Service.Equals(groupName, StringComparison.OrdinalIgnoreCase));
+
+                KeyValuePair<string, AgentService> keyValuePair = new KeyValuePair<string, AgentService>();
+
+
+
+
+
+
+
+                base.ViewBag.Message = message;
+            }
+
+            return View();
+        }
 
 
 

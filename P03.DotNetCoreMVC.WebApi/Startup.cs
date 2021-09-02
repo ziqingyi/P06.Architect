@@ -20,6 +20,16 @@ using P03.DotNetCoreMVC.Utility.CusMiddleWare;
 using P03.DotNetCoreMVC.WebApi.ProjectUtility.AutofacUtility;
 using P03.DotNetCoreMVC.Utility.Filters;
 
+
+/*
+
+dotnet P03.DotNetCoreMVC.WebApi.dll --urls="http://*:44357" --ip="127.0.0.1" --port=44357
+
+dotnet P03.DotNetCoreMVC.WebApi.dll --urls= "http://*:44358"--ip= "127.0.0.1"--port= 44358
+
+*/
+
+
 namespace P03.DotNetCoreMVC.WebApi
 {
     public class Startup

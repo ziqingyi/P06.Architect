@@ -1,0 +1,27 @@
+﻿@{
+    //Layout = null;
+    ViewData["Title"] = "ETestApi Controller CallServiceFromConsulWithWeight";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ETestApi Controller CallServiceFromConsulWithWeight</title>
+</head>
+<body>
+    <h1>ETestApi Controller CallServiceFromConsulWithWeight</h1>
+
+
+<h3>@base.ViewBag.Url</h3>
+<h5>@base.ViewBag.Data</h5>
+@foreach (var user in base.ViewBag.Users)
+{
+    <h4>********************</h4>
+    <h4>@user.Id</h4>
+    <h4>@user.Name</h4>
+    <h4>@user.Email</h4>
+}
+
+
+</body>
+</html>

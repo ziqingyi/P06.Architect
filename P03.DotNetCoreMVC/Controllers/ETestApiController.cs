@@ -67,7 +67,6 @@ namespace P03.DotNetCoreMVC.Controllers
                 {
                     AgentService agentService = serviceResponse.Value;
 
-
                     string agentServiceMsg = $"agent service: {agentService.Address}:{agentService.Port} " +
                                              $"Id:{agentService.ID} {agentService.Service}";
 
@@ -118,18 +117,20 @@ namespace P03.DotNetCoreMVC.Controllers
                 var consulDictionary = client.Agent.Services().Result.Response;
                 string message = "";
 
-                var list = consulDictionary.Where(k =>
+                var servicelist = consulDictionary.Where(k =>
                     k.Value.Service.Equals(groupName, StringComparison.OrdinalIgnoreCase));
 
-                var serviceArray = list.ToArray();
-                KeyValuePair<string, AgentService> keyValuePair = new KeyValuePair<string, AgentService>();
+                var serviceArray = servicelist.ToArray();
+                KeyValuePair<string, AgentService> targetService = new KeyValuePair<string, AgentService>();
 
 
-                #region MyRegion
+                #region get AgentService from the consul
 
                 //randomly get url address and port
-                keyValuePair = serviceArray[new Random().Next(0, serviceArray.Length)];
-                string hostNew = $"{keyValuePair.Value.Address}:{keyValuePair.Value.Port}";
+                targetService = serviceArray[new Random().Next(0, serviceArray.Length)];
+
+
+                string hostNew = $"{targetService.Value.Address}:{targetService.Value.Port}";
                 //resultUrl = url.Replace(groupName, hostNew,StringComparison.OrdinalIgnoreCase);
                 resultUrl = uri.Scheme + "://" + hostNew + "/api/fusersapi/Get";
 
@@ -148,6 +149,99 @@ namespace P03.DotNetCoreMVC.Controllers
 
             return View();
         }
+
+
+
+
+
+
+        /// <summary>
+        /// https://localhost:44322/etestapi/CallServiceFromConsulWithWeight
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult CallServiceFromConsulWithWeight()
+        {
+            List<CurrentUserCore> userList = new List<CurrentUserCore>();
+
+            /*
+             * http://localhost:44357/api/fusersapi/Get
+             *
+             * http://localhost:44358/api/fusersapi/Get
+             */
+
+            string url = "http://UserServiceGroup/api/fusersapi/Get";
+            string resultUrl;
+            Uri uri = new Uri(url);
+            string groupName = uri.Host;
+
+            using (ConsulClient client = new ConsulClient(c =>
+            {
+                c.Address = new Uri("http://localhost:8500/");
+                c.Datacenter = "dc1";
+            }))
+            {
+                var consulDictionary = client.Agent.Services().Result.Response;
+                string message = "";
+
+                var servicelist = consulDictionary.Where(k =>
+                    k.Value.Service.Equals(groupName, StringComparison.OrdinalIgnoreCase));
+
+                List<KeyValuePair<string, AgentService>> serviceArray = new List<KeyValuePair<string, AgentService>>();
+
+                KeyValuePair<string, AgentService> targetService = new KeyValuePair<string, AgentService>();
+
+
+                #region get AgentService from the consul
+
+                //build new dictionary of services based on the tag in the service
+                foreach (var pair in servicelist)
+                {
+                    int count = int.Parse(pair.Value.Tags?[0]);
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        serviceArray.Add(new KeyValuePair<string, AgentService>(pair.Key,pair.Value));
+                    }
+                }
+
+                //randomly get url address and port
+                targetService = serviceArray[new Random().Next(0, serviceArray.Count)];
+
+                string hostNew = $"{targetService.Value.Address}:{targetService.Value.Port}";
+                //resultUrl = url.Replace(groupName, hostNew,StringComparison.OrdinalIgnoreCase);
+                resultUrl = uri.Scheme + "://" + hostNew + "/api/fusersapi/Get";
+
+
+                //get result from HttpClient
+                string result = HttpClientHelper.InvokeApi(resultUrl);
+                userList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CurrentUserCore>>(result);
+
+                #endregion
+
+
+                ViewBag.Url = resultUrl;
+                ViewBag.Data = result;
+                ViewBag.Users = userList;
+            }
+
+            return View();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

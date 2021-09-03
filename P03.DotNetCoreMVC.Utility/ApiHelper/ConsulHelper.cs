@@ -39,7 +39,7 @@ namespace P03.DotNetCoreMVC.Utility.ApiHelper
                     DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5)
                 }
             });
-            Console.WriteLine($"http://{ip}:{port} finish registering with service ID: {serviceId} ");
+            Console.WriteLine($"http://{ip}:{port} finish registering with service ID: {serviceId} Weight: {weight}");
         }
 
     }

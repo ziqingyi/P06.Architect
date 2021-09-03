@@ -17,10 +17,10 @@ namespace P03.DotNetCoreMVC.WebApi
         {
             #region log ip and port
 
-            var config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddCommandLine(args)
-                .Build();
+            //var config = new ConfigurationBuilder()
+            //    .SetBasePath(Directory.GetCurrentDirectory())
+            //    .AddCommandLine(args)
+            //    .Build();
 
             #endregion
 

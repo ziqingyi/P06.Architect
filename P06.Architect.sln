@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.Services"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.EntityFrameworkModels", "P03.DotNetCoreMVC.EntityFrameworkModels\P03.DotNetCoreMVC.EntityFrameworkModels.csproj", "{E768C230-0A59-462D-96D6-AE3DAD8F2622}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03.DotNetCoreMVC.WebApi", "P03.DotNetCoreMVC.WebApi\P03.DotNetCoreMVC.WebApi.csproj", "{61865B1A-F5E9-4208-90DA-B96DBCAF3B68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.WebApi", "P03.DotNetCoreMVC.WebApi\P03.DotNetCoreMVC.WebApi.csproj", "{61865B1A-F5E9-4208-90DA-B96DBCAF3B68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03.DotNetCoreMVC.MicroServiceGateway", "P03.DotNetCoreMVC.MicroServiceGateway\P03.DotNetCoreMVC.MicroServiceGateway.csproj", "{B5D4AA2E-2146-4BCE-86CB-BDAC3C42CA6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,10 @@ Global
 		{61865B1A-F5E9-4208-90DA-B96DBCAF3B68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61865B1A-F5E9-4208-90DA-B96DBCAF3B68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61865B1A-F5E9-4208-90DA-B96DBCAF3B68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5D4AA2E-2146-4BCE-86CB-BDAC3C42CA6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5D4AA2E-2146-4BCE-86CB-BDAC3C42CA6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5D4AA2E-2146-4BCE-86CB-BDAC3C42CA6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5D4AA2E-2146-4BCE-86CB-BDAC3C42CA6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

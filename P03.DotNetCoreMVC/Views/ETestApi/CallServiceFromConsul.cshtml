@@ -11,7 +11,17 @@
 <body>
     <h1>ETestApi Controller CallServiceFromConsul</h1>
 
-<h3>@base.ViewBag.Message </h3>  
-    
+
+    <h3>@base.ViewBag.Url</h3>
+    <h5>@base.ViewBag.Data</h5>
+    @foreach (var user in base.ViewBag.Users)
+    {
+        <h4>********************</h4>
+        <h4>@user.Id</h4>
+        <h4>@user.Name</h4>
+        <h4>@user.Email</h4>
+    }
+
+
 </body>
 </html>

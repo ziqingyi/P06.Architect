@@ -82,8 +82,21 @@ namespace P03.DotNetCoreMVC.Controllers
             return View();
         }
 
+        #region Polling
+
+        private static int ISeed = 0;
+
+        #endregion
+
+
+        /// <summary>
+        /// https://localhost:44322/etestapi/CallServiceFromConsul
+        /// </summary>
+        /// <returns></returns>
         public IActionResult CallServiceFromConsul()
         {
+            List<CurrentUserCore> userList = new List<CurrentUserCore>();
+
             /*
              * http://localhost:44357/api/fusersapi/Get
              *
@@ -92,11 +105,9 @@ namespace P03.DotNetCoreMVC.Controllers
 
 
             string url = "http://UserServiceGroup/api/fusersapi/Get";
-
+            string resultUrl;
             Uri uri = new Uri(url);
             string groupName = uri.Host;
-
-
 
             using (ConsulClient client = new ConsulClient(c =>
             {
@@ -110,15 +121,29 @@ namespace P03.DotNetCoreMVC.Controllers
                 var list = consulDictionary.Where(k =>
                     k.Value.Service.Equals(groupName, StringComparison.OrdinalIgnoreCase));
 
+                var serviceArray = list.ToArray();
                 KeyValuePair<string, AgentService> keyValuePair = new KeyValuePair<string, AgentService>();
 
 
+                #region MyRegion
+
+                //randomly get url address and port
+                keyValuePair = serviceArray[new Random().Next(0, serviceArray.Length)];
+                string hostNew = $"{keyValuePair.Value.Address}:{keyValuePair.Value.Port}";
+                //resultUrl = url.Replace(groupName, hostNew,StringComparison.OrdinalIgnoreCase);
+                resultUrl = uri.Scheme + "://" + hostNew + "/api/fusersapi/Get";
 
 
+                //get result from HttpClient
+                string result = HttpClientHelper.InvokeApi(resultUrl);
+                userList = Newtonsoft.Json.JsonConvert.DeserializeObject<List<CurrentUserCore>>(result);
+
+                #endregion
 
 
-
-                base.ViewBag.Message = message;
+                ViewBag.Url = resultUrl;
+                ViewBag.Data = result;
+                ViewBag.Users = userList;
             }
 
             return View();

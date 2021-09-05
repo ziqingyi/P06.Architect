@@ -9,6 +9,11 @@ namespace P03.DotNetCoreMVC.Utility.ApiHelper
     public static class ConsulHelper
     {
 
+        /// <summary>
+        /// command:  consul.exe agent –dev
+        /// Portal:  http://localhost:8500
+        /// </summary>
+        /// <param name="configuration"></param>
         public static void ConsulRegister(this IConfiguration configuration)
         {
             ConsulClient client = new ConsulClient(c =>

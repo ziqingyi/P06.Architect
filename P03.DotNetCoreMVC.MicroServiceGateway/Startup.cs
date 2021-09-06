@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Ocelot.Provider.Consul;
 
 namespace P03.DotNetCoreMVC.MicroServiceGateway
 {
@@ -33,7 +34,7 @@ namespace P03.DotNetCoreMVC.MicroServiceGateway
 
             #region use Ocelot
 
-            services.AddOcelot();
+            services.AddOcelot().AddConsul();
 
             #endregion
 

@@ -1,5 +1,5 @@
 //**************************Test one Server address, manually fill server address and port*********
-////////// http://localhost:44363/T44357/fusersapi/Get
+////////// http://localhost:50000/T44357/fusersapi/Get
 //{
 //  "ReRoutes": [
 //    {
@@ -17,8 +17,8 @@
 //  ]
 //} 
 //**************************Test multiple Server address, two UpstreamPathTemplate*********
-/*   http://localhost:44363/T44357/fusersapi/Get
- *   http://localhost:44363/T44358/fusersapi/Get
+/*   http://localhost:50000/T44357/fusersapi/Get
+ *   http://localhost:50000/T44358/fusersapi/Get
  */
 //{
 //  "ReRoutes": [
@@ -108,9 +108,9 @@ CookieStickySessions - uses a cookie to stick all requests to a specific server.
     "BaseUrl": "http://127.0.0.1:50000",
     "ServiceDiscoveryProvider": {
       "Host": "localHost",
-      "Port": 8500, 
-      "Type": "Consul"  //Consul provide service discovery 
-    } 
+      "Port": 8500,
+      "Type": "Consul" //Consul provide service discovery 
+    }
 
   }
 }

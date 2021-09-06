@@ -16,35 +16,101 @@
 //    }
 //  ]
 //} 
-//**************************Test one Server address, manually fill server address and port*********
+//**************************Test multiple Server address, two UpstreamPathTemplate*********
 /*   http://localhost:44363/T44357/fusersapi/Get
  *   http://localhost:44363/T44358/fusersapi/Get
  */
+//{
+//  "ReRoutes": [
+//    {
+//      "DownstreamPathTemplate": "/api/{url}", //the address for server
+//      "DownstreamScheme": "http",
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "localhost",
+//          "Port": 44357 //server port 
+//        }
+//      ],
+//      "UpstreamPathTemplate": "/T44357/{url}", //gateway address and url
+//      "UpstreamHttpMethod": [ "Get", "Post" ]
+//    },
+//    {
+//      "DownstreamPathTemplate": "/api/{url}", //the address for server
+//      "DownstreamScheme": "http",
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "localhost",
+//          "Port": 44358 //server port 
+//        }
+//      ],
+//      "UpstreamPathTemplate": "/T44358/{url}", //gateway address and url
+//      "UpstreamHttpMethod": [ "Get", "Post" ]
+//    }
+//  ]
+//}
+
+//**************************Test multiple Server address, one UpstreamPathTemplate*********
+/*   http://localhost:50000/users/fusersapi/Get
+ */
+//{
+//  "ReRoutes": [
+//    {
+//      "DownstreamPathTemplate": "/api/{url}", //the address for server
+//      "DownstreamScheme": "http",
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "localhost",
+//          "Port": 44357 //server port 
+//        },
+//        {
+//          "Host": "localhost",
+//          "Port": 44358 //server port 
+//        }
+//      ],
+//      "UpstreamPathTemplate": "/users/{url}", //gateway address and url
+//      "UpstreamHttpMethod": [ "Get", "Post" ],
+//      "LoadBalancerOptions": {
+//        "Type": "RoundRobin"
+//      }
+//    }
+//  ]
+//}
+
+//**************************Test multiple Server address, one UpstreamPathTemplate*********
+/*   http://localhost:50000/users/fusersapi/Get
+
+LeastConnection - tracks which services are dealing with requests and sends new requests to 
+            service with least existing requests. The algorithm state is not distributed across a cluster of Ocelot¡¯s.
+
+RoundRobin - loops through available services and sends requests. 
+             The algorithm state is not distributed across a cluster of Ocelot¡¯s.
+
+NoLoadBalancer - takes the first available service from config or service discovery.
+
+CookieStickySessions - uses a cookie to stick all requests to a specific server. More info below.
+ */
 {
+
   "ReRoutes": [
     {
       "DownstreamPathTemplate": "/api/{url}", //the address for server
       "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 44357 //server port 
-        }
-      ],
-      "UpstreamPathTemplate": "/T44357/{url}", //gateway address and url
-      "UpstreamHttpMethod": [ "Get", "Post" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/{url}", //the address for server
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 44358 //server port 
-        }
-      ],
-      "UpstreamPathTemplate": "/T44358/{url}", //gateway address and url
-      "UpstreamHttpMethod": [ "Get", "Post" ]
+      "UpstreamPathTemplate": "/users/{url}", //gateway address and url
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "ServiceName": "UserServiceGroup",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin" //looping    
+      },
+      "UseServiceDiscovery": true
     }
-  ]
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://127.0.0.1:50000",
+    "ServiceDiscoveryProvider": {
+      "Host": "localHost",
+      "Port": 8500, 
+      "Type": "Consul"  //Consul provide service discovery 
+    } 
+
+  }
 }

@@ -16,7 +16,7 @@ using Ocelot.Middleware;
 namespace P03.DotNetCoreMVC.MicroServiceGateway
 {
     /// <summary>
-    /// dotnet P03.DotNetCoreMVC.MicroServiceGateway.exe --urls="http://*:6299" --ip="127.0.0.1" --port=50000
+    /// dotnet P03.DotNetCoreMVC.MicroServiceGateway.dll --urls="http://*:44363" --ip="127.0.0.1" --port=50000
     /// </summary>
     public class Startup
     {

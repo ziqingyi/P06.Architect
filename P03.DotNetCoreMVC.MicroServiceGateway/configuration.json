@@ -1,5 +1,25 @@
 //**************************Test one Server address, manually fill server address and port*********
-////////// https://localhost:44363/T44357/fusersapi/Get
+////////// http://localhost:44363/T44357/fusersapi/Get
+//{
+//  "ReRoutes": [
+//    {
+//      "DownstreamPathTemplate": "/api/{url}", //the address for server
+//      "DownstreamScheme": "http",
+//      "DownstreamHostAndPorts": [
+//        {
+//          "Host": "localhost",
+//          "Port": 44357 //server port 
+//        }
+//      ],
+//      "UpstreamPathTemplate": "/T44357/{url}", //gateway address and url
+//      "UpstreamHttpMethod": [ "Get", "Post" ]
+//    }
+//  ]
+//} 
+//**************************Test one Server address, manually fill server address and port*********
+/*   http://localhost:44363/T44357/fusersapi/Get
+ *   http://localhost:44363/T44358/fusersapi/Get
+ */
 {
   "ReRoutes": [
     {
@@ -12,6 +32,18 @@
         }
       ],
       "UpstreamPathTemplate": "/T44357/{url}", //gateway address and url
+      "UpstreamHttpMethod": [ "Get", "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/{url}", //the address for server
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44358 //server port 
+        }
+      ],
+      "UpstreamPathTemplate": "/T44358/{url}", //gateway address and url
       "UpstreamHttpMethod": [ "Get", "Post" ]
     }
   ]

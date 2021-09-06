@@ -76,7 +76,7 @@
 //  ]
 //}
 
-//**************************Test multiple Server address, one UpstreamPathTemplate*********
+//**************************Test multiple Server address, one UpstreamPathTemplate with Consul service discovery*********
 /*   http://localhost:50000/users/fusersapi/Get
 
 LeastConnection - tracks which services are dealing with requests and sends new requests to 
@@ -88,6 +88,36 @@ RoundRobin - loops through available services and sends requests.
 NoLoadBalancer - takes the first available service from config or service discovery.
 
 CookieStickySessions - uses a cookie to stick all requests to a specific server. More info below.
+ */
+//{
+
+//  "ReRoutes": [
+//    {
+//      "DownstreamPathTemplate": "/api/{url}", //the address for server
+//      "DownstreamScheme": "http",
+//      "UpstreamPathTemplate": "/users/{url}", //gateway address and url
+//      "UpstreamHttpMethod": [ "Get", "Post" ],
+//      "ServiceName": "UserServiceGroup",
+//      "LoadBalancerOptions": {
+//        "Type": "RoundRobin" //looping    
+//      },
+//      "UseServiceDiscovery": true
+//    }
+//  ],
+//  "GlobalConfiguration": {
+//    "BaseUrl": "http://127.0.0.1:50000",
+//    "ServiceDiscoveryProvider": {
+//      "Host": "localHost",
+//      "Port": 8500,
+//      "Type": "Consul" //Consul provide service discovery 
+//    }
+
+//  }
+//}
+
+//**************************Test multiple Server address, one UpstreamPathTemplate with Polly*********
+/*
+ * http://localhost:50000/users/fusersapi/Get
  */
 {
 
@@ -101,7 +131,30 @@ CookieStickySessions - uses a cookie to stick all requests to a specific server.
       "LoadBalancerOptions": {
         "Type": "RoundRobin" //looping    
       },
-      "UseServiceDiscovery": true
+      "UseServiceDiscovery": true,
+
+
+      "RateLimitOptions": {
+        "ClientWhitelist":  true, 
+        "EnableRateLimiting": true,
+        "Period": "5m",
+        "PeriodTimespan": 5,
+        "Limit": 5 
+      },
+
+
+      //"QoSOptions": {
+      //  "ExceptionsAllowedBeforeBreaking": 3, 
+      //  "DurationOfBreak": 10000, 
+      //  "TimeoutValue": 10000 
+      //} ,
+
+      "FileCacheOptions": {
+        "TtlSeconds": 10 
+      } 
+
+
+
     }
   ],
   "GlobalConfiguration": {
@@ -110,7 +163,11 @@ CookieStickySessions - uses a cookie to stick all requests to a specific server.
       "Host": "localHost",
       "Port": 8500,
       "Type": "Consul" //Consul provide service discovery 
-    }
+    },
+    "RateLimitOptions": {
+      "QuotaExceededMessage": "Too many requests, Please try later? 11",
+      "HttpStatusCode" : 666 
+    } 
 
   }
 }

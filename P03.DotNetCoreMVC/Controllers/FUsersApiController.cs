@@ -98,7 +98,7 @@ namespace P03.DotNetCoreMVC.Controllers
         #endregion
 
         #region HttpGet
-
+        //btnGet1
         // this is the rest way. but for test, we have multiple get names. 
         //GET api/User
         [HttpGet]
@@ -108,11 +108,12 @@ namespace P03.DotNetCoreMVC.Controllers
             return _usersList;
         }
 
+        //btnGet2
         [HttpGet]
         public CurrentUserCore GetUserByID(int id)
         {
             //throw new Exception("23213131");
-            string idParam = base.HttpContext.Request.Query["userId"];
+            string idParam = base.HttpContext.Request.Query["Id"];
 
             CurrentUserCore u = _usersList.FirstOrDefault(user => user.Id == id);
             if (u == null)
@@ -122,6 +123,7 @@ namespace P03.DotNetCoreMVC.Controllers
             return u;
         }
 
+        //btnGet3
         [HttpGet]
         //[CustomBasicAuthorize] //if place on method, only works for this method. 
         public IEnumerable<CurrentUserCore> GetUserByName(string username)
@@ -132,6 +134,7 @@ namespace P03.DotNetCoreMVC.Controllers
             return _usersList.Where(p => string.Equals(p.Name, username, StringComparison.OrdinalIgnoreCase));
         }
 
+        //btnGet4
         [HttpGet]
         public IEnumerable<CurrentUserCore> GetUserByNameId(string username, int id)
         {
@@ -141,13 +144,15 @@ namespace P03.DotNetCoreMVC.Controllers
             return _usersList.Where(p => string.Equals(p.Name, username, StringComparison.OrdinalIgnoreCase));
         }
 
+        /// ///////////////////////////////////////////////
+
         //btnGet5
         [HttpGet]
-        public IEnumerable<CurrentUserCore> GetUserByModel(CurrentUserCore user)
+        public IEnumerable<CurrentUserCore> GetUserByModel([FromQuery]CurrentUserCore user)
         {
-            string idParam = base.HttpContext.Request.Query["userId"];
-            string userNameParam = base.HttpContext.Request.Query["userName"];
-            string email = base.HttpContext.Request.Query["email"];
+            string idParam = base.HttpContext.Request.Query["Id"];
+            string userNameParam = base.HttpContext.Request.Query["Name"];
+            string email = base.HttpContext.Request.Query["Email"];
 
             return _usersList;
         }

@@ -64,7 +64,7 @@
                     <input type="button" id="btnGetOtherApi" value="GetOtherApi" />
                 </p>
                 
-                
+                <h5> result: <span id="txtShowResult"></span></h5>
 
             </div>
         </div>
@@ -73,18 +73,21 @@
         <script>
         $(
             function () {
-                var user = { Id: "1", Name: "Tom", Email: "safdxdaf@gmail.com" };
-                var info = "this is muti model";
+               
 
                 $("#btnGet1").on("click",
-                    function () {
+                    function () {//no param
                         $.ajax({
-                            url: "/api/FUsersApi/GetUserByName", type: "get", data: { "username": "Superman" },
-                            beforeSend: function (XHR) {
-                                XHR.setRequestHeader('Authorization', 'BasicAuth ' + ticket);
-                            },
+                            url: "/api/FUsersApi/Get",
+                            type: "get",
+                            data: "",
                             success: function (data) {
-                                alert(data);
+                                clearSearchResult();
+                                $.each(data, function (i, item) {
+
+                                    $("#txtShowResult").append("ID: " + item.id + " Name: " + item.name + " Account: " + item.account + ", ");
+                                });
+
                             },
                             datatype: "json"
                         });
@@ -97,34 +100,58 @@
                             url: "/api/FUsersApi/GetUserByID",
                             type: "get",
                             data: { "id": $("#txtId").val() },
-                            success: function (data) { alert(data); },
-                            datatype: "json"
-                        });
-                    });
-
-
-                $("#btnGet3").on("click",
-                    function () {//two param
-                        $.ajax({
-                            url: "/api/FUsersApi/GetUserByNameId",
-                            type: "get",
-                            data: { "userName": "Superman", "id": $("#txtId").val() },
-                            success: function (data) { alert(data); },
-                            datatype: "json"
-                        });
-                    });
-                $("#btnGet4").on("click",
-                    function () {//no param
-                        $.ajax({
-                            url: "/api/FUsersApi/Get",
-                            type: "get",
-                            data: "",
                             success: function (data) {
-                                alert(data);
+                                //alert(data);
+                                clearSearchResult();
+                            
+                                $("#txtShowResult").append("ID: " + data.id + " Name: " + data.name + " Account: " + data.account + ", ");
+                                
                             },
                             datatype: "json"
                         });
                     });
+
+                $("#btnGet3").on("click",
+                    function () {
+                        $.ajax({
+                            url: "/api/FUsersApi/GetUserByName", type: "get", data: { "username": "Eleven" },
+                            beforeSend: function (XHR) {
+                                XHR.setRequestHeader('Authorization', 'BasicAuth ' + ticket);
+                            },
+                            success: function (data) {
+                                //alert(data);
+                                clearSearchResult();
+                                $.each(data, function (i, item) {
+
+                                    $("#txtShowResult").append("ID: " + item.id + " Name: " + item.name + " Account: " + item.account + ", ");
+                                });
+                            },
+                            datatype: "json"
+                        });
+                    });
+
+
+
+                $("#btnGet4").on("click",
+                    function () {//two param
+                        $.ajax({
+                            url: "/api/FUsersApi/GetUserByNameId",
+                            type: "get",
+                            data: { "userName": "elaaa", "id": $("#txtId").val() },
+                            success: function (data) {
+                                clearSearchResult();
+                                $.each(data, function (i, item) {
+
+                                    $("#txtShowResult").append("ID: " + item.id + " Name: " + item.name + " Account: " + item.account + ", ");
+                                });
+                            },
+                            datatype: "json"
+                        });
+                    });
+
+
+                var user = { Id: "1", Name: "Tom", Email: "safdxdaf@gmail.com" };
+                var info = "this is muti model";
 
                 $("#btnGet5").on("click",
                     function () {//pass json type of object
@@ -132,7 +159,14 @@
                             url: "/api/FUsersApi/GetUserByModel",
                             type: "get",
                             data: user,
-                            success: function (data) { alert(data); },
+                            success: function (data) {
+                                clearSearchResult();
+                                $.each(data, function (i, item) {
+
+                                    $("#txtShowResult").append("ID: " + item.id + " Name: " + item.name + " Account: " + item.account + ", ");
+                                });
+
+                            },
                             datatype: "json"
                         });
                     });
@@ -354,6 +388,21 @@
                 });
             }
         );
+
+
+
+
+        function clearSearchResult() {
+            $("#txtShowResult").html("");
+        }
+
+        
+
+
+
+
+
+
 
         </script>
 

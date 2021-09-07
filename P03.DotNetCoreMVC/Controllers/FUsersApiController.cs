@@ -156,16 +156,17 @@ namespace P03.DotNetCoreMVC.Controllers
 
             return _usersList;
         }
-        //btnGet6
+        //btnGet6, core with [FromHeader]
         [HttpGet]
-        public IEnumerable<CurrentUserCore> GetUserByModelUri([FromUri] CurrentUserCore user)
+        public IEnumerable<CurrentUserCore> GetUserByModelUri([FromHeader]CurrentUserCore user)
         {
-            string idParam = base.HttpContext.Request.Query["userId"];
-            string userNameParam = base.HttpContext.Request.Query["userName"];
-            string email = base.HttpContext.Request.Query["email"];
+            string idParam = base.HttpContext.Request.Query["Id"];
+            string userNameParam = base.HttpContext.Request.Query["Name"];
+            string email = base.HttpContext.Request.Query["Email"];
 
             return _usersList;
         }
+
         //btnGet7
         [HttpGet]
         public IEnumerable<CurrentUserCore> GetUserByModelSerialize(string userstring)
@@ -173,13 +174,17 @@ namespace P03.DotNetCoreMVC.Controllers
             CurrentUserCore user = JsonConvert.DeserializeObject<CurrentUserCore>(userstring);
             return _usersList;
         }
+
+
         //btnGet8
         public IEnumerable<CurrentUserCore> GetUserByModelSerializeWithoutGet(string userstring)
         {
             CurrentUserCore user = JsonConvert.DeserializeObject<CurrentUserCore>(userstring);
             return _usersList;
         }
-        //not begin with Get and no attribute([HttpGet]/[HttpPost]/[HttpPut]/[HttpDelete]), will return 405, not sure which request.
+
+        //btnGet9
+        //not begin with Get and no attribute([HttpGet]/[HttpPost]/[HttpPut]/[HttpDelete]), request accepted..
         public IEnumerable<CurrentUserCore> NoGetUserByModelSerializeWithoutGet(string userstring)
         {
             CurrentUserCore user = JsonConvert.DeserializeObject<CurrentUserCore>(userstring);

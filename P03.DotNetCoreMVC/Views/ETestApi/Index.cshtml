@@ -74,7 +74,7 @@
         $(
             function () {
                
-
+                //https://localhost:44322/api/FUsersApi/Get
                 $("#btnGet1").on("click",
                     function () {//no param
                         $.ajax({
@@ -93,7 +93,7 @@
                         });
                     });
 
-
+                //https://localhost:44322/api/FUsersApi/GetUserByID?id=5
                 $("#btnGet2").on("click",
                     function () {//one param
                         $.ajax({
@@ -111,6 +111,7 @@
                         });
                     });
 
+                //https://localhost:44322/api/FUsersApi/GetUserByName?username=Eleven
                 $("#btnGet3").on("click",
                     function () {
                         $.ajax({
@@ -131,7 +132,7 @@
                     });
 
 
-
+                //https://localhost:44322/api/FUsersApi/GetUserByNameId?userName=elaaa&id=5
                 $("#btnGet4").on("click",
                     function () {//two param
                         $.ajax({
@@ -153,6 +154,7 @@
                 var user = { Id: "1", Name: "Tom", Email: "safdxdaf@gmail.com" };
                 var info = "this is muti model";
 
+                //https://localhost:44322/api/FUsersApi/GetUserByModel?Id=1&Name=Tom&Email=safdxdaf%40gmail.com
                 $("#btnGet5").on("click",
                     function () {//pass json type of object
                         $.ajax({
@@ -170,41 +172,85 @@
                             datatype: "json"
                         });
                     });
+
+                //https://localhost:44322/api/FUsersApi/GetUserByModel?Id=1&Name=Tom&Email=safdxdaf%40gmail.com
                 $("#btnGet6").on("click",
-                    function () {//pass object, must use FromUri to find
+                    function () {//pass object, must use [FromHeader] to bind
                         $.ajax({
                             url: "/api/FUsersApi/GetUserByModelUri",
                             type: "get",
                             data: user,
-                            success: function (data) { alert(data); },
+                            success: function (data) {
+                                clearSearchResult();
+                                $.each(data, function (i, item) {
+
+                                    $("#txtShowResult").append("ID: " + item.id + " Name: " + item.name + " Account: " + item.account + ", ");
+                                });
+
+                            },
                             datatype: "json"
                         });
                     });
+
+
+                //https://localhost:44322/api/FUsersApi/GetUserByModelSerialize?userString=%7B%22Id%22%3A%221%22%2C%22Name%22%3A%22Tom%22%2C%22Email%22%3A%22safdxdaf%40gmail.com%22%7D
                 $("#btnGet7").on("click",
                     function () {//pass obj after serialization
                         $.ajax({
                             url: "/api/FUsersApi/GetUserByModelSerialize",
                             type: "get",
                             data: { userString: JSON.stringify(user) },
-                            success: function (data) { alert(data); },
+                            success: function (data) {
+                              
+                                clearSearchResult();
+
+                                $.each(data, function (i, item) {
+
+                                    $("#txtShowResult").append("ID: " + item.id + " Name: " + item.name + " Account: " + item.account + ", ");
+                                });
+
+                            },
                             datatype: "json"
                         });
                     });
+
+                //https://localhost:44322/api/FUsersApi/GetUserByModelSerializeWithoutGet?userString=%7B%22Id%22%3A%221%22%2C%22Name%22%3A%22Tom%22%2C%22Email%22%3A%22safdxdaf%40gmail.com%22%7D
                 $("#btnGet8").on("click", function () {//pass obj after serialization
                     $.ajax({
                         url: "/api/FUsersApi/GetUserByModelSerializeWithoutGet",
                         type: "get",
                         data: { userString: JSON.stringify(user) },
-                        success: function (data) { alert(data); },
+                        success: function (data) {
+                              
+                            clearSearchResult();
+
+                            $.each(data, function (i, item) {
+
+                                $("#txtShowResult").append("ID: " + item.id + " Name: " + item.name + " Account: " + item.account + ", ");
+                            });
+
+                        },
                         datatype: "json"
                     });
                 });
-                $("#btnGet9").on("click", function () {//pass obj after serialization  405 Method Not Allowed    need to start with get if no httpget
+
+                //https://localhost:44322/api/FUsersApi/NoGetUserByModelSerializeWithoutGet?userString=%7B%22Id%22%3A%221%22%2C%22Name%22%3A%22Tom%22%2C%22Email%22%3A%22safdxdaf%40gmail.com%22%7D
+                $("#btnGet9").on("click", function () {//pass obj after serialization  method name does not start with get and method is not decorated by httpget
                     $.ajax({
                         url: "/api/FUsersApi/NoGetUserByModelSerializeWithoutGet",
                         type: "get",
                         data: { userString: JSON.stringify(user) },
-                        success: function (data) { alert(data); }, datatype: "json"
+                        success: function (data) {
+
+                            clearSearchResult();
+
+                            $.each(data, function (i, item) {
+
+                                $("#txtShowResult").append("ID: " + item.id + " Name: " + item.name + " Account: " + item.account + ", ");
+                            });
+
+                        },
+                        datatype: "json"
                     });
                 });
 

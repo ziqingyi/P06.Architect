@@ -35,6 +35,7 @@
                 </p>
 
                 <p>
+                    <input type="button" id="btnPost0" value="Post0" />
                     <input type="button" id="btnPost1" value="Post1" />
                     <input type="button" id="btnPost2" value="Post2" />
                     <input type="button" id="btnPost3" value="Post3" />
@@ -257,37 +258,79 @@
 
 
 
-////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////Post//////////////////////////////////////////////////////////////
 
+                //https://localhost:44322/api/FUsersApi/RegisterNone
+                $("#btnPost0").on("click", function () {//pass single value, no key for jason
+                        $.ajax({
+                            url: "/api/FUsersApi/RegisterNone",
+                            type: "post",
+                            data: "",
+                            success: function (data) {
+                                //alert(data);
+                                clearSearchResult();
+                            
+                                $("#txtShowResult").append("ID: " + data.id + " Name: " + data.name + " Account: " + data.account + ", ");
+                                
+                            },
+                            datatype: "json"
+                        });
+                });
 
-
+                //https://localhost:44322/api/FUsersApi/RegisterNoKey
+                //No value in Form
                 $("#btnPost1").on("click", function () {//pass single value, no key for jason
                     $.ajax({
                         url: "/api/FUsersApi/RegisterNoKey",
                         type: "post",
                         data: { "": $("#txtId").val() },
-                        success: function (data) { alert(data); },
+                        success: function (data) {
+                            //alert(data);
+                            clearSearchResult();
+                            
+                            $("#txtShowResult").append("ID: " + data.id + " Name: " + data.name + " Account: " + data.account + ", ");
+                        },
                         datatype: "json"
                     });
                 });
+
+                // https://localhost:44322/api/FUsersApi/RegisterWithDataKey
+                //From: Id:5  will be saved in base.HttpContext.Request.Form["Id"]
                 $("#btnPost2").on("click", function () {//key-value, if put "id" as key, will not able to get value
                     $.ajax({
-                        url: "/api/FUsersApi/Register",
+                        url: "/api/FUsersApi/RegisterWithDataKey",
                         type: "post",
-                        data: { "id": $("#txtId").val() },
-                        success: function (data) { alert(data); },
+                        data: { "Id": $("#txtId").val() },
+                        success: function (data) {
+                            //alert(data);
+                            clearSearchResult();
+                            
+                            $("#txtShowResult").append("ID: " + data.id + " Name: " + data.name + " Account: " + data.account + ", ");
+                        },
                         datatype: "json"
                     });
                 });
+
+
+                var userPost = { Id: "1", Name: "TomPost", Email: "safdxdaf@gmail.com" };
+
+                //https://localhost:44322/api/FUsersApi/RegisterUser
                 $("#btnPost3").on("click", function () {//json
                     $.ajax({
                         url: "/api/FUsersApi/RegisterUser",
                         type: "post",
-                        data: user,
-                        success: function (data) { alert(data); },
+                        data: userPost,
+                        success: function (data) {
+                            //alert(data);
+                            clearSearchResult();
+
+                            $("#txtShowResult").append("ID: " + data.id + " Name: " + data.name + " Account: " + data.account + ", ");
+                        },
                         datatype: "json"
                     });
                 });
+
+
                 $("#btnPost4").on("click", function () {//json, , contentType
                     $.ajax({
                         url: "/api/FUsersApi/RegisterUser",

@@ -195,7 +195,7 @@ namespace P03.DotNetCoreMVC.Controllers
 
 
         #region HttpPost
-        //
+        //btnPost0
         [HttpPost]
         public CurrentUserCore RegisterNone()
         {
@@ -203,9 +203,9 @@ namespace P03.DotNetCoreMVC.Controllers
         }
         //btnPost1
         [HttpPost]
-        public CurrentUserCore RegisterNoKey([FromBody] int id)
+        public CurrentUserCore RegisterNoKey(int id)
         {
-            string idParam = base.HttpContext.Request.Query["UserID"];
+            string idParam = base.HttpContext.Request.Form[""]; //get value from form
 
             var user = _usersList.FirstOrDefault(u => u.Id == id);
             if (user == null)
@@ -216,10 +216,10 @@ namespace P03.DotNetCoreMVC.Controllers
         }
         //btnPost2
         [HttpPost]
-        public CurrentUserCore Register([FromBody] int id)
+        public CurrentUserCore RegisterWithDataKey([FromForm]int id) //must get id from Form
         {
-            string idParam = base.HttpContext.Request.Query["ID"];
-            CurrentUserCore user = _usersList.FirstOrDefault(u => u.Id == id);
+            string idParam = base.HttpContext.Request.Form["Id"];//get value from form
+            CurrentUserCore user = _usersList.FirstOrDefault(u => u.Id == int.Parse(idParam));
 
             if (user == null)
             {
@@ -230,11 +230,11 @@ namespace P03.DotNetCoreMVC.Controllers
         }
         //btnPost3
         [HttpPost]
-        public CurrentUserCore RegisterUser(CurrentUserCore user)
+        public CurrentUserCore RegisterUser([FromForm]CurrentUserCore user)
         {
-            string idParam = base.HttpContext.Request.Query["UserID"];
-            string nameParam = base.HttpContext.Request.Query["userName"];
-            string emailParam = base.HttpContext.Request.Query["userEmail"];
+            string idParam = base.HttpContext.Request.Form["Id"];
+            string nameParam = base.HttpContext.Request.Form["Name"];
+            string emailParam = base.HttpContext.Request.Form["Email"];
 
             return user;
         }
@@ -243,10 +243,10 @@ namespace P03.DotNetCoreMVC.Controllers
         [HttpPost]
         public string RegisterObject(JObject jData)
         {
-            string idParam = base.HttpContext.Request.Query["User[userId]"];
-            string nameParam = base.HttpContext.Request.Query["User[userName]"];
-            string emailParam = base.HttpContext.Request.Query["User[userEmail]"];
-            string infoParam = base.HttpContext.Request.Query["info"];
+            string idParam = base.HttpContext.Request.Form["User[Id]"];
+            string nameParam = base.HttpContext.Request.Form["User[Name]"];
+            string emailParam = base.HttpContext.Request.Form["User[Email]"];
+            string infoParam = base.HttpContext.Request.Form["info"];
 
             dynamic json = jData;
             JObject juser = json.User;
@@ -262,10 +262,10 @@ namespace P03.DotNetCoreMVC.Controllers
         [HttpPost]
         public string RegisterObjectDynamic(dynamic dynamicData)
         {
-            string idParam = base.HttpContext.Request.Query["User[userId]"];
-            string nameParam = base.HttpContext.Request.Query["User[userName]"];
-            string emailParam = base.HttpContext.Request.Query["User[userEmail]"];
-            string infoParam = base.HttpContext.Request.Query["info"];
+            string idParam = base.HttpContext.Request.Form["User[userId]"];
+            string nameParam = base.HttpContext.Request.Form["User[userName]"];
+            string emailParam = base.HttpContext.Request.Form["User[userEmail]"];
+            string infoParam = base.HttpContext.Request.Form["info"];
 
             dynamic json = dynamicData;
             JObject juser = json.User;
@@ -293,7 +293,7 @@ namespace P03.DotNetCoreMVC.Controllers
         [HttpPut]
         public CurrentUserCore RegisterNoKeyPut([FromBody] int id)
         {
-            string idParam = base.HttpContext.Request.Query["userId"];
+            string idParam = base.HttpContext.Request.Form["userId"];
 
             CurrentUserCore user = _usersList.FirstOrDefault(u => u.Id == id);
             if (user == null)
@@ -307,7 +307,7 @@ namespace P03.DotNetCoreMVC.Controllers
         [HttpPut]
         public CurrentUserCore RegisterPut([FromBody] int id)
         {
-            string idParam = base.HttpContext.Request.Query["userId"];
+            string idParam = base.HttpContext.Request.Form["userId"];
 
             CurrentUserCore user = _usersList.FirstOrDefault(u => u.Id == id);
             if (user == null)
@@ -321,9 +321,9 @@ namespace P03.DotNetCoreMVC.Controllers
         [HttpPut]
         public CurrentUserCore RegisterUserPut(CurrentUserCore user)
         {
-            string idParam = base.HttpContext.Request.Query["userId"];
-            string nameParam = base.HttpContext.Request.Query["userName"];
-            string emailParam = base.HttpContext.Request.Query["userEmail"];
+            string idParam = base.HttpContext.Request.Form["userId"];
+            string nameParam = base.HttpContext.Request.Form["userName"];
+            string emailParam = base.HttpContext.Request.Form["userEmail"];
 
             return user;
         }
@@ -331,10 +331,10 @@ namespace P03.DotNetCoreMVC.Controllers
         [HttpPut]
         public string RegisterObjectPut(JObject jData)
         {
-            string idParam = base.HttpContext.Request.Query["User[userId]"];
-            string nameParam = base.HttpContext.Request.Query["User[userName]"];
-            string emailParam = base.HttpContext.Request.Query["User[userEmail]"];
-            string infoParam = base.HttpContext.Request.Query["info"];
+            string idParam = base.HttpContext.Request.Form["User[userId]"];
+            string nameParam = base.HttpContext.Request.Form["User[userName]"];
+            string emailParam = base.HttpContext.Request.Form["User[userEmail]"];
+            string infoParam = base.HttpContext.Request.Form["info"];
 
             dynamic json = jData;
             JObject juser = json.User;
@@ -349,10 +349,10 @@ namespace P03.DotNetCoreMVC.Controllers
         [HttpPut]
         public string RegisterObjectDynamicPut(dynamic dynamicData)
         {
-            string idParam = base.HttpContext.Request.Query["User[userId]"];
-            string nameParam = base.HttpContext.Request.Query["User[userName]"];
-            string emailParam = base.HttpContext.Request.Query["User[userEmail]"];
-            string infoParam = base.HttpContext.Request.Query["info"];
+            string idParam = base.HttpContext.Request.Form["User[userId]"];
+            string nameParam = base.HttpContext.Request.Form["User[userName]"];
+            string emailParam = base.HttpContext.Request.Form["User[userEmail]"];
+            string infoParam = base.HttpContext.Request.Form["info"];
 
             dynamic json = dynamicData;
             JObject juser = json.User;
@@ -380,7 +380,7 @@ namespace P03.DotNetCoreMVC.Controllers
         [HttpDelete]
         public CurrentUserCore RegisterNoKeyDelete([FromBody] int id)
         {
-            string idParam = base.HttpContext.Request.Query["userId"];
+            string idParam = base.HttpContext.Request.Form["userId"];
             CurrentUserCore user = _usersList.FirstOrDefault(u => u.Id == id);
 
             if (user == null)
@@ -393,7 +393,7 @@ namespace P03.DotNetCoreMVC.Controllers
         [HttpDelete]
         public CurrentUserCore RegisterDelete([FromBody] int id)
         {
-            string idParam = base.HttpContext.Request.Query["userId"];
+            string idParam = base.HttpContext.Request.Form["userId"];
 
             CurrentUserCore user = _usersList.FirstOrDefault(u => u.Id == id);
             if (user == null)
@@ -407,9 +407,9 @@ namespace P03.DotNetCoreMVC.Controllers
         [HttpDelete]
         public CurrentUserCore RegisterUserDelete(CurrentUserCore user)
         {
-            string idParam = base.HttpContext.Request.Query["userId"];
-            string nameParam = base.HttpContext.Request.Query["userName"];
-            string emailParam = base.HttpContext.Request.Query["userEmail"];
+            string idParam = base.HttpContext.Request.Form["userId"];
+            string nameParam = base.HttpContext.Request.Form["userName"];
+            string emailParam = base.HttpContext.Request.Form["userEmail"];
 
             return user;
         }
@@ -417,9 +417,9 @@ namespace P03.DotNetCoreMVC.Controllers
         [HttpDelete]
         public string RegisterObjectDynamicDelete(dynamic dynamicData)
         {
-            string idParam = base.HttpContext.Request.Query["User[userId]"];
-            string nameParam = base.HttpContext.Request.Query["User[userName]"];
-            string emailParam = base.HttpContext.Request.Query["info"];
+            string idParam = base.HttpContext.Request.Form["User[userId]"];
+            string nameParam = base.HttpContext.Request.Form["User[userName]"];
+            string emailParam = base.HttpContext.Request.Form["info"];
 
             dynamic json = dynamicData;
             JObject juser = json.User;

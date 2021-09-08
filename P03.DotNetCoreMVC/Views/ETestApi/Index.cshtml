@@ -317,7 +317,7 @@
                 //https://localhost:44322/api/FUsersApi/RegisterUser
                 $("#btnPost3").on("click", function () {//json
                     $.ajax({
-                        url: "/api/FUsersApi/RegisterUser",
+                        url: "/api/FUsersApi/RegisterUserForm",
                         type: "post",
                         data: userPost,
                         success: function (data) {
@@ -330,17 +330,24 @@
                     });
                 });
 
-
+                //https://localhost:44322/api/FUsersApi/RegisterUser
                 $("#btnPost4").on("click", function () {//json, , contentType
                     $.ajax({
                         url: "/api/FUsersApi/RegisterUser",
                         type: "post",
-                        data: JSON.stringify(user),
-                        success: function (data) { alert(data); },
+                        data: JSON.stringify(userPost),
+                        success: function (data) {
+                            //alert(data);
+                            clearSearchResult();
+
+                            $("#txtShowResult").append("ID: " + data.id + " Name: " + data.name + " Account: " + data.account + ", ");
+                        },
                         datatype: "json",
                         contentType: 'application/json'
                     });
                 });
+
+
                 $("#btnPost5").on("click", function () {//JObject
                     $.ajax({
                         url: "/api/FUsersApi/RegisterObject",

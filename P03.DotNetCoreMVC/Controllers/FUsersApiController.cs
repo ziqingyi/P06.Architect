@@ -5,12 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using P03.DotNetCoreMVC.EntityFrameworkModels.Models;
 using P03.DotNetCoreMVC.Interface.TestServiceInterface;
-using System.Web.Http;
 using P03.DotNetCoreMVC.Interface;
 using P03.DotNetCoreMVC.Utility.Models;
 using FromBodyAttribute = Microsoft.AspNetCore.Mvc.FromBodyAttribute;
@@ -19,7 +19,7 @@ using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
 using HttpPutAttribute = Microsoft.AspNetCore.Mvc.HttpPutAttribute;
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
-
+using FromBody = Microsoft.AspNetCore.Mvc.FromBodyAttribute;
 
 
 namespace P03.DotNetCoreMVC.Controllers
@@ -230,7 +230,7 @@ namespace P03.DotNetCoreMVC.Controllers
         }
         //btnPost3
         [HttpPost]
-        public CurrentUserCore RegisterUser([FromForm]CurrentUserCore user)
+        public CurrentUserCore RegisterUserForm([FromForm]CurrentUserCore user)
         {
             string idParam = base.HttpContext.Request.Form["Id"];
             string nameParam = base.HttpContext.Request.Form["Name"];
@@ -239,7 +239,20 @@ namespace P03.DotNetCoreMVC.Controllers
             return user;
         }
 
+        //btnPost4
+        [HttpPost]
+        public string RegisterUser([FromUri]string user)
+        {
+            //string idParam = base.HttpContext.Request.Form["Id"];
+            //string nameParam = base.HttpContext.Request.Form["Name"];
+            //string emailParam = base.HttpContext.Request.Form["Email"];
 
+            return user;
+        }
+
+
+
+        //btnPost5
         [HttpPost]
         public string RegisterObject(JObject jData)
         {
@@ -291,7 +304,7 @@ namespace P03.DotNetCoreMVC.Controllers
 
 
         [HttpPut]
-        public CurrentUserCore RegisterNoKeyPut([FromBody] int id)
+        public CurrentUserCore RegisterNoKeyPut([System.Web.Http.FromBody] int id)
         {
             string idParam = base.HttpContext.Request.Form["userId"];
 
@@ -305,7 +318,7 @@ namespace P03.DotNetCoreMVC.Controllers
 
 
         [HttpPut]
-        public CurrentUserCore RegisterPut([FromBody] int id)
+        public CurrentUserCore RegisterPut([System.Web.Http.FromBody] int id)
         {
             string idParam = base.HttpContext.Request.Form["userId"];
 
@@ -378,7 +391,7 @@ namespace P03.DotNetCoreMVC.Controllers
         }
 
         [HttpDelete]
-        public CurrentUserCore RegisterNoKeyDelete([FromBody] int id)
+        public CurrentUserCore RegisterNoKeyDelete([System.Web.Http.FromBody] int id)
         {
             string idParam = base.HttpContext.Request.Form["userId"];
             CurrentUserCore user = _usersList.FirstOrDefault(u => u.Id == id);
@@ -391,7 +404,7 @@ namespace P03.DotNetCoreMVC.Controllers
         }
 
         [HttpDelete]
-        public CurrentUserCore RegisterDelete([FromBody] int id)
+        public CurrentUserCore RegisterDelete([System.Web.Http.FromBody] int id)
         {
             string idParam = base.HttpContext.Request.Form["userId"];
 

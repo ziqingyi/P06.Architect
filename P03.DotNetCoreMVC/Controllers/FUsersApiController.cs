@@ -228,7 +228,7 @@ namespace P03.DotNetCoreMVC.Controllers
 
             return user;
         }
-        //btnPost3
+        //btnPost3, binding to Form
         [HttpPost]
         public CurrentUserCore RegisterUserForm([FromForm]CurrentUserCore user)
         {
@@ -241,13 +241,14 @@ namespace P03.DotNetCoreMVC.Controllers
 
         //btnPost4
         [HttpPost]
-        public string RegisterUser([FromUri]string user)
+        public CurrentUserCore RegisterUser([FromBodyAttribute]string user)
         {
             //string idParam = base.HttpContext.Request.Form["Id"];
             //string nameParam = base.HttpContext.Request.Form["Name"];
             //string emailParam = base.HttpContext.Request.Form["Email"];
 
-            return user;
+            CurrentUserCore res = JsonConvert.DeserializeObject<CurrentUserCore>(user);
+            return res;
         }
 
 

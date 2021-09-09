@@ -33,7 +33,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.WebApi", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.MicroServiceGateway", "P03.DotNetCoreMVC.MicroServiceGateway\P03.DotNetCoreMVC.MicroServiceGateway.csproj", "{B5D4AA2E-2146-4BCE-86CB-BDAC3C42CA6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P06.Architect.WebDemo", "P06.Architect.WebDemo\P06.Architect.WebDemo.csproj", "{948FDAE5-EC54-42B9-98D1-3E3E0BD284C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P06.Architect.WebDemo", "P06.Architect.WebDemo\P06.Architect.WebDemo.csproj", "{948FDAE5-EC54-42B9-98D1-3E3E0BD284C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03.DotNetCoreMVC.AuthenticationCenter", "P03.DotNetCoreMVC.AuthenticationCenter\P03.DotNetCoreMVC.AuthenticationCenter.csproj", "{B700BC7F-536D-4BEF-AAB3-B13961EE9053}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +107,10 @@ Global
 		{948FDAE5-EC54-42B9-98D1-3E3E0BD284C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{948FDAE5-EC54-42B9-98D1-3E3E0BD284C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{948FDAE5-EC54-42B9-98D1-3E3E0BD284C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B700BC7F-536D-4BEF-AAB3-B13961EE9053}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B700BC7F-536D-4BEF-AAB3-B13961EE9053}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B700BC7F-536D-4BEF-AAB3-B13961EE9053}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B700BC7F-536D-4BEF-AAB3-B13961EE9053}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

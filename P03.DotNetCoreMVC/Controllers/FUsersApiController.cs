@@ -100,6 +100,7 @@ namespace P03.DotNetCoreMVC.Controllers
         #region HttpGet
         //btnGet1
         // this is the rest way. but for test, we have multiple get names. 
+        //https://localhost:44357/api/FUsersApi/get
         //GET api/User
         [HttpGet]
         public IEnumerable<CurrentUserCore> Get()

@@ -9,9 +9,11 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Autofac;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using P03.DotNetCoreMVC.Interface.TestServiceInterface;
 using P03.DotNetCoreMVC.Services;
 using P03.DotNetCoreMVC.Utility;
@@ -77,6 +79,39 @@ namespace P03.DotNetCoreMVC.WebApi
             #endregion
 
 
+
+            #region JWT
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidAudience = this.Configuration["audience"],
+                        ValidIssuer = this.Configuration["issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.Configuration["SecurityKey"]))
+                        //AudienceValidator = (m, n, z) =>
+                        //{
+                        //    return m != null && m.FirstOrDefault().Equals(this.Configuration["audience"]);
+                        //},//custom validator, invalid previous log in.
+                    };
+                });
+
+            #endregion
+
+
+
+
+
+
+
+
+
+
         }
 
 
@@ -103,6 +138,13 @@ namespace P03.DotNetCoreMVC.WebApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+            #region JWT
+
+            app.UseAuthentication();
+
+            #endregion
+
 
             #region log ip and port
 

@@ -258,9 +258,9 @@ namespace P03.DotNetCoreMVC.Controllers
         [HttpPost]
         public string RegisterObject(JObject jData)
         {
-            string idParam = base.HttpContext.Request.Form["User[Id]"];
-            string nameParam = base.HttpContext.Request.Form["User[Name]"];
-            string emailParam = base.HttpContext.Request.Form["User[Email]"];
+            string idParam = base.HttpContext.Request.Form["userPost[Id]"];
+            string nameParam = base.HttpContext.Request.Form["userPost[Name]"];
+            string emailParam = base.HttpContext.Request.Form["userPost[Email]"];
             string infoParam = base.HttpContext.Request.Form["info"];
 
             dynamic json = jData;
@@ -277,9 +277,9 @@ namespace P03.DotNetCoreMVC.Controllers
         [HttpPost]
         public string RegisterObjectDynamic(dynamic dynamicData)
         {
-            string idParam = base.HttpContext.Request.Form["User[userId]"];
-            string nameParam = base.HttpContext.Request.Form["User[userName]"];
-            string emailParam = base.HttpContext.Request.Form["User[userEmail]"];
+            string idParam = base.HttpContext.Request.Form["userPost[Id]"];
+            string nameParam = base.HttpContext.Request.Form["userPost[Name]"];
+            string emailParam = base.HttpContext.Request.Form["userPost[Email]"];
             string infoParam = base.HttpContext.Request.Form["info"];
 
             dynamic json = dynamicData;

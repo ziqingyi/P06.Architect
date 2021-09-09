@@ -87,20 +87,17 @@ namespace P03.DotNetCoreMVC.WebApi.Controllers
             return _usersList;
         }
 
-
-        #endregion
-
-
-        #region HttpPost
-
-        [HttpPost]
+        [HttpGet]
         [AllowAnonymous] //must from AspNetCore
-        public CurrentUserCore Post()
+        public CurrentUserCore GetUserById(string username)
         {
-            this._logger.LogInformation("This is GUsersAuthController  Post method");
-            return _usersList.FirstOrDefault();
+            CurrentUserCore u = _usersList.FirstOrDefault(user => user.Id == id);
+            if (u == null)
+            {
+                throw new System.Web.Http.HttpResponseException(HttpStatusCode.NotFound);
+            }
+            return u;
         }
-        
         #endregion
 
 

@@ -153,7 +153,6 @@
 
 
                 var user = { Id: "1", Name: "Tom", Email: "safdxdaf@gmail.com" };
-                var info = "this is muti model";
 
                 //https://localhost:44322/api/FUsersApi/GetUserByModel?Id=1&Name=Tom&Email=safdxdaf%40gmail.com
                 $("#btnGet5").on("click",
@@ -258,7 +257,7 @@
 
 
 
-//////////////////////////////Post//////////////////////////////////////////////////////////////
+//////////////////////////////Post, error from 3 - 6 in core//////////////////////////////////////////////////////////////
 
                 //https://localhost:44322/api/FUsersApi/RegisterNone
                 $("#btnPost0").on("click", function () {//pass single value, no key for jason
@@ -313,6 +312,7 @@
 
 
                 var userPost = { Id: "1", Name: "TomPost", Email: "safdxdaf@gmail.com" };
+                var info = "this is muti model";
 
                 //https://localhost:44322/api/FUsersApi/RegisterUser
                 $("#btnPost3").on("click", function () {//json
@@ -331,7 +331,7 @@
                 });
 
                 //https://localhost:44322/api/FUsersApi/RegisterUser
-                $("#btnPost4").on("click", function () {//json, , contentType
+                $("#btnPost4").on("click", function () {//send json, , contentType is application/json
                     $.ajax({
                         url: "/api/FUsersApi/RegisterUser",
                         type: "post",
@@ -352,8 +352,13 @@
                     $.ajax({
                         url: "/api/FUsersApi/RegisterObject",
                         type: "post",
-                        data: { "User": user, "Info": info },
-                        success: function (data) { alert(data); },
+                        data: { "User": userPost, "Info": info },
+                        success: function (data) {
+                            //alert(data);
+                            clearSearchResult();
+
+                            $("#txtShowResult").append(data);
+                        },
                         datatype: "json"
                     });
                 });
@@ -362,7 +367,12 @@
                         url: "/api/FUsersApi/RegisterObjectDynamic",
                         type: "post",
                         data: { "User": user, "Info": info },
-                        success: function (data) { alert(data); },
+                        success: function (data) {
+                            //alert(data);
+                            clearSearchResult();
+
+                            $("#txtShowResult").append(data);
+                        },
                         datatype: "json",
                         contentType: 'application/json'
                     });

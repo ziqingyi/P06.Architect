@@ -23,7 +23,7 @@ using P03.DotNetCoreMVC.Interface.TestServiceInterface;
 
 namespace P03.DotNetCoreMVC.WebApi.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     [Authorize]//must from AspNetCore
     public class GUsersAuthController : ControllerBase

@@ -72,22 +72,19 @@ namespace P03.DotNetCoreMVC.WebApi.Controllers
                 }).ToList();
 
         }
-
         #endregion
-
 
 
         #region HttpGet
 
-        //https://localhost:44357/api/GUsersAuth/get
-   
-
+        //https://localhost:44357/api/GUsersAuth
+        
         // this is the rest way
         //GET api/User
         [HttpGet]
         public IEnumerable<CurrentUserCore> Get()
         {
-            this._logger.LogInformation("This is FUsersApiController  Get method");
+            this._logger.LogInformation("This is GUsersAuthController  Get method");
             return _usersList;
         }
 
@@ -105,6 +102,7 @@ namespace P03.DotNetCoreMVC.WebApi.Controllers
         }
 
         [HttpGet("{name}")]
+        [AllowAnonymous]
         public IEnumerable<CurrentUserCore> Get(string name)
         {
             //throw new Exception("23213131");//test exception

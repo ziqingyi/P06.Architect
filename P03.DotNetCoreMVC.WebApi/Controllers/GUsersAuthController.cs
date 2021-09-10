@@ -80,17 +80,22 @@ namespace P03.DotNetCoreMVC.WebApi.Controllers
         #region HttpGet
 
         //https://localhost:44357/api/GUsersAuth/get
+   
+
+        // this is the rest way
+        //GET api/User
         [HttpGet]
         public IEnumerable<CurrentUserCore> Get()
         {
-            this._logger.LogInformation("This is GUsersAuthController  Get method");
+            this._logger.LogInformation("This is FUsersApiController  Get method");
             return _usersList;
         }
 
-        [HttpGet]
-        [AllowAnonymous] //must from AspNetCore
-        public CurrentUserCore GetUserById(string username)
+        [HttpGet("{id:int}")]
+        public CurrentUserCore Get(int id)
         {
+            string idParam = base.HttpContext.Request.Query["Id"];
+
             CurrentUserCore u = _usersList.FirstOrDefault(user => user.Id == id);
             if (u == null)
             {
@@ -98,6 +103,22 @@ namespace P03.DotNetCoreMVC.WebApi.Controllers
             }
             return u;
         }
+
+        [HttpGet("{name}")]
+        public IEnumerable<CurrentUserCore> Get(string name)
+        {
+            //throw new Exception("23213131");//test exception
+            string userNameParam = base.HttpContext.Request.Query["name"];
+
+            return _usersList.Where(p => string.Equals(p.Name, name, StringComparison.OrdinalIgnoreCase));
+        }
+
+
+
+
+
+
+
         #endregion
 
 

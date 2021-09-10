@@ -22,7 +22,7 @@ using P03.DotNetCoreMVC.Interface.TestServiceInterface;
 
 namespace P03.DotNetCoreMVC.WebApi.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class FUsersApiController : ControllerBase
     {
@@ -78,7 +78,7 @@ namespace P03.DotNetCoreMVC.WebApi.Controllers
 
         #region HttpGet
 
-        // this is the rest way. but for test, we have multiple get names. 
+        // this is the rest way
         //GET api/User
         [HttpGet]
         public IEnumerable<CurrentUserCore> Get()
@@ -87,11 +87,10 @@ namespace P03.DotNetCoreMVC.WebApi.Controllers
             return _usersList;
         }
 
-        [HttpGet]
-        public CurrentUserCore GetUserByID(int id)
+        [HttpGet("{id:int}")]
+        public CurrentUserCore Get(int id)
         {
-            //throw new Exception("23213131");
-            string idParam = base.HttpContext.Request.Query["userId"];
+            string idParam = base.HttpContext.Request.Query["Id"];
 
             CurrentUserCore u = _usersList.FirstOrDefault(user => user.Id == id);
             if (u == null)
@@ -101,14 +100,13 @@ namespace P03.DotNetCoreMVC.WebApi.Controllers
             return u;
         }
 
-        [HttpGet]
-        //[CustomBasicAuthorize] //if place on method, only works for this method. 
-        public IEnumerable<CurrentUserCore> GetUserByName(string username)
+        [HttpGet("{name}")]
+        public IEnumerable<CurrentUserCore> Get(string name)
         {
             //throw new Exception("23213131");//test exception
-            string userNameParam = base.HttpContext.Request.Query["userName"];
-            
-            return _usersList.Where(p => string.Equals(p.Name, username, StringComparison.OrdinalIgnoreCase));
+            string userNameParam = base.HttpContext.Request.Query["name"];
+
+            return _usersList.Where(p => string.Equals(p.Name, name, StringComparison.OrdinalIgnoreCase));
         }
         #endregion
 

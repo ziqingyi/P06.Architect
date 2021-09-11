@@ -29,6 +29,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Controllers
             return new List<int>() { 1, 2, 3, 4, 6, 7 };
         }
 
+        [Route("Login")]
         [HttpPost]
         public string Login(string name, string password)
         {

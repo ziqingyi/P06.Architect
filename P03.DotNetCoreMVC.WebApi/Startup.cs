@@ -133,18 +133,20 @@ namespace P03.DotNetCoreMVC.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
 
-            app.UseRouting();
-
-            app.UseAuthorization();
-
-            #region JWT
+            #region JWT, before authorization..
 
             app.UseAuthentication();
 
             #endregion
 
+
+
+            app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
 
             #region log ip and port
 

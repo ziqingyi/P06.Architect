@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace P03.DotNetCoreMVC.AuthenticationCenter.ProjectUtility.JWTUtility
 {
-    interface IJWTService
+    public interface IJWTService
     {
         string GetToken(string userName);
     }

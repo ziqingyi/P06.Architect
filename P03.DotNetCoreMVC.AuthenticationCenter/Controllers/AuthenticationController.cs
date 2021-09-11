@@ -5,7 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using P03.DotNetCoreMVC.AuthenticationCenter.ProjectUtility;
+using P03.DotNetCoreMVC.AuthenticationCenter.ProjectUtility.JWTUtility;
 using P03.DotNetCoreMVC.Interface;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace P03.DotNetCoreMVC.AuthenticationCenter.Controllers
 {
@@ -13,14 +17,28 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Controllers
     [ApiController]
     public class AuthenticationController : Controller
     {
+        #region Identity
 
-        LoginHelper loginHelper; 
-
-        public AuthenticationController(IUserService userService)
+        private LoginHelper loginHelper;
+        private ILoggerFactory _Factory = null;
+        private ILogger<AuthenticationController> _logger = null;
+        private IUserService _userService = null;
+        private IJWTService _iJwtService;
+        public AuthenticationController(IUserService userService,
+            IConfiguration configuration,
+            ILoggerFactory loggerFactory,
+            IJWTService JwtService)
         {
-            loginHelper= new LoginHelper(userService);
+            this._Factory = loggerFactory;
+            this._logger = new Logger<AuthenticationController>(this._Factory);
+            this._userService = userService;
+            this._iJwtService = JwtService;
 
+            loginHelper = new LoginHelper(userService);
         }
+        
+        #endregion
+
 
         [Route("Get")]
         [HttpGet]
@@ -38,17 +56,29 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Controllers
 
             if (result == LoginResult.Success)
             {
-                string token = "";
+                string token = this._iJwtService.GetToken(name);
 
-
+                string jToken = JsonConvert.SerializeObject(new
+                {
+                    result = true,
+                    token
+                });
+                return jToken;
             }
             else
             {
-                
+
+                string jToken = JsonConvert.SerializeObject(new
+                {
+                    result = false,
+                    token =""
+                });
+                return jToken;
+
+
             }
 
 
-            return "";
         }
 
 

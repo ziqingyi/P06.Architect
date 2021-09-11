@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
 using Microsoft.EntityFrameworkCore;
+using P03.DotNetCoreMVC.AuthenticationCenter.ProjectUtility.JWTUtility;
 using P03.DotNetCoreMVC.EntityFrameworkModels;
 using P03.DotNetCoreMVC.Interface;
 
@@ -50,7 +51,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.ProjectUtility.AutofacUtility
             #endregion
 
             containerBuilder.RegisterType<UserService>().As<IUserService>();
-
+            containerBuilder.RegisterType<JWTService>().As<IJWTService>();
 
             //containerBuilder.RegisterType<TestServiceA>().As<ITestServiceA>().SingleInstance().PropertiesAutowired();
 

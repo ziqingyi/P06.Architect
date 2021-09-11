@@ -9,6 +9,8 @@ using P03.DotNetCoreMVC.Interface;
 
 namespace P03.DotNetCoreMVC.AuthenticationCenter.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class AuthenticationController : Controller
     {
 
@@ -20,7 +22,12 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Controllers
 
         }
 
-
+        [Route("Get")]
+        [HttpGet]
+        public IEnumerable<int> Get()
+        {
+            return new List<int>() { 1, 2, 3, 4, 6, 7 };
+        }
 
         [HttpPost]
         public string Login(string name, string password)

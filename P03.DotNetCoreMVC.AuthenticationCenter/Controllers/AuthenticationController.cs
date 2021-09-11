@@ -35,8 +35,16 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Controllers
             LoginResult result = UserManagerCore.ApiLogin(name, password,
                 loginHelper.GetUser, loginHelper.CheckPass, loginHelper.CheckStatusActive);
 
+            if (result == LoginResult.Success)
+            {
+                string token = "";
 
 
+            }
+            else
+            {
+                
+            }
 
 
             return "";

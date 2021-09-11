@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using P03.DotNetCoreMVC.Interface;
 using P03.DotNetCoreMVC.ProjectUtility;
 using P03.DotNetCoreMVC.Utility.Extensions;
 using P03.DotNetCoreMVC.Utility.Filters;
@@ -9,7 +10,13 @@ namespace P03.DotNetCoreMVC.Controllers
    
     public class DFourthController : Controller
     {
- 
+        private LoginHelper loginHelper;
+        private readonly IUserService _userService;
+        public DFourthController(IUserService userService)
+        {
+            this._userService = userService;
+            loginHelper = new LoginHelper(userService);
+        }
 
 
         [TypeFilter(typeof(CustomActionCheckFilterAttribute))]
@@ -32,8 +39,8 @@ namespace P03.DotNetCoreMVC.Controllers
         {
             string formName = base.HttpContext.Request.Form["Name"];
 
-            LoginResult result = base.HttpContext.Login(name, password, captcha, 
-                LoginHelper.GetUser, LoginHelper.CheckPass, LoginHelper.CheckStatusActive);
+            LoginResult result = base.HttpContext.Login(name, password, captcha,
+                loginHelper.GetUser, loginHelper.CheckPass, loginHelper.CheckStatusActive);
 
             if (result == LoginResult.Success)
             {
@@ -59,12 +66,12 @@ namespace P03.DotNetCoreMVC.Controllers
         //[CustomAllowAnonymous]
         public ActionResult CreateCaptchaFile()
         {
-            return LoginHelper.CreateCaptchaFile(this);
+            return loginHelper.CreateCaptchaFile(this);
         }
         //[CustomAllowAnonymous]
         public void CreateCaptchaResponse(HttpContext httpContext)
-        { 
-            LoginHelper.CreateCaptchaResponse(this);
+        {
+            loginHelper.CreateCaptchaResponse(this);
         }
         #endregion
 

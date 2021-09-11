@@ -35,11 +35,12 @@ namespace P03.DotNetCoreMVC.Controllers
         //{
         //    this._dbContext = dbContext;
         //}
-
+        private LoginHelper loginHelper;
         private readonly IUserService _userService;
         public DFourthAuthenController(IUserService userService)
         {
             this._userService = userService;
+            loginHelper = new LoginHelper(userService);
         }
 
         [Authorize]
@@ -71,10 +72,6 @@ namespace P03.DotNetCoreMVC.Controllers
 
 
 
-
-
-
-
             return View();
         }
 
@@ -93,7 +90,7 @@ namespace P03.DotNetCoreMVC.Controllers
             string formName = base.HttpContext.Request.Form["Name"];
 
             LoginResult result = base.HttpContext.LoginInCoreAuthentication(name, password, captcha,
-                LoginHelper.GetUser, LoginHelper.CheckPass, LoginHelper.CheckStatusActive);
+                loginHelper.GetUser, loginHelper.CheckPass, loginHelper.CheckStatusActive);
 
             if (result == LoginResult.Success)
             {
@@ -118,12 +115,12 @@ namespace P03.DotNetCoreMVC.Controllers
         //[CustomAllowAnonymous]
         public ActionResult CreateCaptchaFile()
         {
-            return LoginHelper.CreateCaptchaFile(this);
+            return loginHelper.CreateCaptchaFile(this);
         }
         //[CustomAllowAnonymous]
         public void CreateCaptchaResponse(HttpContext httpContext)
         {
-            LoginHelper.CreateCaptchaResponse(this);
+            loginHelper.CreateCaptchaResponse(this);
         }
         #endregion
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -92,6 +93,13 @@ namespace P03.DotNetCoreMVC.WebApi.Controllers
         public CurrentUserCore Get(int id)
         {
             string idParam = base.HttpContext.Request.Query["Id"];
+
+            var userClaims = HttpContext.AuthenticateAsync().Result.Principal.Claims;
+
+            var nickName = userClaims.FirstOrDefault(c => c.Type.Equals("NickName"))?.Value;
+
+            var role = userClaims.FirstOrDefault(c => c.Type.Equals("role"))?.Value;
+
 
             CurrentUserCore u = _usersList.FirstOrDefault(user => user.Id == id);
             if (u == null)

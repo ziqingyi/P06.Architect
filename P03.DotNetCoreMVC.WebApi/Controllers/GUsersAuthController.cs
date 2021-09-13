@@ -96,10 +96,11 @@ namespace P03.DotNetCoreMVC.WebApi.Controllers
 
             var userClaims = HttpContext.AuthenticateAsync().Result.Principal.Claims;
 
-            var nickName = userClaims.FirstOrDefault(c => c.Type.Equals("NickName"))?.Value;
+            var nickName = userClaims.FirstOrDefault(c => c.Type.Equals("Name"))?.Value;
 
-            var role = userClaims.FirstOrDefault(c => c.Type.Equals("role"))?.Value;
+            var role = userClaims.FirstOrDefault(c => c.Type.Equals("Role"))?.Value;
 
+            Console.WriteLine("Name: "+nickName +" Role: "+role);
 
             CurrentUserCore u = _usersList.FirstOrDefault(user => user.Id == id);
             if (u == null)

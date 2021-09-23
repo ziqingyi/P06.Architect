@@ -38,7 +38,12 @@ namespace P04.DataStructureAlgorithm.DataStructure
             stackCopy.Clear();
             Console.WriteLine($"stackCopy.Count = {stackCopy.Count}");
 
+            {
 
+                BinaryConversion(4,2);
+
+            }
+            Console.WriteLine("***************End of Stack<T>******************");
         }
 
 

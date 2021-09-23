@@ -109,7 +109,7 @@ namespace P04.DataStructureAlgorithm.DataStructure
                 }
             }
 
-
+            Console.WriteLine("***************End ofList<T>******************");
         }
     }
 }

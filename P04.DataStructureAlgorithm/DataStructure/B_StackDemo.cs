@@ -40,5 +40,24 @@ namespace P04.DataStructureAlgorithm.DataStructure
 
 
         }
+
+
+        private static void BinaryConversion(int number, int format)
+        {
+            Stack<int> targetStack = new Stack<int>();
+            do
+            {
+                targetStack.Push(number % format);
+                number = number / format;
+            }
+            while (number != 0);
+
+            while (targetStack.Count > 0)
+            {
+                Console.Write(targetStack.Pop());
+            }
+        }
+
+
     }
 }

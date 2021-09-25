@@ -1,4 +1,5 @@
 ﻿using System;
+using P04.DataStructureAlgorithm.Algorithm;
 using P04.DataStructureAlgorithm.DataStructure;
 
 namespace P04.DataStructureAlgorithm
@@ -8,16 +9,17 @@ namespace P04.DataStructureAlgorithm
         static void Main(string[] args)
         {
             {
-                A_ArrayDemo.Show();
+                //Console.WriteLine("Data Structure");
+                //A_ArrayDemo.Show();
 
-                B_StackDemo.Show();
+                //B_StackDemo.Show();
 
-                C_QueueDemo.Show();
+                //C_QueueDemo.Show();
             }
-
             {
-
-
+                Console.WriteLine("Algorithm");
+                a_SortDemo.Show();
+                b_BasicSearchDemo.Show();
 
             }
 

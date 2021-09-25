@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using P04.DataStructureAlgorithm.CustomExtension;
 
 namespace P04.DataStructureAlgorithm.Algorithm
 {
@@ -9,21 +10,37 @@ namespace P04.DataStructureAlgorithm.Algorithm
 
         public static void Show()
         {
-            int[] array = new int[10];
-            for (int i = 0; i < array.Length; i++)
+            int[] array1 = new int[10];
+            int[] array2 = new int[10];
+            int[] array3 = new int[10];
+            for (int i = 0; i < array1.Length; i++)
             {
-                array[i] = new Random(i + DateTime.Now.Millisecond).Next(100, 999);
+                 int newRand= new Random(i + DateTime.Now.Millisecond).Next(100, 999);
+                 array1[i] = newRand;
+                 array2[i] = newRand;
+                 array3[i] = newRand;
+
             }
 
-            Console.WriteLine("before BubbleSort");
-            array.Show();
-            Console.WriteLine("start BubbleSort");
-            //array.BubbleSort();
-            //array.SelectionSort();
-            array.InsertionSort();
 
-            Console.WriteLine("  end BubbleSort");
-            array.Show();
+            Console.WriteLine("before BubbleSort");
+
+            
+            array1.Show();
+            Console.WriteLine("start Bubble Sort");
+            array1.BubbleSort();
+
+            Console.WriteLine("before Selection sort");
+            array2.Show();
+            Console.WriteLine("start Selection sort");
+            array2.SelectionSort();
+
+
+            Console.WriteLine("before Insertion sort");
+            array3.Show();
+            Console.WriteLine("start Insertion sort");
+            array3.InsertionSort();
+
         }
 
 
@@ -38,7 +55,7 @@ namespace P04.DataStructureAlgorithm.Algorithm
             int temp;
             for (int outer = arr.Length; outer >= 1; outer--)
             {
-                for (int inner = 0; inner <= outer - 1; inner++)
+                for (int inner = 0; inner <= outer - 2; inner++)
                 {
                     if (arr[inner] > arr[inner + 1])
                     {
@@ -59,6 +76,7 @@ namespace P04.DataStructureAlgorithm.Algorithm
             int min, temp;
             for (int outer = 0; outer < arr.Length; outer++)
             {
+                //find the smallest one on the right, swap with current position.
                 min = outer;
                 for (int inner = outer + 1; inner < arr.Length; inner++)
                 {
@@ -83,6 +101,7 @@ namespace P04.DataStructureAlgorithm.Algorithm
             int inner, temp;
             for (int outer = 1; outer < arr.Length; outer++)
             {
+                //keep the current value, 
                 temp = arr[outer];
                 inner = outer;
                 while (inner > 0 && arr[inner - 1] >= temp)
@@ -95,14 +114,6 @@ namespace P04.DataStructureAlgorithm.Algorithm
             }
         }
 
-        private static void Show(this int[] arr)
-        {
-            foreach (var item in arr)
-            {
-                Console.Write(item.ToString() + " ");
-            }
-            Console.WriteLine();
-        }
 
 
 

@@ -43,7 +43,7 @@ namespace P04.DataStructureAlgorithm.DataStructure
 
     }
 
-    //need to adjust size and 
+    //need to adjust size  
     public class WeightQueue<T>
     {
         private T[] Items;
@@ -69,7 +69,7 @@ namespace P04.DataStructureAlgorithm.DataStructure
             {
                 Items = new T[4];
             }
-            Items[_iIndex] = t;//还要扩容
+            Items[_iIndex] = t;
             if (weight > 0)
             {
                 if (EntryArray == null)

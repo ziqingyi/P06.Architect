@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Text;
 using P04.DataStructureAlgorithm.CustomExtension;
 
@@ -9,6 +10,7 @@ namespace P04.DataStructureAlgorithm.Algorithm
     {
         public static void Show()
         {
+            Console.Clear();
             int[] array = new int[10];
             for (int i = 0; i < array.Length; i++)
             {
@@ -16,32 +18,102 @@ namespace P04.DataStructureAlgorithm.Algorithm
             }
             array.Show();
 
-            int iResult = -1;
+
 
             Console.WriteLine("find your int number");
 
-            while (iResult < 0)
+
+            Console.WriteLine("Please input your int number");
+            string sValue = Console.ReadLine();
+            if (int.TryParse(sValue, out int iValue))
             {
-                Console.WriteLine("Please input your int number");
-                string sValue = Console.ReadLine();
-                if (int.TryParse(sValue, out int iValue))
+                #region test different method of search 
+                //int ResultLocation = array.SequentialSearch(iValue);
+                //array.SequentialSearchWithSelfOrganizing(iValue);
+                
+                array.BinarySearchRecursion(iValue);
+
+                #endregion 
+
+            }
+            else
+            {
+                Console.WriteLine("Please input right number");
+            }
+
+        }
+
+
+        #region binary search
+        public static int BinarySearch(this int[] arr, int value)
+        {
+            arr.InsertionSort();
+
+            int right = arr.Length - 1;
+            int left = 0;
+            int middle;
+
+            int newEdge;
+            while (left < right)
+            {
+                middle = (right + left) / 2;
+                newEdge = middle - 1;
+                if (arr[middle] == value)
                 {
-                     //iResult = array.SequentialSearch(iValue);
-                     bool bResult = array.SequentialSearchWithSelfOrganizing(iValue);
+                    return middle;
+                }
+                else if (value < arr[middle])
+                {
+                    right = newEdge;
                 }
                 else
                 {
-                    Console.WriteLine("Please input right number");
+                    left = newEdge;
+                }
+            }
+
+            return -1;
+        }
+
+        //binary search recursively
+
+        public static int BinarySearchRecursion(this int[] arr, int value)
+        {
+            arr.InsertionSort();
+            return arr.BinarySearchRecursion(value, 0, arr.Length);
+        }
+
+        private static int BinarySearchRecursion(this int[] arr, int value, int left, int right)
+        {
+            if (left > right)
+            {
+                return -1;
+            }
+            else
+            {
+                int middle = (int) (right + left) / 2;
+                if (value < arr[middle])
+                {
+                    return arr.BinarySearchRecursion(value, left, middle-1);
+                }
+                else if (value == arr[middle])
+                {
+                    return middle;
+                }
+                else
+                {
+                    return arr.BinarySearchRecursion(value, middle + 1, right);
                 }
             }
         }
 
 
+        #endregion
 
 
         #region self organizing
         //just move the searched result to a position before it.
-        public static bool SequentialSearchWithSelfOrganizing(this int[] arr, int sValue)
+        public static void SequentialSearchWithSelfOrganizing(this int[] arr, int sValue)
         {
             for (int index = 0; index < arr.Length; index++)
             {
@@ -53,10 +125,14 @@ namespace P04.DataStructureAlgorithm.Algorithm
                         arr[index - 1] = arr[index];
                         arr[index] = temp;
                     }
-                    return true;
+
+                    Console.WriteLine(sValue+" is at new position "+ index--);
+                    //return true;
                 }
             }
-            return false;
+
+            Console.WriteLine("not exist");
+            //return false;
         }
         //if searched result is behind top 20 position,
         //move the searched result to a position before it.

@@ -15,6 +15,8 @@ namespace P04.DataStructureAlgorithm
                 //B_StackDemo.Show();
 
                 //C_QueueDemo.Show();
+
+                D_LinkedListDemo.Show();
             }
             {
                 Console.WriteLine("Algorithm");

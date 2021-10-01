@@ -149,8 +149,9 @@ namespace P04.DataStructureAlgorithm.DataStructure
 
         #endregion
 
-        #region find
 
+
+        #region find
         public CustomTreeNode Find(int i)
         {
             CustomTreeNode current = this.root;
@@ -171,15 +172,9 @@ namespace P04.DataStructureAlgorithm.DataStructure
                     current = current.right;
                 }
             }
-
             return null;
         }
-
-
-
-
         #endregion
-
 
 
         #region traversal
@@ -223,7 +218,89 @@ namespace P04.DataStructureAlgorithm.DataStructure
         #endregion
 
 
+        #region
 
+        public bool Delete(int key)
+        {
+            CustomTreeNode current = this.root;
+            CustomTreeNode parent = root;
+            bool isLeftChild = true;
+            while (current.data != key)
+            {
+                parent = current;
+                if (key < current.data)
+                {
+                    isLeftChild = true;
+                    current = current.right;
+                }
+                else
+                {
+                    isLeftChild = false;
+                    current = current.right;
+                }
+                if (current == null)
+                    return false;
+            }
+            if ((current.left == null) & (current.right == null))
+                if (current == this.root)
+                    this.root = null;
+                else if (isLeftChild)
+                    parent.left = null;
+                else if (current.right == null)
+                {
+                    if (current == this.root)
+                        this.root = current.left;
+                    else if (isLeftChild)
+                        parent.left = current.left;
+                    else
+                        parent.right = current.right;
+                }
+                else if (current.left == null)
+                {
+                    if (current == this.root)
+                        this.root = current.right;
+                    else if (isLeftChild)
+                        parent.left = parent.right;
+                    else
+                        parent.right = current.right;
+                }
+                else
+                {
+                    CustomTreeNode successor = GetSubstitute(current);
+                    if (current == this.root)
+                        this.root = successor;
+                    else if (isLeftChild)
+                        parent.left = successor;
+                    else
+                        parent.right = successor;
+                    successor.left = current.left;
+                }
+            return true;
+        }
+
+        private CustomTreeNode GetSubstitute(CustomTreeNode delNode)
+        {
+            CustomTreeNode substituteParent = delNode;
+            CustomTreeNode substitute = delNode;
+            CustomTreeNode current = delNode.right;
+            while (current != null)
+            {
+                substituteParent = current;
+                substitute = current;
+                current = current.left;
+            }
+            if (substitute != delNode.right)
+            {
+                substituteParent.left = substitute.right;
+                substitute.right = delNode.right;
+            }
+            return substitute;
+        }
+
+
+
+
+        #endregion
 
 
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using P04.DataStructureAlgorithm.Algorithm;
 using P04.DataStructureAlgorithm.DataStructure;
+using P04.DataStructureAlgorithm.HashTable;
 
 namespace P04.DataStructureAlgorithm
 {
@@ -19,7 +20,9 @@ namespace P04.DataStructureAlgorithm
                 //D_LinkedListDemo.Show();
 
                 //E_HashSetDemo.Show();
-                
+
+                CSharpHashTableShow.Show();
+
             }
             {
                 Console.WriteLine("Algorithm");

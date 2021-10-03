@@ -4,7 +4,7 @@ using System.Text;
 
 namespace P04.DataStructureAlgorithm.HashTable
 {
-    interface IHashCollectionSolver
+    public interface IHashCollectionSolver
     {
         //get next address
         int GetNextOffset(int length, int previous);

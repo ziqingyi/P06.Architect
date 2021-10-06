@@ -94,6 +94,9 @@ namespace P04.DataStructureAlgorithm.Algorithm
 
         /// <summary>
         /// InsertionSort
+        ///
+        /// start from the second num, compare with previous num,
+        /// swap when left is less than right.
         /// </summary>
         /// <param name="arr"></param>
         public static void InsertionSort(this int[] arr)

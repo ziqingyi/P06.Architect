@@ -21,14 +21,14 @@ namespace P04.DataStructureAlgorithm
 
                 //E_HashSetDemo.Show();
 
-                CSharpHashTableShow.Show();
+                //CSharpHashTableShow.Show();
 
             }
             {
                 Console.WriteLine("Algorithm");
-                a_SortDemo.Show();
-                b_BasicSearchDemo.Show();
-
+                //a_SortDemo.Show();
+                //b_BasicSearchDemo.Show();
+                c_AdvancedSortDemo.Show();
             }
 
 

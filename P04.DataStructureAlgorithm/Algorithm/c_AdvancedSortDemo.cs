@@ -41,8 +41,13 @@ namespace P04.DataStructureAlgorithm.Algorithm
             array1.ShellSort();
             Console.WriteLine("end ShellSort");
 
+            Console.WriteLine("before MergeSort");
+            array2.Show();
+            Console.WriteLine("start MergeSort");
+            array2.MergeSort();
+            Console.WriteLine("end MergeSort");
+            
 
-            //array.MergeSort();
             //array.HeapSort();
             //array.QuickSort();
 
@@ -117,7 +122,61 @@ namespace P04.DataStructureAlgorithm.Algorithm
 
 
 
+        #region Merge Sort
+        public static void MergeSort(this int[] arr)
+        {
+            int[] temp = new int[arr.Length];//empty array
+            PartSort(arr, 0, arr.Length - 1, temp);
+        }
+        private static void PartSort(int[] arr, int left, int right, int[] temp)
+        {
+            if (left < right)
+            {
+                int middle = (left + right) / 2;
+                PartSort(arr, left, middle, temp);//left side sort
+                PartSort(arr, middle + 1, right, temp);//right side sort
+                Merge(arr, left, middle, right, temp);//combine together
+            }
+        }
+        private static void Merge(int[] arr, int left, int mid, int right, int[] temp)
+        {
+            int i = left;
+            int j = mid + 1;
+            int t = 0;
+            while (i <= mid && j <= right)
+            {
+                if (arr[i] <= arr[j])
+                {
+                    //temp[t++] = arr[i++];
+                    temp[t] = arr[i];
+                    t++;
+                    i++;
+                }
+                else
+                {
+                    //temp[t++] = arr[j++];
+                    temp[t] = arr[j];
+                    t++;
+                    j++;
+                }
+            }
+            while (i <= mid)
+            {
+                temp[t++] = arr[i++];//left remaining to temp array
+            }
+            while (j <= right)
+            {
+                temp[t++] = arr[j++];//right
+            }
+            t = 0;
+            while (left <= right)
+            {
+                arr[left++] = temp[t++];//put elements in temp to original array
+            }
+            arr.Show();
+        }
 
+        #endregion
 
 
 

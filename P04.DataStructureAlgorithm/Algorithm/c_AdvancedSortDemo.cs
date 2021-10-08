@@ -46,9 +46,15 @@ namespace P04.DataStructureAlgorithm.Algorithm
             Console.WriteLine("start MergeSort");
             array2.MergeSort();
             Console.WriteLine("end MergeSort");
-            
 
-            //array.HeapSort();
+
+            Console.WriteLine("before HeapSort");
+            array3.Show();
+            Console.WriteLine("start HeapSort");
+            array3.HeapSort();
+            Console.WriteLine("end HeapSort");
+
+
             //array.QuickSort();
 
             array.Show();
@@ -179,7 +185,51 @@ namespace P04.DataStructureAlgorithm.Algorithm
         #endregion
 
 
+        #region Heap Sort
+        public static void HeapSort(this int[] arr)
+        {
+            for (int i = arr.Length / 2 - 1; i >= 0; i--)
+            {
+                BuildHeap(arr, i, arr.Length);
+            }
+            Console.WriteLine("Heap is completed");
+            for (int j = arr.Length - 1; j > 0; j--)
+            {
+                Swap(arr, 0, j);
+                BuildHeap(arr, 0, j);
+            }
+        }
+        private static void BuildHeap(int[] arr, int i, int Length)
+        {
+            int temp = arr[i];
+            for (int k = i * 2 + 1; k < Length; k = k * 2 + 1)
+            {
 
+                if (k + 1 < Length && arr[k] < arr[k + 1])
+                {
+                    k++;
+                }
+                if (arr[k] > temp)
+                {
+                    arr[i] = arr[k];
+                    i = k;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            arr[i] = temp;
+            arr.Show();
+        }
+        private static void Swap(int[] arr, int a, int b)
+        {
+            int temp = arr[a];
+            arr[a] = arr[b];
+            arr[b] = temp;
+        }
+
+        #endregion
 
 
 

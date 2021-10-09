@@ -99,6 +99,7 @@ namespace P04.DataStructureAlgorithm.Algorithm
             }
             while (increment > 0)
             {
+                Console.WriteLine("----------Increment is {0}--------------",increment);
                 for (int outer = increment; outer <= arr.Length -1 ; outer++)
                 {
                     #region Swap

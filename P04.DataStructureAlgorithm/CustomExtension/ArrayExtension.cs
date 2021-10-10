@@ -14,6 +14,20 @@ namespace P04.DataStructureAlgorithm.CustomExtension
             }
             Console.WriteLine();
         }
+        public static void Show(this int[] arr, int count)
+        {
+            for (int i = 0;i < arr.Length;i++)
+            {
 
+                Console.Write(arr[i].ToString() + " ");
+
+                if ((i + 1) % count == 0)
+                {
+                    Console.Write(" * ");
+                }
+
+            }
+            Console.WriteLine();
+        }
     }
 }

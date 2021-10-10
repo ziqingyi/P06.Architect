@@ -106,18 +106,25 @@ namespace P04.DataStructureAlgorithm.Algorithm
 
                     temp = arr[outer];
                     inner = outer;
+
+                    //if inner position is larger than first group
+                    //and the counterpart in left groups is larger than current value, swap,
+                    //and move inner to left group again.
                     while ((inner > increment - 1) && arr[inner - increment] >= temp)
                     {
+
                         arr[inner] = arr[inner - increment];
+
+                        //move to previous group
                         inner -= increment;
                     }
                     arr[inner] = temp;
 
                     #endregion
 
-                    arr.Show();
+                    arr.Show(increment);
                 }
-
+                //when increment is 1, then same to insertion sort
                 increment = (increment - 1) / 3;
                 arr.Show();
             }

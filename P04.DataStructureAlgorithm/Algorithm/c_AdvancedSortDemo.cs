@@ -22,7 +22,7 @@ namespace P04.DataStructureAlgorithm.Algorithm
             #region Fixed Array
             int[] array0 = { 941, 770, 130, 388, 646, 905, 264, 569, 828, 187 };
             int[] array1 = { 941, 770, 130, 388, 646, 905, 264, 569, 828, 187};
-            int[] array2 = { 941, 770, 130, 388, 646, 905, 264, 569, 828, 187 };
+            int[] array2 = { 8, 4, 5, 7, 1, 3, 6, 2, };
             int[] array3 = { 941, 770, 130, 388, 646, 905, 264, 569, 828, 187 };
             int[] array4 = { 941, 770, 130, 388, 646, 905, 264, 569, 828, 187 };
 
@@ -42,6 +42,7 @@ namespace P04.DataStructureAlgorithm.Algorithm
             Console.WriteLine("end ShellSort");
 
             Console.WriteLine("before MergeSort");
+            Console.Clear();
             array2.Show();
             Console.WriteLine("start MergeSort");
             array2.MergeSort();
@@ -49,15 +50,19 @@ namespace P04.DataStructureAlgorithm.Algorithm
 
 
             Console.WriteLine("before HeapSort");
+            Console.Clear();
             array3.Show();
             Console.WriteLine("start HeapSort");
             array3.HeapSort();
             Console.WriteLine("end HeapSort");
 
 
-            //array.QuickSort();
-
-            array.Show();
+            Console.WriteLine("before QuickSort");
+            Console.Clear();
+            array4.Show();
+            Console.WriteLine("start QuickSort");
+            array4.QuickSort();
+            Console.WriteLine("end QuickSort");
 
         }
 
@@ -245,6 +250,61 @@ namespace P04.DataStructureAlgorithm.Algorithm
         public static void QuickSort(this int[] arr)
         {
             QuickSortRecursion(arr, 0, arr.Length - 1);
+        }
+
+        private static void QuickSortRecursion(int[] arr, int left, int right)
+        {
+            if (left < right)
+            {
+                SetReference(arr, left, right);
+                int referenceIndex = right - 1;
+                int i = left;
+                int j = right - 1;
+                while (true)
+                {
+                    while (arr[++i] < arr[referenceIndex])
+                    {
+                    }
+                    while (j > left && arr[--j] > arr[referenceIndex])
+                    {
+                    }
+                    if (i < j)
+                    {
+                        Swap(arr, i, j);
+                        arr.Show();
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if (i < right)
+                {
+                    Swap(arr, i, right - 1);
+                    arr.Show();
+                }
+                QuickSortRecursion(arr, left, i - 1);
+                QuickSortRecursion(arr, i + 1, right);
+            }
+        }
+        private static void SetReference(int[] arr, int left, int right)
+        {
+            int mid = (left + right) / 2;
+            if (arr[left] > arr[mid])
+            {
+                Swap(arr, left, mid);
+            }
+            if (arr[left] > arr[right])
+            {
+                Swap(arr, left, right);
+            }
+            if (arr[right] < arr[mid])
+            {
+                Swap(arr, right, mid);
+            }
+            arr.Show();
+            Swap(arr, right - 1, mid);
+            arr.Show();
         }
 
         #endregion

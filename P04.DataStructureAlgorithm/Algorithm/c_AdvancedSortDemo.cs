@@ -240,7 +240,14 @@ namespace P04.DataStructureAlgorithm.Algorithm
         #endregion
 
 
+        #region Quick Sort
 
+        public static void QuickSort(this int[] arr)
+        {
+            QuickSortRecursion(arr, 0, arr.Length - 1);
+        }
+
+        #endregion
 
 
 

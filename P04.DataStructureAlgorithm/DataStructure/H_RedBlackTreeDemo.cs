@@ -6,16 +6,34 @@ namespace P04.DataStructureAlgorithm.DataStructure
 {
     public class H_RedBlackTreeDemo
     {
-        //***************************************************************
-        int[] arr = {3, 2, 1, 4, 5, 6, 7, 16, 15, 14, 13, 12, 11, 10, 8, 9};
+        public static void Show()
+        {
+            //***************************************************************
+            int[] arr = { 3, 2, 1, 4, 5, 6, 7, 16, 15, 14, 13, 12, 11, 10, 8, 9 };
+            int i;
+            //RedBlackTree tree = new RedBlackTree(arr[0].ToString());
+            RedBlackTree<int> tree = new RedBlackTree<int>();
+            Console.WriteLine("*******insert: ");
+            for (i = 1; i < arr.Length; i++)
+            {
+                tree.Insert(arr[i]);
+            }
 
-        int i;
+            Console.WriteLine($"*******Min:{tree.Min()}");
+            Console.WriteLine($"*******Max:{tree.Max()}");
+            Console.WriteLine($"*******Depth:{tree.Depth}");
+            Console.WriteLine($"*******Count:{tree.Count}");
+            tree.SequentialTraversal();
 
-        //RedBlackTree tree = new RedBlackTree(arr[0].ToString());
-       
+            Console.WriteLine("remove Min Node");
+            tree.RemoveMin();
+            Console.WriteLine($"*******Min:{tree.Min()}");
+            Console.WriteLine($"*******Max:{tree.Max()}");
+            Console.WriteLine($"*******Depth:{tree.Depth}");
+            Console.WriteLine($"*******Max:{tree.Count}");
+            tree.SequentialTraversal();
+        }
 
-
-   
 
     }
 

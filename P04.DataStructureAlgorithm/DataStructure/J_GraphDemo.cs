@@ -315,7 +315,7 @@ namespace P04.DataStructureAlgorithm.DataStructure
         }
         #endregion
 
-        #region minimum  search tree
+        #region  Minimum Cost Spanning Tree
         public void Mst()
         {
             Stack<int> gStack = new Stack<int>();

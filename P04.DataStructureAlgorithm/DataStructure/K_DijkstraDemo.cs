@@ -7,10 +7,35 @@ namespace P04.DataStructureAlgorithm.DataStructure
     public class K_DijkstraDemo
     {
 
-
-
-
-
+        public static void Show()
+        {
+            Console.WriteLine("DijkstraDemo Show");
+            DijkstraGraph theGraph = new DijkstraGraph();
+            theGraph.AddVertex("A");//root
+            theGraph.AddVertex("B");
+            theGraph.AddVertex("C");
+            theGraph.AddVertex("D");
+            theGraph.AddVertex("E");
+            theGraph.AddVertex("F");
+            theGraph.AddVertex("G");
+            theGraph.AddEdge(0, 1, 2);//edge and weight
+            theGraph.AddEdge(0, 3, 1);
+            theGraph.AddEdge(1, 3, 3);
+            theGraph.AddEdge(1, 4, 10);
+            theGraph.AddEdge(2, 5, 5);
+            theGraph.AddEdge(2, 0, 4);
+            theGraph.AddEdge(3, 2, 2);
+            theGraph.AddEdge(3, 5, 8);
+            theGraph.AddEdge(3, 4, 2);
+            theGraph.AddEdge(3, 6, 4);
+            theGraph.AddEdge(4, 6, 6);
+            theGraph.AddEdge(6, 5, 1);
+            Console.WriteLine();
+            Console.WriteLine("Shortest paths:");
+            Console.WriteLine();
+            theGraph.Path();
+            Console.WriteLine();
+        }
 
     }
 

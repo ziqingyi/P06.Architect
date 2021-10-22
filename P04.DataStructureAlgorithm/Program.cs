@@ -31,9 +31,27 @@ namespace P04.DataStructureAlgorithm
                 c_AdvancedSortDemo.Show();
             }
 
-
-
-
+            {
+                //G_AVLTreeDemo.Show();
+            }
+            {
+                //H_RedBlackTreeDemo.Show();
+            }
+            {
+                //I_SkipListDemo.Show();
+            }
+            {
+                //J_GraphDemo.Show();
+            }
+            {
+                //K_DijkstraDemo.Show();
+            }
+            {
+                //GreedyAlgorithmDemo.Show();
+            }
+            {
+                //DynamicPlanningDemo.Show();
+            }
 
 
             Console.WriteLine("Hello World!");

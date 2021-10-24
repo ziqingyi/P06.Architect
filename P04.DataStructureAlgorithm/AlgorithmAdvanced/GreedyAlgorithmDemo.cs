@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,13 +10,12 @@ namespace P04.DataStructureAlgorithm.AlgorithmAdvanced
 
         public static void Show()
         {
-            #region find change
+
             MakeChangeShow();
-            #endregion
 
             HuffmanShow();
 
-
+            KnapsackShow();
 
         }
 
@@ -331,6 +331,104 @@ namespace P04.DataStructureAlgorithm.AlgorithmAdvanced
 
 
 
+
+        #region Knapsack problem
+
+        public static void KnapsackShow()
+        {
+            Carpet c1 = new Carpet("Frieze", 1.75F, 12);
+            Carpet c2 = new Carpet("Saxony", 1.82F, 9);
+            Carpet c3 = new Carpet("Shag", 1.5F, 13);
+            Carpet c4 = new Carpet("Loop", 1.77F, 10);
+            ArrayList rugs = new ArrayList();
+            rugs.Add(c1);
+            rugs.Add(c2);
+            rugs.Add(c3);
+            rugs.Add(c4);
+            rugs.Sort();
+            Knapsack k = new Knapsack(25);
+            k.FillSack(rugs);
+            Console.WriteLine(k.GetItems());
+        }
+
+
+        public class Carpet : IComparable
+        {
+            private string item;
+            private float val;
+            private int unit;
+            public Carpet(string i, float v, int u)
+            {
+                item = i;
+                val = v;
+                unit = u;
+            }
+            public int CompareTo(Object c)
+            {
+                return (this.val.CompareTo(((Carpet)c).val));
+            }
+            public int GetUnit()
+            {
+                return unit;
+            }
+            public string GetItem()
+            {
+                return item;
+            }
+            public float GetVal()
+            {
+                return val * unit;
+            }
+            public float ItemVal()
+            {
+                return val;
+            }
+        }
+        public class Knapsack
+        {
+            private float quantity;
+            SortedList items = new SortedList();
+            string itemList;
+            public Knapsack(float max)
+            {
+                quantity = max;
+            }
+            public void FillSack(ArrayList objects)
+            {
+                int pos = objects.Count - 1;
+                int totalUnits = 0;
+                float totalVal = 0.0F;
+                int tempTot = 0;
+                while (totalUnits < quantity)
+                {
+                    tempTot += ((Carpet)objects[pos]).GetUnit();
+                    if (tempTot <= quantity)
+                    {
+                        totalUnits += ((Carpet)objects[pos]).GetUnit();
+                        totalVal += ((Carpet)objects[pos]).GetVal();
+                        items.Add(((Carpet)objects[pos]).GetItem(), ((Carpet)objects[pos]).GetUnit());
+                    }
+                    else
+                    {
+                        float tempUnit = quantity - totalUnits;
+                        float tempVal = ((Carpet)objects[pos]).ItemVal() * tempUnit;
+                        totalVal += tempVal;
+                        totalUnits += (int)tempUnit;
+                        items.Add(((Carpet)objects[pos]).GetItem(), tempUnit);
+                    }
+                    pos--;
+                }
+            }
+            public string GetItems()
+            {
+                foreach (Object k in items.GetKeyList())
+                    itemList += k.ToString() + ": " + items[k].
+                    ToString() + " ";
+                return itemList;
+            }
+        }
+
+        #endregion
 
 
 

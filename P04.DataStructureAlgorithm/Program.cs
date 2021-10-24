@@ -1,5 +1,6 @@
 ﻿using System;
 using P04.DataStructureAlgorithm.Algorithm;
+using P04.DataStructureAlgorithm.AlgorithmAdvanced;
 using P04.DataStructureAlgorithm.DataStructure;
 using P04.DataStructureAlgorithm.HashTable;
 
@@ -28,7 +29,7 @@ namespace P04.DataStructureAlgorithm
                 Console.WriteLine("Algorithm");
                 //a_SortDemo.Show();
                 //b_BasicSearchDemo.Show();
-                c_AdvancedSortDemo.Show();
+                //c_AdvancedSortDemo.Show();
             }
 
             {
@@ -52,7 +53,9 @@ namespace P04.DataStructureAlgorithm
             {
                 //DynamicPlanningDemo.Show();
             }
-
+            {
+                GreedyAlgorithmDemo.Show();
+            }
 
             Console.WriteLine("Hello World!");
         }

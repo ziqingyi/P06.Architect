@@ -10,8 +10,11 @@ namespace P04.DataStructureAlgorithm.AlgorithmAdvanced
         public static void Show()
         {
             ShowFibonacci();
+
             FindLongestCommonSubStringShow();
 
+            Package();
+            
         }
 
 
@@ -217,7 +220,30 @@ namespace P04.DataStructureAlgorithm.AlgorithmAdvanced
         #endregion
 
 
+        #region max value for bag
+        public static void Package()
+        {
+            int capacity = 16;
+            int[] size = new int[] { 3, 4, 7, 8, 9 };//Size of items 
+            int[] values = new int[] { 4, 5, 10, 11, 13 };//values of items
+            int[] totalValue = new int[capacity + 1];//most values of bag with each size(capacity 1-16)
 
+            for (int j = 0; j <= values.Length - 1; j++)//add one item each time
+            {
+                for (int i = 0; i <= capacity; i++)//add size one by one for this item
+                {
+                    if (i >= size[j])
+                    {
+                        if (totalValue[i] < (totalValue[i - size[j] + values[j]]))
+                        {
+                            totalValue[i] = totalValue[i - size[j]] + values[j];
+                        }
+                    }
+                }
+            }
+            Console.WriteLine("The Max value is: " + totalValue[capacity]);
+        }
+        #endregion
 
 
     }

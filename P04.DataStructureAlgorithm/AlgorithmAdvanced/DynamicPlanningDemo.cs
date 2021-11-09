@@ -14,7 +14,8 @@ namespace P04.DataStructureAlgorithm.AlgorithmAdvanced
             FindLongestCommonSubStringShow();
 
             Package();
-            
+
+            PirateGameShow();
         }
 
 
@@ -245,6 +246,56 @@ namespace P04.DataStructureAlgorithm.AlgorithmAdvanced
         }
         #endregion
 
+
+
+        #region Pirate game
+        private static void PirateGameShow()
+        {
+
+            int pirates = 5;  //海盗总数
+            int gold = 100;   //金币总数
+            int joinNum;   //加入分配的海盗数
+            int[] poke = new int[pirates + 1];  //每个海盗一个口袋
+            int ticket;     //票数计数器
+            for (int i = pirates; i >= 1; i--)
+            {
+                joinNum = pirates - i + 1;  //此次加入分配的海盗数
+                ticket = 0;
+                for (int j = pirates; j >= i; j--)
+                {
+                    if ((pirates - j + 1) == joinNum)  //如果本海盗就是此次加入分配的最后一个海盗
+                    {
+                        poke[j] = gold;      //利益最大化，把还剩的金币全给他
+                        gold = gold - poke[j];
+                        ticket = ticket + 1;
+                    }
+                    else
+                    {
+                        if (poke[j] > 0)    //此海盗已经获得了金币
+                        {
+                            gold = gold + poke[j]; //推论中本次分配者会使上一次获得金币的海盗什么都没有。
+                            poke[j] = 0;
+                        }
+                        else
+                        {
+                            poke[j] = 1;   //推论中上一次分配中没有获得金币的海盗会在本次获得金币。
+                            gold = gold - 1;
+                            ticket = ticket + 1;
+                        }
+                    }
+                }
+                if ((double)ticket / (double)joinNum < 0.5) { break; } //总得票数/此次加入分配的海盗数>=50%则此次分配成立，否则失败
+            }
+            for (int n = 1; n <= 5; n++)
+            {
+                Console.WriteLine("Pirate {0} get {1} gold ", n, poke[n]);
+            }
+            Console.ReadKey();
+
+
+        }
+
+        #endregion
 
     }
 }

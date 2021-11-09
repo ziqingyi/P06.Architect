@@ -28,6 +28,14 @@ namespace P03.DotNetCoreMVC
 
                 //})
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())//change service provider
+
+                ////configure kestrel service factory
+                //.ConfigureServices((context, services) =>
+                //{
+                //    services.Configure<KestrelServerOptions>(
+                //    context.Configuration.GetSection("Kestrel"));
+                //})
+
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
 

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\P05.IOCDI.IDAL\P05.IOCDI.IDAL.csproj" />
+    <ProjectReference Include="..\P05.IOCDI.Model\P05.IOCDI.Model.csproj" />
+  </ItemGroup>
+
+</Project>

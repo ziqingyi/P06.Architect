@@ -7,4 +7,19 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\P05.IOCDI.BLLv2\P05.IOCDI.BLLv2.csproj" />
+    <ProjectReference Include="..\P05.IOCDI.BLL\P05.IOCDI.BLL.csproj" />
+    <ProjectReference Include="..\P05.IOCDI.DAL\P05.IOCDI.DAL.csproj" />
+    <ProjectReference Include="..\P05.IOCDI.Framework\P05.IOCDI.Framework.csproj" />
+    <ProjectReference Include="..\P05.IOCDI.IBLL\P05.IOCDI.IBLL.csproj" />
+    <ProjectReference Include="..\P05.IOCDI.IDAL\P05.IOCDI.IDAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,6 @@
 ﻿
+using P05.IOCDI.BLL;
+using P05.IOCDI.DAL;
 using P05.IOCDI.Framework;
 using P05.IOCDI.IDAL;
 using System;
@@ -31,9 +33,9 @@ public class Projgram
         //1 factory use Class Name  --> factory create obj by reflection, using config files. 
 
         IUserDAL userDAL = CustomFactory.Create<IUserDAL>();
-
-
-
+        UserBLL userBLL = new UserBLL(userDAL);
+        var user = userBLL.Login("Administrator");
+        
         #endregion
 
 
@@ -51,7 +53,7 @@ public class Projgram
 
 
 
-
+        Console.ReadKey();
 
     }
 

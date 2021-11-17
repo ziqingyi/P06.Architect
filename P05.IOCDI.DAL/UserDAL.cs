@@ -24,7 +24,6 @@ namespace P05.IOCDI.DAL
                 Role = "Admin",
                 LoginTime = DateTime.Now
             };
-
         }
 
         public void Update(UserModel userModel)

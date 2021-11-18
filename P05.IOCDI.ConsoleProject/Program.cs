@@ -2,6 +2,7 @@
 using P05.IOCDI.BLL;
 using P05.IOCDI.DAL;
 using P05.IOCDI.Framework;
+using P05.IOCDI.IBLL;
 using P05.IOCDI.IDAL;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ public class Projgram
         //high level rely(dependent) on lower level,
         //lower level update will lead to changes in higher level.
 
-        #region tightly coupled with class 
+        #region factory 1 : tightly coupled with class 
         //{
         //1 dependent on class name ---> use interface
         //2 code contains new object(), need to update everywhere when class name change. --> use factory create with new()
@@ -28,18 +29,26 @@ public class Projgram
         //}
         #endregion
 
-        #region  factory
+        #region  factory 2: read config
 
         //1 factory use Class Name  --> factory create obj by reflection, using config files. 
 
+
         IUserDAL userDAL = CustomFactory.Create<IUserDAL>();
-        UserBLL userBLL = new UserBLL(userDAL);
+        IUserBLL userBLL = CustomFactory.Create<IUserBLL>(userDAL);
+
         var user = userBLL.Login("Administrator");
-        
+
         #endregion
 
 
+        #region  factory 3: IOC (register and resolve)
 
+        //1 create by factory, but user need to know the params for each obj, relationship --> 
+
+        
+
+        #endregion
 
 
 

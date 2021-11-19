@@ -14,6 +14,8 @@
     <ProjectReference Include="..\P05.IOCDI.Framework\P05.IOCDI.Framework.csproj" />
     <ProjectReference Include="..\P05.IOCDI.IBLL\P05.IOCDI.IBLL.csproj" />
     <ProjectReference Include="..\P05.IOCDI.IDAL\P05.IOCDI.IDAL.csproj" />
+    <ProjectReference Include="..\P05.IOCDI.ServiceInterface\P05.IOCDI.ServiceInterface.csproj" />
+    <ProjectReference Include="..\P05.IOCDI.Service\P05.IOCDI.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>

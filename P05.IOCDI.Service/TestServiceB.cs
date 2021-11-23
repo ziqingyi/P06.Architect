@@ -1,5 +1,6 @@
 ﻿
 using System;
+using P05.IOCDI.Framework.CustomContainerFolder.ContainerAttributes;
 using P05.IOCDI.ServiceInterface;
 
 namespace P05.IOCDI.Service
@@ -8,7 +9,7 @@ namespace P05.IOCDI.Service
     {
         private ITestServiceA? _iTestServiceA = null;
 
-        //[InjectionConstractorAttribute]//not affect B, but provide more information
+        [InjectionConstructorAttribute]//not affect B, but provide more information
         public TestServiceB(ITestServiceA testServiceA)
         {
             Console.WriteLine($"{this.GetType().Name} is constructed....");
@@ -20,17 +21,17 @@ namespace P05.IOCDI.Service
         //    Console.WriteLine($"{this.GetType().Name} is constructed");
         //}
 
-        //public TestServiceB()
-        //{
-        //    Console.WriteLine($"{this.GetType().Name} is constructed....");
-        //}
+        public TestServiceB()
+        {
+            Console.WriteLine($"{this.GetType().Name} is constructed....");
+        }
 
 
 
-        //public void Init(ITestServiceA testServiceA)
-        //{
-        //    this._iTestServiceA = testServiceA;
-        //}
+        public void Init(ITestServiceA testServiceA)
+        {
+            this._iTestServiceA = testServiceA;
+        }
 
         public void Show()
         {

@@ -45,15 +45,37 @@ public class Projgram
 
         #region  factory 3: IOC (register and resolve)
 
-        //1 create by factory, but user need to know the params for each obj, relationship --> container find ctors and params
+        //2 create by factory, but user need to know the params for each obj, relationship --> container find ctors and params
         {
             IContainer container = new CustomContainer();
             container.Register<ITestServiceA, TestServiceA>();
             ITestServiceA serviceA = container.Resolve<ITestServiceA>();
 
+            //if has multi ctors, choose one by number of ctors or attribute label.
             container.Register<ITestServiceB, TestServiceB>();
             ITestServiceB serviceB = container.Resolve<ITestServiceB>();
+
+
+
         }
+        //3  parameters's initialization   ==>  Iteration 
+        {
+            Console.WriteLine("***************Iteration******************************");
+            IContainer container = new CustomContainer();
+            //iteration of creating instance and parameters
+            container.Register<ITestServiceA, TestServiceA>();
+            container.Register<ITestServiceB, TestServiceB>();
+            container.Register<ITestServiceC, TestServiceC>();
+            ITestServiceC testServiceC = container.Resolve<ITestServiceC>();
+
+
+
+
+
+
+        }
+
+
 
         #endregion
 

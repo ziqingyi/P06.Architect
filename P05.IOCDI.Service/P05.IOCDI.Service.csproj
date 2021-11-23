@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\P05.IOCDI.Framework\P05.IOCDI.Framework.csproj" />
     <ProjectReference Include="..\P05.IOCDI.ServiceInterface\P05.IOCDI.ServiceInterface.csproj" />
   </ItemGroup>
 

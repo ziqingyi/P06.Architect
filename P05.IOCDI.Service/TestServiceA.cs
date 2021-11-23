@@ -18,7 +18,7 @@ namespace P05.IOCDI.Service
         //}
 
         /// <summary>
-        /// attribute injection, initialize automatically....
+        /// property injection, initialize automatically....
         /// </summary>
         public ITestServiceC ITestServiceC { get; set; }
 

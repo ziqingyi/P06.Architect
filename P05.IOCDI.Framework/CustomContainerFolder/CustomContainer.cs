@@ -41,7 +41,7 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
             #region IOC 
 
 
-            #region find a ctor from the list
+            #region find a ctor from the list, constructor discovery rules for Constructor injection behavior
 
             //find all ctors
             ConstructorInfo[] constractorArray = type.GetConstructors();

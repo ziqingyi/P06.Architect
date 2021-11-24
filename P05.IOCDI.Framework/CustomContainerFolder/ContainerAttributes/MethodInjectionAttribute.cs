@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace P05.IOCDI.Framework.CustomContainerFolder.ContainerAttributes
 {
-    //label for property injection 
-    [AttributeUsage(AttributeTargets.Property)]
-    public class InjectionPropertyAttribute:Attribute
+    //label for method injection 
+    [AttributeUsage(AttributeTargets.Method)]
+    public class MethodInjectionAttribute:Attribute
     {
     }
 }

@@ -7,9 +7,10 @@ namespace P05.IOCDI.Service
 {
     public class TestServiceB : ITestServiceB
     {
-        private ITestServiceA? _iTestServiceA = null;
+        [PropertyInjection]
+        private ITestServiceA? _iTestServiceA { get; set; }
 
-        [InjectionConstructorAttribute]//not affect B, but provide more information
+        [ConstructorInjectionAttribute]//not affect B, but provide more information
         public TestServiceB(ITestServiceA testServiceA)
         {
             Console.WriteLine($"{this.GetType().Name} is constructed....");

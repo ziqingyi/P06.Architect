@@ -28,29 +28,29 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
             return instance;
         }
 
-        
+        //Resolve: create instance by DI
         private object Resolve(Type ServicType)
         {
-
-            #region IOC and DI
-
             //find target type in register dictionary
             string keyType = ServicType.FullName!;
             if (!containerDic.ContainsKey(keyType))
             {
                 throw new Exception($"{keyType} has not been registered");
             }
-
             Type targetType = this.containerDic[keyType];
 
 
-            #region find a ctor from the list, constructor discovery rules for Constructor injection behavior
+
+            #region 1 Constructor injection: find a ctor from the list,set constructor discovery rules for injection behavior
+
+
+            #region constructor discovery
 
             //find all ctors
             ConstructorInfo[] constractorArray = targetType.GetConstructors();
 
             //get ctor by attributes first
-            ConstructorInfo ctor = constractorArray.FirstOrDefault(c => c.IsDefined(typeof(InjectionConstructorAttribute)));
+            ConstructorInfo ctor = constractorArray.FirstOrDefault(c => c.IsDefined(typeof(ConstructorInjectionAttribute)));
             if (ctor == null && constractorArray.Length > 0)
             {
                 //get ctor by length of parameters
@@ -61,6 +61,7 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
 
 
             #region get all parameters of this ctor
+
             var parameterArray = ctor.GetParameters();
 
             //resolve all parameters and add to list
@@ -82,22 +83,20 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
             #endregion
 
 
-
-            #endregion
-
-
-
             #region create instance with reflection
             object oInstance = Activator.CreateInstance(targetType, oParameterInstanceList.ToArray())!;
 
             #endregion
 
 
+            #endregion
 
 
-            #region  attribute injection after instance is created. 
 
-            IEnumerable<PropertyInfo> allInjectionProperties = targetType.GetProperties().Where(p => p.IsDefined(typeof(InjectionPropertyAttribute)));
+
+            #region 2  attribute injection after instance is created. 
+
+            IEnumerable<PropertyInfo> allInjectionProperties = targetType.GetProperties().Where(p => p.IsDefined(typeof(MethodInjectionAttribute)));
 
             foreach (PropertyInfo property in allInjectionProperties)
             {
@@ -107,9 +106,17 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
 
             }
 
+            #endregion
+
+
+            #region 3 method injection
+
+
 
 
             #endregion
+
+
 
             return oInstance;
 

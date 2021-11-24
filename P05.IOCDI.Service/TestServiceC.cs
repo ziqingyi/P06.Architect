@@ -6,7 +6,7 @@ namespace P05.IOCDI.Service
 {
     public class TestServiceC : ITestServiceC
     {
-        [InjectionProperty]
+        [PropertyInjection]
         public ITestServiceA _ITestServiceA { get; set; }
 
         private ITestServiceB _ITestServiceB ;
@@ -22,5 +22,22 @@ namespace P05.IOCDI.Service
             Console.WriteLine("C123456"); 
             Console.WriteLine($"this._ITestServiceA is null？{this._ITestServiceA is null}");
         }
+
+
+
+
+
+
+
+        public void Init(ITestServiceB iTestServiceB, ITestServiceA testServiceA)
+        {
+
+
+        }
+
+
+
+
+
     }
 }

@@ -8,7 +8,7 @@ namespace P05.IOCDI.Framework.CustomContainerFolder.ContainerAttributes
 {
     //constructor with priority
     [AttributeUsage(AttributeTargets.Constructor)]
-    public class InjectionConstructorAttribute : Attribute
+    public class ConstructorInjectionAttribute : Attribute
     {
 
 

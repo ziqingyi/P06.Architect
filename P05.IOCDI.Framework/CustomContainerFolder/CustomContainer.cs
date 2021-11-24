@@ -10,14 +10,20 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
 {
     public class CustomContainer : IContainer
     {
-        private Dictionary<string, Type> containerDic = new Dictionary<string, Type>();
-        
+        //private Dictionary<string, Type> containerDic = new Dictionary<string, Type>();
+        private Dictionary<string, RegisterTypeModel> containerDic = new Dictionary<string, RegisterTypeModel>();
 
-        public void Register<TService, TImplementation>() where TService : class where TImplementation : TService
+        public void Register<TService, TImplementation>( RegisterLifeTimeType lifeTimeType = RegisterLifeTimeType.Transient ) where TService : class where TImplementation : TService
         {
             if(!containerDic.ContainsKey( typeof(TService).FullName!  ))
             {
-                this.containerDic.Add(typeof(TService).FullName!, typeof(TImplementation));
+                //this.containerDic.Add(typeof(TService).FullName!, typeof(TImplementation));
+                this.containerDic.Add(typeof(TService).FullName, new RegisterTypeModel()
+                {
+                    TargetType = typeof(TImplementation),
+                    LifeTimeType = lifeTimeType,
+                    SingletonInstance = null
+                }) ;
             }        
         }
 
@@ -37,7 +43,7 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
             {
                 throw new Exception($"{keyType} has not been registered");
             }
-            Type targetType = this.containerDic[keyType];
+            Type targetType = this.containerDic[keyType]?.TargetType!;
 
 
 

@@ -59,6 +59,7 @@ public class Projgram
 
         }
         //3  parameters's initialization   ==>  Iteration 
+        //   some properties need initializaiton  ==> parameter injection
         {
             Console.WriteLine("***************Iteration******************************");
             IContainer container = new CustomContainer();

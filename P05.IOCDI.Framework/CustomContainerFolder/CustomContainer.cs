@@ -23,32 +23,35 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
 
         public TService Resolve<TService>()
         {
-            string key = typeof(TService).FullName!;
-            if(!containerDic.ContainsKey(key))
-            {
-                throw new Exception($"{key} not registered");
-            }
-            Type type = containerDic[key];
 
-            TService instance = (TService)this.Resolve(type);
+            TService instance = (TService)this.Resolve(typeof(TService));
             return instance;
         }
 
         
-        private object Resolve(Type type)
+        private object Resolve(Type ServicType)
         {
 
-            #region IOC 
+            #region IOC and DI
+
+            //find target type in register dictionary
+            string keyType = ServicType.FullName!;
+            if (!containerDic.ContainsKey(keyType))
+            {
+                throw new Exception($"{keyType} has not been registered");
+            }
+
+            Type targetType = this.containerDic[keyType];
 
 
             #region find a ctor from the list, constructor discovery rules for Constructor injection behavior
 
             //find all ctors
-            ConstructorInfo[] constractorArray = type.GetConstructors();
+            ConstructorInfo[] constractorArray = targetType.GetConstructors();
 
             //get ctor by attributes first
             ConstructorInfo ctor = constractorArray.FirstOrDefault(c => c.IsDefined(typeof(InjectionConstructorAttribute)));
-            if (ctor == null)
+            if (ctor == null && constractorArray.Length > 0)
             {
                 //get ctor by length of parameters
                 ctor = constractorArray.OrderBy(c => c.GetParameters().Length).Last();
@@ -67,8 +70,8 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
                 foreach (var p in parameterArray)
                 {
                     Type parameterType = p.ParameterType;
-                    Type targetType = this.containerDic[parameterType.FullName!];
-                    object parameterInsance = this.Resolve(targetType);//Activator.CreateInstance(targetType)!;
+  
+                    object parameterInsance = this.Resolve(parameterType);//Activator.CreateInstance(targetType)!;
                     oParameterInstanceList.Add(parameterInsance);
                 }
             }
@@ -84,13 +87,33 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
 
 
 
-
-
-
             #region create instance with reflection
-            object oInstance = Activator.CreateInstance(type,oParameterInstanceList.ToArray())!;
-            return oInstance;
+            object oInstance = Activator.CreateInstance(targetType, oParameterInstanceList.ToArray())!;
+
             #endregion
+
+
+
+
+            #region  attribute injection after instance is created. 
+
+            IEnumerable<PropertyInfo> allInjectionProperties = targetType.GetProperties().Where(p => p.IsDefined(typeof(InjectionPropertyAttribute)));
+
+            foreach (PropertyInfo property in allInjectionProperties)
+            {
+                Type Ptype = property.PropertyType;
+                object propertyInstance = this.Resolve(Ptype);
+                property.SetValue(oInstance, propertyInstance);
+
+            }
+
+
+
+            #endregion
+
+            return oInstance;
+
+
         }
 
 

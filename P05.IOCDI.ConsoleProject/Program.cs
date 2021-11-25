@@ -83,6 +83,14 @@ public class Projgram
             ITestServiceA testServiceA2 = container.Resolve<ITestServiceA>();
             Console.WriteLine($"testServiceA.Equals(testServiceA2) ?  {testServiceA.Equals(testServiceA2)}");
 
+            //everytime create A MUST search in dic and use existing instance if singleton
+            ITestServiceB testServiceB = container.Resolve<ITestServiceB>();
+            Console.WriteLine($"testServiceA.Equals(testServiceB._ITestServiceA) ?  {testServiceA.Equals(testServiceB._ITestServiceA)}");
+            Console.WriteLine($"testService2A.Equals(testServiceB._ITestServiceA) ?  {testServiceA2.Equals(testServiceB._ITestServiceA)}");
+
+
+
+
         }
 
 

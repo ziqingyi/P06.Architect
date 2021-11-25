@@ -7,14 +7,16 @@ namespace P05.IOCDI.Service
 {
     public class TestServiceB : ITestServiceB
     {
+        //public attribute for interface access
         [PropertyInjection]
-        private ITestServiceA? _iTestServiceA { get; set; }
+        public ITestServiceA _ITestServiceA { get; set; }
+    
 
         [ConstructorInjectionAttribute]//not affect B, but provide more information
         public TestServiceB(ITestServiceA testServiceA)
         {
             Console.WriteLine($"{this.GetType().Name} is constructed....");
-            this._iTestServiceA = testServiceA;
+            this._ITestServiceA = testServiceA;
         }
 
         //public TestServiceB(ITestServiceD testServiceD,int a)
@@ -31,7 +33,7 @@ namespace P05.IOCDI.Service
 
         public void Init(ITestServiceA testServiceA)
         {
-            this._iTestServiceA = testServiceA;
+            this._ITestServiceA = testServiceA;
         }
 
         public void Show()

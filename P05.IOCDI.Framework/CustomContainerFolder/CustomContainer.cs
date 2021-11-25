@@ -37,13 +37,29 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
         //Resolve: create instance by DI
         private object Resolve(Type ServicType)
         {
-            //find target type in register dictionary
+            
+            #region check register dictionary and find target type in register dictionary
+
             string keyType = ServicType.FullName!;
+
             if (!containerDic.ContainsKey(keyType))
             {
                 throw new Exception($"{keyType} has not been registered");
             }
+
+            var model = containerDic[keyType];
+            if(model.LifeTimeType == RegisterLifeTimeType.Singleton && model.SingletonInstance != null)
+            {
+                return model.SingletonInstance;
+            }
+            
+            
+            
             Type targetType = this.containerDic[keyType]?.TargetType!;
+
+            #endregion
+
+            
 
 
 
@@ -119,6 +135,17 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
 
 
 
+
+            #endregion
+
+
+
+            #region set life time type for instance 
+
+            if(model.LifeTimeType == RegisterLifeTimeType.Singleton)
+            {
+                model.SingletonInstance = oInstance;
+            }
 
             #endregion
 

@@ -61,7 +61,7 @@ public class Projgram
         //3  parameters's initialization   ==>  Iteration 
         //   some properties need initializaiton  ==> parameter injection
         {
-            Console.WriteLine("***************Iteration******************************");
+            Console.WriteLine("***************3 Iteration******************************");
             IContainer container = new CustomContainer();
             //iteration of creating instance and parameters
             container.Register<ITestServiceA, TestServiceA>();
@@ -69,10 +69,19 @@ public class Projgram
             container.Register<ITestServiceC, TestServiceC>();
             ITestServiceC testServiceC = container.Resolve<ITestServiceC>();
 
+        }
 
-
-
-
+        {
+            //4 add life time type to instance when initialize
+            Console.WriteLine("***************4 life time type******************************");
+            CustomContainer container = new CustomContainer();
+            container.Register<ITestServiceA, TestServiceA>(RegisterLifeTimeType.Singleton);
+            container.Register<ITestServiceB, TestServiceB>(RegisterLifeTimeType.Singleton);
+            container.Register<ITestServiceC, TestServiceC>();
+            //resolve 2 instances and compare
+            ITestServiceA testServiceA = container.Resolve<ITestServiceA>();
+            ITestServiceA testServiceA2 = container.Resolve<ITestServiceA>();
+            Console.WriteLine($"testServiceA.Equals(testServiceA2) ?  {testServiceA.Equals(testServiceA2)}");
 
         }
 

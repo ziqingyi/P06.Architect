@@ -13,6 +13,20 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
         //private Dictionary<string, Type> containerDic = new Dictionary<string, Type>();
         private Dictionary<string, RegisterTypeModel> containerDic = new Dictionary<string, RegisterTypeModel>();
 
+        private Dictionary<string, object> scope_ContainerDic = new Dictionary<string, object>();
+
+        public IContainer CreateChildContainer()
+        {
+            CustomContainer container = new CustomContainer()
+            {
+                containerDic = this.containerDic,
+                scope_ContainerDic = new Dictionary<string, object>()
+            };
+
+            return container;
+        }
+
+
         public void Register<TService, TImplementation>( RegisterLifeTimeType lifeTimeType = RegisterLifeTimeType.Transient ) where TService : class where TImplementation : TService
         {
             if(!containerDic.ContainsKey( typeof(TService).FullName!  ))
@@ -48,13 +62,32 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
             }
 
             var model = containerDic[keyType];
-            if(model.LifeTimeType == RegisterLifeTimeType.Singleton && model.SingletonInstance != null)
+
+            //if(model.LifeTimeType == RegisterLifeTimeType.Singleton && model.SingletonInstance != null)
+            //{
+            //    return model.SingletonInstance;
+            //}
+            switch(model.LifeTimeType)
             {
-                return model.SingletonInstance;
+                case RegisterLifeTimeType.Transient:
+                    break;
+                case RegisterLifeTimeType.Scope:
+
+                    if(scope_ContainerDic[model.TargetType.FullName]!= null)
+                    {
+                        return model.SingletonInstance;
+                    }
+                    break;
+                case RegisterLifeTimeType.Singleton:
+                    if(model.SingletonInstance != null)
+                    {
+                        return model.SingletonInstance;
+                    }
+                    break;
+                default:
+                    break;
             }
-            
-            
-            
+               
             Type targetType = this.containerDic[keyType]?.TargetType!;
 
             #endregion
@@ -142,9 +175,29 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
 
             #region set life time type for instance 
 
-            if(model.LifeTimeType == RegisterLifeTimeType.Singleton)
+            //if(model.LifeTimeType == RegisterLifeTimeType.Singleton)
+            //{
+            //    model.SingletonInstance = oInstance;
+            //}
+
+            switch (model.LifeTimeType)
             {
-                model.SingletonInstance = oInstance;
+                case RegisterLifeTimeType.Transient:
+                    break;
+                case RegisterLifeTimeType.Scope:
+                    if (scope_ContainerDic[model.TargetType.FullName!] == null)
+                    {
+                        scope_ContainerDic[model.TargetType.FullName!] = oInstance;                    
+                    }
+                    break;
+                case RegisterLifeTimeType.Singleton:
+                    if (model.SingletonInstance == null)
+                    {
+                        return model.SingletonInstance = oInstance;
+                    }
+                    break;
+                default:
+                    break;
             }
 
             #endregion

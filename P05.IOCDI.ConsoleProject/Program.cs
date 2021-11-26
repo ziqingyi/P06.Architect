@@ -22,20 +22,20 @@ public class Projgram
         //lower level update will lead to changes in higher level.
 
         #region factory 1 : tightly coupled with class 
-        //{
+        {
         //1 dependent on class name ---> use interface
         //2 code contains new object(), need to update everywhere when class name change. --> use factory create with new()
 
         //    UserDAL userDAL = new UserDAL();
         //    UserBLL userBLL = new UserBLL(userDAL);
         //    userBLL.Login("Administrator");
-        //}
+        }
         #endregion
 
         #region  factory 2: read config
 
-        //1 factory use Class Name  --> factory create obj by reflection, using config files. 
         {
+            //1 factory use Class Name  --> factory create obj by reflection, using config files.       
             IUserDAL userDAL = CustomFactory.Create<IUserDAL>();
             IUserBLL userBLL = CustomFactory.Create<IUserBLL>(userDAL);
 
@@ -45,8 +45,9 @@ public class Projgram
 
         #region  factory 3: IOC (register and resolve)
 
-        //2 create by factory, but user need to know the params for each obj, relationship --> container find ctors and params
         {
+            Console.WriteLine("***************3.1 create by factory******************************");
+            //3.1 create by factory, but user need to know the params for each obj, relationship --> container find ctors and params        
             IContainer container = new CustomContainer();
             container.Register<ITestServiceA, TestServiceA>();
             ITestServiceA serviceA = container.Resolve<ITestServiceA>();
@@ -58,10 +59,10 @@ public class Projgram
 
 
         }
-        //3  parameters's initialization   ==>  Iteration 
-        //   some properties need initializaiton  ==> parameter injection
         {
-            Console.WriteLine("***************3 Iteration******************************");
+            //3.2  parameters's initialization   ==>  Iteration       
+            //   some properties need initializaiton  ==> parameter injection
+            Console.WriteLine("***************3.2  parameters's initialization******************************");
             IContainer container = new CustomContainer();
             //iteration of creating instance and parameters
             container.Register<ITestServiceA, TestServiceA>();
@@ -71,9 +72,9 @@ public class Projgram
 
         }
 
-        {
-            //4 add life time type to instance when initialize
-            Console.WriteLine("***************4 life time type******************************");
+        {     
+            //3.3 add life time type to instance when initialize
+            Console.WriteLine("***************3.3 add life time type: Singleton***********");
             CustomContainer container = new CustomContainer();
             container.Register<ITestServiceA, TestServiceA>(RegisterLifeTimeType.Singleton);
             container.Register<ITestServiceB, TestServiceB>(RegisterLifeTimeType.Singleton);
@@ -87,12 +88,28 @@ public class Projgram
             ITestServiceB testServiceB = container.Resolve<ITestServiceB>();
             Console.WriteLine($"testServiceA.Equals(testServiceB._ITestServiceA) ?  {testServiceA.Equals(testServiceB._ITestServiceA)}");
             Console.WriteLine($"testService2A.Equals(testServiceB._ITestServiceA) ?  {testServiceA2.Equals(testServiceB._ITestServiceA)}");
+        }
+        {
+            //3.4  Scope
+            Console.WriteLine("***************3.4  life time type: Scope******************************");
+            CustomContainer container1 = new CustomContainer();
+            container1.Register<ITestServiceA, TestServiceA>(RegisterLifeTimeType.Singleton);
+            container1.Register<ITestServiceB, TestServiceB>(RegisterLifeTimeType.Scope);
+            container1.Register<ITestServiceC, TestServiceC>();
 
+            CustomContainer container2 = (CustomContainer)container1.CreateChildContainer();
+            ITestServiceB testServiceB21 = container2.Resolve<ITestServiceB>();
+            ITestServiceB testServiceB22 = container2.Resolve<ITestServiceB>();
+            Console.WriteLine($"testServiceB21.Equals(testServiceB22._ITestServiceA) ?  {testServiceB21.Equals(testServiceB22._ITestServiceA)}");
 
+            CustomContainer container3 = (CustomContainer)container1.CreateChildContainer();
+            ITestServiceB testServiceB31 = container3.Resolve<ITestServiceB>();
+            ITestServiceB testServiceB32 = container3.Resolve<ITestServiceB>();
+            Console.WriteLine($"testServiceB31.Equals(testServiceB._ITestServiceA) ?  {testServiceB31.Equals(testServiceB32._ITestServiceA)}");
 
+            Console.WriteLine($"testServiceB21.Equals(testServiceB31._ITestServiceA) ?  {testServiceB21.Equals(testServiceB31._ITestServiceA)}");
 
         }
-
 
 
         #endregion

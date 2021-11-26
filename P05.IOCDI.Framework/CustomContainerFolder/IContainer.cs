@@ -12,5 +12,8 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
         void Register<TService,TImplementation>(RegisterLifeTimeType lifeTimeType = RegisterLifeTimeType.Transient) where TService:class where TImplementation : TService;
 
         TService Resolve<TService>();
+
+        IContainer CreateChildContainer();
+
     }
 }

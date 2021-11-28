@@ -75,7 +75,7 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
 
                     if(scope_ContainerDic.ContainsKey(model.TargetType.FullName!))
                     {
-                        return model.SingletonInstance;
+                        return scope_ContainerDic[model.TargetType.FullName!];
                     }
                     break;
                 case RegisterLifeTimeType.Singleton:
@@ -185,13 +185,13 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
                 case RegisterLifeTimeType.Transient:
                     break;
                 case RegisterLifeTimeType.Scope:
-                    if (scope_ContainerDic.ContainsKey(model.TargetType.FullName!))
+                    if (!scope_ContainerDic.ContainsKey(model.TargetType.FullName!))
                     {
                         scope_ContainerDic[model.TargetType.FullName!] = oInstance;                    
                     }
                     break;
                 case RegisterLifeTimeType.Singleton:
-                    if (model.SingletonInstance != null)
+                    if (model.SingletonInstance == null)
                     {
                         return model.SingletonInstance = oInstance;
                     }

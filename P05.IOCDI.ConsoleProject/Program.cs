@@ -100,14 +100,14 @@ public class Projgram
             CustomContainer container2 = (CustomContainer)container1.CreateChildContainer();
             ITestServiceB testServiceB21 = container2.Resolve<ITestServiceB>();
             ITestServiceB testServiceB22 = container2.Resolve<ITestServiceB>();
-            Console.WriteLine($"testServiceB21.Equals(testServiceB22._ITestServiceA) ?  {testServiceB21.Equals(testServiceB22._ITestServiceA)}");
+            Console.WriteLine($"testServiceB21.Equals(testServiceB22._ITestServiceA) ?  {testServiceB21.Equals(testServiceB22)}");
 
             CustomContainer container3 = (CustomContainer)container1.CreateChildContainer();
             ITestServiceB testServiceB31 = container3.Resolve<ITestServiceB>();
             ITestServiceB testServiceB32 = container3.Resolve<ITestServiceB>();
-            Console.WriteLine($"testServiceB31.Equals(testServiceB._ITestServiceA) ?  {testServiceB31.Equals(testServiceB32._ITestServiceA)}");
+            Console.WriteLine($"testServiceB31.Equals(testServiceB._ITestServiceA) ?  {testServiceB31.Equals(testServiceB32)}");
 
-            Console.WriteLine($"testServiceB21.Equals(testServiceB31._ITestServiceA) ?  {testServiceB21.Equals(testServiceB31._ITestServiceA)}");
+            Console.WriteLine($"testServiceB21.Equals(testServiceB31._ITestServiceA) ?  {testServiceB21.Equals(testServiceB31)}");
 
         }
 

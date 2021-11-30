@@ -1,4 +1,5 @@
 ﻿using Castle.DynamicProxy;
+using P05.IOCDI.Framework.CustomAOP.AOPAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,8 @@ namespace P05.IOCDI.Framework.CustomAOP
 
     public interface ICommonClass
     {
+        [BeforeLog]
+        [AfterLog]
         void Show();
     }
 

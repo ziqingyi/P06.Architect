@@ -21,11 +21,14 @@ namespace P05.IOCDI.Framework.CustomAOP
 
         protected override void PerformProceed(IInvocation invocation)
         {
+            //store base method
             Action action = () => base.PerformProceed(invocation);
 
-            if(invocation.Method.IsDefined(typeof(BeforeLogAttribute),true))
+
+            //find all attributes, add action into the methods, encapsulate. 
+            if (invocation.Method.IsDefined(typeof(BaseAOPAttribute),true))
             {
-                var attributes = invocation.Method.GetCustomAttributes<BeforeLogAttribute>()!;
+                var attributes = invocation.Method.GetCustomAttributes<BaseAOPAttribute>()!;
 
                 foreach (BaseAOPAttribute attr in attributes)
                 {
@@ -33,6 +36,7 @@ namespace P05.IOCDI.Framework.CustomAOP
                 }
                 
             }
+
 
             action.Invoke();
             Console.WriteLine($"This is {nameof(CustomInterceptor)} method: {nameof(PerformProceed)}");

@@ -41,6 +41,8 @@ namespace P05.IOCDI.Framework.CustomAOP
     {
         [BeforeLog]
         [AfterLog]
+        [Cache]
+        [Monitor]
         void Show();
     }
 

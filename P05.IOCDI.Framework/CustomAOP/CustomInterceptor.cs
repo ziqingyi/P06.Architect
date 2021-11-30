@@ -28,7 +28,7 @@ namespace P05.IOCDI.Framework.CustomAOP
             //find all attributes, add action into the methods, encapsulate. 
             if (invocation.Method.IsDefined(typeof(BaseAOPAttribute),true))
             {
-                var attributes = invocation.Method.GetCustomAttributes<BaseAOPAttribute>()!;
+                var attributes = invocation.Method.GetCustomAttributes<BaseAOPAttribute>().OrderBy(a=>a.Order);
 
                 foreach (BaseAOPAttribute attr in attributes)
                 {

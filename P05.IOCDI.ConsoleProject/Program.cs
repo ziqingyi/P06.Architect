@@ -2,6 +2,7 @@
 using P05.IOCDI.BLL;
 using P05.IOCDI.DAL;
 using P05.IOCDI.Framework;
+using P05.IOCDI.Framework.CustomAOP;
 using P05.IOCDI.Framework.CustomContainerFolder;
 using P05.IOCDI.IBLL;
 using P05.IOCDI.IDAL;
@@ -115,7 +116,16 @@ public class Program
         #endregion
 
 
+        #region  AOP with Castle.Core
+        {
+            Console.Clear();
+            Console.WriteLine("***************AOP with Castle.Core******************************");
 
+            CustomAOPtest.Show();
+
+
+        }
+        #endregion
 
 
 

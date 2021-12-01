@@ -123,13 +123,23 @@ public class Program
 
             CustomAOPtest.Show();
 
-
         }
         #endregion
 
 
 
+        #region  AOP with Custom Container
+        {
+            Console.Clear();
+            Console.WriteLine("***************AOP with Castle.Core******************************");
+            CustomContainer container = new CustomContainer();
+            container.Register<ITestServiceA, TestServiceA>(RegisterLifeTimeType.Singleton);
 
+            ITestServiceA testServiceA = container.Resolve<ITestServiceA>();
+
+            testServiceA.Show();
+        }
+        #endregion
 
 
 

@@ -1,4 +1,5 @@
-﻿using P05.IOCDI.Framework.CustomContainerFolder.ContainerAttributes;
+﻿using P05.IOCDI.Framework.CustomAOP;
+using P05.IOCDI.Framework.CustomContainerFolder.ContainerAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -168,6 +169,14 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
 
 
 
+
+            #endregion
+
+
+
+            #region  AOP
+
+            oInstance = oInstance.AOP(ServicType);
 
             #endregion
 

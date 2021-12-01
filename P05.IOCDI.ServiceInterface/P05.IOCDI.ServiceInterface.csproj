@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\P05.IOCDI.Framework\P05.IOCDI.Framework.csproj" />
+  </ItemGroup>
+
 </Project>

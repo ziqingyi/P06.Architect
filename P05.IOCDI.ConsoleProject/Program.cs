@@ -77,8 +77,8 @@ public class Program
             //3.3 add life time type to instance when initialize
             Console.WriteLine("***************3.3 add life time type: Singleton***********");
             CustomContainer container = new CustomContainer();
-            container.Register<ITestServiceA, TestServiceA>(RegisterLifeTimeType.Singleton);
-            container.Register<ITestServiceB, TestServiceB>(RegisterLifeTimeType.Singleton);
+            container.Register<ITestServiceA, TestServiceA>(lifeTimeType: RegisterLifeTimeType.Singleton);
+            container.Register<ITestServiceB, TestServiceB>(lifeTimeType: RegisterLifeTimeType.Singleton);
             container.Register<ITestServiceC, TestServiceC>();
             //resolve 2 instances and compare
             ITestServiceA testServiceA = container.Resolve<ITestServiceA>();
@@ -94,8 +94,8 @@ public class Program
             //3.4  Scope
             Console.WriteLine("***************3.4  life time type: Scope******************************");
             CustomContainer container1 = new CustomContainer();
-            container1.Register<ITestServiceA, TestServiceA>(RegisterLifeTimeType.Singleton);
-            container1.Register<ITestServiceB, TestServiceB>(RegisterLifeTimeType.Scope);
+            container1.Register<ITestServiceA, TestServiceA>(lifeTimeType: RegisterLifeTimeType.Singleton);
+            container1.Register<ITestServiceB, TestServiceB>(lifeTimeType: RegisterLifeTimeType.Scope);
             container1.Register<ITestServiceC, TestServiceC>();
 
             CustomContainer container2 = (CustomContainer)container1.CreateChildContainer();
@@ -133,7 +133,7 @@ public class Program
             Console.Clear();
             Console.WriteLine("***************AOP with Castle.Core******************************");
             CustomContainer container = new CustomContainer();
-            container.Register<ITestServiceA, TestServiceA>(RegisterLifeTimeType.Singleton);
+            container.Register<ITestServiceA, TestServiceA>();
 
             ITestServiceA testServiceA = container.Resolve<ITestServiceA>();
 

@@ -16,30 +16,48 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
 
         private Dictionary<string, object> scope_ContainerDic = new Dictionary<string, object>();
 
+        private string GetKey(string fullName, string shortName) => $"{fullName}_{shortName}";
+        private Dictionary<string, object[]> value_ContainerDic = new Dictionary<string, object[]>();
+
+
         public IContainer CreateChildContainer()
         {
             CustomContainer container = new CustomContainer()
             {
                 containerDic = this.containerDic,
-                scope_ContainerDic = new Dictionary<string, object>()
+                scope_ContainerDic = new Dictionary<string, object>(),
+                value_ContainerDic = this.value_ContainerDic
             };
 
             return container;
         }
 
-
-        public void Register<TService, TImplementation>( RegisterLifeTimeType lifeTimeType = RegisterLifeTimeType.Transient ) where TService : class where TImplementation : TService
+        /// <summary>
+        /// Short name: use for differenciate the instances under same service type. 
+        /// </summary>
+        public void Register<TService, TImplementation>(string shortName = null, object[] paraList = null, RegisterLifeTimeType lifeTimeType = RegisterLifeTimeType.Transient ) where TService : class where TImplementation : TService
         {
             if(!containerDic.ContainsKey( typeof(TService).FullName!  ))
             {
                 //this.containerDic.Add(typeof(TService).FullName!, typeof(TImplementation));
-                this.containerDic.Add(typeof(TService).FullName, new RegisterTypeModel()
+                //this.containerDic.Add(typeof(TService).FullName, new RegisterTypeModel()
+
+                string ServiceKey = this.GetKey(typeof(TService).FullName!, shortName);
+
+                this.containerDic.Add(ServiceKey, new RegisterTypeModel()
                 {
                     TargetType = typeof(TImplementation),
                     LifeTimeType = lifeTimeType,
                     SingletonInstance = null
                 }) ;
-            }        
+
+                #region keep nominated parameters
+
+                if (paraList != null && paraList.Length > 0)
+                    this.value_ContainerDic.Add(ServiceKey, paraList);
+
+                #endregion
+            }
         }
 
         public TService Resolve<TService>()
@@ -50,12 +68,12 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
         }
 
         //Resolve: create instance by DI
-        private object Resolve(Type ServicType)
+        private object Resolve(Type ServicType, string shortName = null)
         {
             
             #region check register dictionary and find target type in register dictionary
 
-            string keyType = ServicType.FullName!;
+            string keyType =  this.GetKey(ServicType.FullName!, shortName);   
 
             if (!containerDic.ContainsKey(keyType))
             {
@@ -122,14 +140,32 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
 
             //resolve all parameters and add to list
             List<object> oParameterInstanceList = new List<object>();
+            //find constant values
+            object[] paraConstant = this.value_ContainerDic.ContainsKey(keyType) ? this.value_ContainerDic[keyType] : null;
+            //index in constant array
+            int constantIndex = 0;
+
+
             if (parameterArray != null && parameterArray.Length > 0)
             {
                 foreach (var p in parameterArray)
                 {
-                    Type parameterType = p.ParameterType;
-  
-                    object parameterInsance = this.Resolve(parameterType);//Activator.CreateInstance(targetType)!;
-                    oParameterInstanceList.Add(parameterInsance);
+                    //keep constant parameter 
+                    if(p.IsDefined(typeof(ConstantParameterAttribute),true))
+                    {
+                        oParameterInstanceList.Add(paraConstant[constantIndex]);
+                        constantIndex++;
+                    }
+                    else
+                    {
+                        Type parameterType = p.ParameterType;
+
+                        object parameterInsance = this.Resolve(parameterType);//Activator.CreateInstance(targetType)!;
+                        oParameterInstanceList.Add(parameterInsance);
+                    }
+
+
+
                 }
             }
             else

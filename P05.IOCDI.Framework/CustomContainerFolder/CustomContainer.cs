@@ -37,12 +37,14 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
         /// </summary>
         public void Register<TService, TImplementation>(string shortName = null, object[] paraList = null, RegisterLifeTimeType lifeTimeType = RegisterLifeTimeType.Transient ) where TService : class where TImplementation : TService
         {
-            if(!containerDic.ContainsKey( typeof(TService).FullName!  ))
+            string ServiceKey = this.GetKey(typeof(TService).FullName!, shortName);
+
+            if(!containerDic.ContainsKey(ServiceKey))
             {
                 //this.containerDic.Add(typeof(TService).FullName!, typeof(TImplementation));
                 //this.containerDic.Add(typeof(TService).FullName, new RegisterTypeModel()
 
-                string ServiceKey = this.GetKey(typeof(TService).FullName!, shortName);
+                
 
                 this.containerDic.Add(ServiceKey, new RegisterTypeModel()
                 {
@@ -60,10 +62,9 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
             }
         }
 
-        public TService Resolve<TService>()
-        {
-            
-            TService instance = (TService)this.Resolve(typeof(TService));
+        public TService Resolve<TService>(string shortName = null)
+        {       
+            TService instance = (TService)this.Resolve(typeof(TService), shortName);
             return instance;
         }
 

@@ -11,7 +11,7 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
         //TService:class                TService must be a reference type (not a value type).
         void Register<TService,TImplementation>(string shortName = null, object[] paraList = null, RegisterLifeTimeType lifeTimeType = RegisterLifeTimeType.Transient) where TService:class where TImplementation : TService;
 
-        TService Resolve<TService>();
+        TService Resolve<TService>(string shortName = null);
 
         IContainer CreateChildContainer();
 

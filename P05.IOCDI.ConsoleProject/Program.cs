@@ -54,7 +54,8 @@ public class Program
             ITestServiceA serviceA = container.Resolve<ITestServiceA>();
 
             //if has multi ctors, choose one by number of ctors or attribute label.
-            container.Register<ITestServiceB, TestServiceB>();
+            object[] parameterList = new object[] { "six",5 };
+            container.Register<ITestServiceB, TestServiceB>(paraList: parameterList);
             ITestServiceB serviceB = container.Resolve<ITestServiceB>();
 
 
@@ -65,9 +66,11 @@ public class Program
             //   some properties need initializaiton  ==> parameter injection
             Console.WriteLine("***************3.2  parameters's initialization******************************");
             IContainer container = new CustomContainer();
+            object[] parameterList = new object[] { "six", 5 };
+
             //iteration of creating instance and parameters
             container.Register<ITestServiceA, TestServiceA>();
-            container.Register<ITestServiceB, TestServiceB>();
+            container.Register<ITestServiceB, TestServiceB>(paraList: parameterList);
             container.Register<ITestServiceC, TestServiceC>();
             ITestServiceC testServiceC = container.Resolve<ITestServiceC>();
 
@@ -77,8 +80,10 @@ public class Program
             //3.3 add life time type to instance when initialize
             Console.WriteLine("***************3.3 add life time type: Singleton***********");
             CustomContainer container = new CustomContainer();
+            object[] parameterList = new object[] { "six", 5 };
+
             container.Register<ITestServiceA, TestServiceA>(lifeTimeType: RegisterLifeTimeType.Singleton);
-            container.Register<ITestServiceB, TestServiceB>(lifeTimeType: RegisterLifeTimeType.Singleton);
+            container.Register<ITestServiceB, TestServiceB>(paraList: parameterList,lifeTimeType: RegisterLifeTimeType.Singleton);
             container.Register<ITestServiceC, TestServiceC>();
             //resolve 2 instances and compare
             ITestServiceA testServiceA = container.Resolve<ITestServiceA>();
@@ -94,8 +99,10 @@ public class Program
             //3.4  Scope
             Console.WriteLine("***************3.4  life time type: Scope******************************");
             CustomContainer container1 = new CustomContainer();
+            object[] parameterList = new object[] { "six", 5 };
+
             container1.Register<ITestServiceA, TestServiceA>(lifeTimeType: RegisterLifeTimeType.Singleton);
-            container1.Register<ITestServiceB, TestServiceB>(lifeTimeType: RegisterLifeTimeType.Scope);
+            container1.Register<ITestServiceB, TestServiceB>(paraList: parameterList, lifeTimeType: RegisterLifeTimeType.Scope);
             container1.Register<ITestServiceC, TestServiceC>();
 
             CustomContainer container2 = (CustomContainer)container1.CreateChildContainer();

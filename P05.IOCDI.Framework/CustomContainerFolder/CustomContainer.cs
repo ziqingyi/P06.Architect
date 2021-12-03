@@ -161,7 +161,10 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
                     {
                         Type parameterType = p.ParameterType;
 
-                        object parameterInsance = this.Resolve(parameterType);//Activator.CreateInstance(targetType)!;
+                        string paraShortName = this.GetShortName(p);
+                        object parameterInsance = this.Resolve(parameterType,paraShortName);//Activator.CreateInstance(targetType)!;
+                        
+                        
                         oParameterInstanceList.Add(parameterInsance);
                     }
 
@@ -194,6 +197,7 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
             foreach (PropertyInfo property in allInjectionProperties)
             {
                 Type Ptype = property.PropertyType;
+
                 object propertyInstance = this.Resolve(Ptype);
                 property.SetValue(oInstance, propertyInstance);
 
@@ -254,6 +258,27 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
 
 
         }
+
+
+        private string GetShortName(ICustomAttributeProvider provider)
+        {
+            if (provider.IsDefined(typeof(ParameterShortNameAttribute), true))
+            {
+                //get first 
+                var attribute = (ParameterShortNameAttribute)(provider.GetCustomAttributes(typeof(ParameterShortNameAttribute), true)[0]);
+                return attribute.ShortName;
+            }
+            else
+                return null;
+
+        }
+
+
+
+
+
+
+
 
 
     }

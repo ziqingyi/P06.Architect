@@ -50,12 +50,19 @@ public class Program
             Console.WriteLine("***************3.1 create by factory******************************");
             //3.1 create by factory, but user need to know the params for each obj, relationship --> container find ctors and params        
             IContainer container = new CustomContainer();
-            container.Register<ITestServiceA, TestServiceA>();
-            ITestServiceA serviceA = container.Resolve<ITestServiceA>();
+
+            //Register for TestServiceB
+            container.Register<ITestServiceA, TestServiceA>();//method injection need this
+            container.Register<ITestServiceA, TestServiceA>(shortName:"a1");//use for TestServiceB ctor parameter
+            container.Register<ITestServiceA, TestServiceA>(shortName: "a2");//use for TestServiceB ctor parameter
+            object[] ServiceBparameterList = new object[] { "six",5 };
+            //ITestServiceA serviceA = container.Resolve<ITestServiceA>(shortName: "a1");
+            //ITestServiceA serviceA2 = container.Resolve<ITestServiceA>(shortName: "a2");
+
 
             //if has multi ctors, choose one by number of ctors or attribute label.
-            object[] parameterList = new object[] { "six",5 };
-            container.Register<ITestServiceB, TestServiceB>(paraList: parameterList);
+            //register and resolve TestServiceB
+            container.Register<ITestServiceB, TestServiceB>(paraList: ServiceBparameterList);
             ITestServiceB serviceB = container.Resolve<ITestServiceB>();
 
 
@@ -66,12 +73,20 @@ public class Program
             //   some properties need initializaiton  ==> parameter injection
             Console.WriteLine("***************3.2  parameters's initialization******************************");
             IContainer container = new CustomContainer();
-            object[] parameterList = new object[] { "six", 5 };
+
+            //Register for TestServiceB
+            container.Register<ITestServiceA, TestServiceA>();//method injection need this
+            container.Register<ITestServiceA, TestServiceA>(shortName: "a1");//use for TestServiceB ctor parameter
+            container.Register<ITestServiceA, TestServiceA>(shortName: "a2");//use for TestServiceB ctor parameter
+            object[] ServiceBparameterList = new object[] { "six", 5 };
 
             //iteration of creating instance and parameters
             container.Register<ITestServiceA, TestServiceA>();
-            container.Register<ITestServiceB, TestServiceB>(paraList: parameterList);
+            container.Register<ITestServiceB, TestServiceB>(paraList: ServiceBparameterList);
             container.Register<ITestServiceC, TestServiceC>();
+
+
+            //resolve TestServiceC
             ITestServiceC testServiceC = container.Resolve<ITestServiceC>();
 
         }
@@ -80,11 +95,19 @@ public class Program
             //3.3 add life time type to instance when initialize
             Console.WriteLine("***************3.3 add life time type: Singleton***********");
             CustomContainer container = new CustomContainer();
-            object[] parameterList = new object[] { "six", 5 };
+
+            //Register for TestServiceB
+            container.Register<ITestServiceA, TestServiceA>();//method injection need this
+            container.Register<ITestServiceA, TestServiceA>(shortName: "a1");//use for TestServiceB ctor parameter
+            container.Register<ITestServiceA, TestServiceA>(shortName: "a2");//use for TestServiceB ctor parameter
+            object[] ServiceBparameterList = new object[] { "six", 5 };
+
 
             container.Register<ITestServiceA, TestServiceA>(lifeTimeType: RegisterLifeTimeType.Singleton);
-            container.Register<ITestServiceB, TestServiceB>(paraList: parameterList,lifeTimeType: RegisterLifeTimeType.Singleton);
+            container.Register<ITestServiceB, TestServiceB>(paraList: ServiceBparameterList, lifeTimeType: RegisterLifeTimeType.Singleton);
             container.Register<ITestServiceC, TestServiceC>();
+
+
             //resolve 2 instances and compare
             ITestServiceA testServiceA = container.Resolve<ITestServiceA>();
             ITestServiceA testServiceA2 = container.Resolve<ITestServiceA>();
@@ -99,10 +122,16 @@ public class Program
             //3.4  Scope
             Console.WriteLine("***************3.4  life time type: Scope******************************");
             CustomContainer container1 = new CustomContainer();
-            object[] parameterList = new object[] { "six", 5 };
+
+            //Register for TestServiceB
+            container1.Register<ITestServiceA, TestServiceA>();//method injection need this
+            container1.Register<ITestServiceA, TestServiceA>(shortName: "a1");//use for TestServiceB ctor parameter
+            container1.Register<ITestServiceA, TestServiceA>(shortName: "a2");//use for TestServiceB ctor parameter
+            object[] ServiceBparameterList = new object[] { "six", 5 };
+
 
             container1.Register<ITestServiceA, TestServiceA>(lifeTimeType: RegisterLifeTimeType.Singleton);
-            container1.Register<ITestServiceB, TestServiceB>(paraList: parameterList, lifeTimeType: RegisterLifeTimeType.Scope);
+            container1.Register<ITestServiceB, TestServiceB>(paraList: ServiceBparameterList, lifeTimeType: RegisterLifeTimeType.Scope);
             container1.Register<ITestServiceC, TestServiceC>();
 
             CustomContainer container2 = (CustomContainer)container1.CreateChildContainer();

@@ -24,9 +24,9 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
         {
             CustomContainer container = new CustomContainer()
             {
-                containerDic = this.containerDic,
-                scope_ContainerDic = new Dictionary<string, object>(),
-                value_ContainerDic = this.value_ContainerDic
+                containerDic = this.containerDic,           
+                value_ContainerDic = this.value_ContainerDic,
+                scope_ContainerDic = new Dictionary<string, object>()
             };
 
             return container;

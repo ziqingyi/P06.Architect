@@ -10,14 +10,19 @@ namespace P05.IOCDI.Service
         //public attribute for interface access
         [PropertyInjection]
         public ITestServiceA _ITestServiceA { get; set; }
+        public ITestServiceA _ITestServiceA2 { get; set; }
         public int i;
         public string s;
 
         [ConstructorInjectionAttribute]//not affect B, but provide more information
-        public TestServiceB(ITestServiceA testServiceA, [ConstantParameter] string sIndex, [ConstantParameter]int iIndex)
+        public TestServiceB([ParameterShortName("a1")]ITestServiceA testServiceA1,[ParameterShortName("a2")] ITestServiceA testServiceA2,
+            [ConstantParameter] string sIndex, [ConstantParameter]int iIndex)
         {
             Console.WriteLine($"{this.GetType().Name} is constructed....with sIndex {sIndex}..with iIndex {iIndex}");
-            this._ITestServiceA = testServiceA;
+
+            this._ITestServiceA = testServiceA1;
+
+            this._ITestServiceA2 = testServiceA2;
             //this.i = iIndex;
             this.s = sIndex;
         }

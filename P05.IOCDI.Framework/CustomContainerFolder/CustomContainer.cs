@@ -208,8 +208,20 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
 
             #region 3 method injection
 
+            var InjectionMethods = targetType.GetMethods().Where(m=>m.IsDefined(typeof(MethodInjectionAttribute), true));
 
-
+            foreach (MethodInfo method in InjectionMethods)
+            {
+                List<object> paraInjectionList = new List<object>();
+                foreach (ParameterInfo param in method.GetParameters())
+                {
+                    Type paraType = param.ParameterType;
+                    string paraShortName = this.GetShortName(param);
+                    object paraInstance = this.Resolve(paraType, paraShortName);
+                    paraInjectionList.Add(paraInstance);
+                }
+                method.Invoke(oInstance, paraInjectionList.ToArray());
+            }
 
             #endregion
 

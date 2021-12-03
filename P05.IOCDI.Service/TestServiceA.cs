@@ -7,7 +7,7 @@ namespace P05.IOCDI.Service
     {
         public TestServiceA()
         {
-            Console.WriteLine($"{this.GetType().Name}is constructed....");
+            Console.WriteLine($"{this.GetType().Name} is constructed....");
         }
 
         private ITestServiceC _ITestServiceC = null;

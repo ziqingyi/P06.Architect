@@ -33,10 +33,11 @@ namespace P05.IOCDI.Service
         }
 
 
-
+        [MethodInjection]
         public void Init(ITestServiceA testServiceA)
         {
             this._ITestServiceA = testServiceA;
+            Console.WriteLine("TestServiceB's method Init()");
         }
 
         public void Show()

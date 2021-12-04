@@ -47,6 +47,7 @@ public class Program
         #region  factory 3: IOC (register and resolve)
 
         {
+            Console.Clear();
             Console.WriteLine("***************3.1 create by factory******************************");
             //3.1 create by factory, but user need to know the params for each obj, relationship --> container find ctors and params        
             IContainer container = new CustomContainer();
@@ -71,6 +72,7 @@ public class Program
         {
             //3.2  parameters's initialization   ==>  Iteration       
             //   some properties need initializaiton  ==> parameter injection
+            Console.Clear();
             Console.WriteLine("***************3.2  parameters's initialization******************************");
             IContainer container = new CustomContainer();
 
@@ -91,8 +93,9 @@ public class Program
 
         }
 
-        {     
+        {
             //3.3 add life time type to instance when initialize
+            Console.Clear();
             Console.WriteLine("***************3.3 add life time type: Singleton***********");
             CustomContainer container = new CustomContainer();
 
@@ -120,6 +123,7 @@ public class Program
         }
         {
             //3.4  Scope
+            Console.Clear();
             Console.WriteLine("***************3.4  life time type: Scope******************************");
             CustomContainer container1 = new CustomContainer();
 
@@ -145,6 +149,48 @@ public class Program
             Console.WriteLine($"testServiceB31.Equals(testServiceB._ITestServiceA) ?  {testServiceB31.Equals(testServiceB32)}");
 
             Console.WriteLine($"testServiceB21.Equals(testServiceB31._ITestServiceA) ?  {testServiceB21.Equals(testServiceB31)}");
+
+        }
+        {
+            //3.5 PerThread
+            Console.Clear();
+            Console.WriteLine("***************3.5   life time type: PerThread******************************");
+            CustomContainer container = new CustomContainer();
+            container.Register<ITestServiceA, TestServiceA>(lifeTimeType: RegisterLifeTimeType.PerThread);
+            ITestServiceA a1 = container.Resolve<ITestServiceA>();
+            ITestServiceA a2 = container.Resolve<ITestServiceA>();
+            ITestServiceA a3 = null;
+            ITestServiceA a4 = null;
+            ITestServiceA a5 = null;
+
+            Task.Run(() =>
+            {
+                Console.WriteLine($"This is {Thread.CurrentThread.ManagedThreadId} a3");
+                a3 = container.Resolve<ITestServiceA>();
+            });
+            //new thread continue with...
+            Task.Run(() =>
+            {
+                Console.WriteLine($"This is {Thread.CurrentThread.ManagedThreadId} a4");
+                a4 = container.Resolve<ITestServiceA>();
+            }).ContinueWith(t =>
+            {
+                Console.WriteLine($"This is {Thread.CurrentThread.ManagedThreadId} a5");
+                a5 = container.Resolve<ITestServiceA>();
+            });
+            Thread.Sleep(1000);
+
+            Console.WriteLine(object.ReferenceEquals(a1, a2));//True
+            Console.WriteLine(object.ReferenceEquals(a1, a3));//False
+            Console.WriteLine(object.ReferenceEquals(a1, a4));//False
+            Console.WriteLine(object.ReferenceEquals(a1, a5));//False
+
+            Console.WriteLine(object.ReferenceEquals(a3, a4));//False
+            Console.WriteLine(object.ReferenceEquals(a3, a5));//False
+
+            Console.WriteLine(object.ReferenceEquals(a4, a5));//False
+
+
 
         }
 

@@ -21,7 +21,8 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
     {
         Transient,
         Scope,
-        Singleton
+        Singleton,
+        PerThread
     }
 
 

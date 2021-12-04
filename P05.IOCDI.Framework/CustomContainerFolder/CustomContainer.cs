@@ -16,8 +16,10 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
 
         private Dictionary<string, object> scope_ContainerDic = new Dictionary<string, object>();
 
-        private string GetKey(string fullName, string shortName) => $"{fullName}_{shortName}";
         private Dictionary<string, object[]> value_ContainerDic = new Dictionary<string, object[]>();
+
+        private string GetKey(string fullName, string shortName) => $"{fullName}_{shortName}";
+
 
 
         public IContainer CreateChildContainer()
@@ -92,18 +94,26 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
                 case RegisterLifeTimeType.Transient:
                     break;
                 case RegisterLifeTimeType.Scope:
-
                     if(scope_ContainerDic.ContainsKey(model.TargetType.FullName!))
                     {
                         return scope_ContainerDic[model.TargetType.FullName!];
                     }
                     break;
+
                 case RegisterLifeTimeType.Singleton:
                     if(model.SingletonInstance != null)
                     {
                         return model.SingletonInstance;
                     }
                     break;
+
+                case RegisterLifeTimeType.PerThread:
+                    //CallContext in System.Runtime.Remoting.Messaging, no longer in .net core
+                    object oValue = CustomCallContext<object>.GetData($"{keyType}{Thread.CurrentThread.ManagedThreadId}");
+                    if (oValue != null)
+                        return oValue;
+                    break;
+
                 default:
                     break;
             }
@@ -257,6 +267,9 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
                     {
                         return model.SingletonInstance = oInstance;
                     }
+                    break;
+                case RegisterLifeTimeType.PerThread:
+                    CustomCallContext<object>.SetData($"{ keyType}{ Thread.CurrentThread.ManagedThreadId}",oInstance);
                     break;
                 default:
                     break;

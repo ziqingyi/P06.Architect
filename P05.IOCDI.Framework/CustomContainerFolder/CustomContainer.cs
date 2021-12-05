@@ -33,27 +33,37 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
 
             return container;
         }
+        #region Register
+
 
         /// <summary>
         /// Short name: use for differenciate the instances under same service type. 
         /// </summary>
         public void Register<TService, TImplementation>(string shortName = null, object[] paraList = null, RegisterLifeTimeType lifeTimeType = RegisterLifeTimeType.Transient ) where TService : class where TImplementation : TService
         {
-            string ServiceKey = this.GetKey(typeof(TService).FullName!, shortName);
+            Type tService = typeof(TService);
+            Type tImplementation = typeof(TImplementation);
 
-            if(!containerDic.ContainsKey(ServiceKey))
+
+            RegisterType(tService, tImplementation, shortName, paraList, lifeTimeType);
+
+        }
+
+        public void RegisterType(Type tService, Type tImplementation, string shortName = null, object[] paraList = null, RegisterLifeTimeType lifeTimeType = RegisterLifeTimeType.Transient)
+        {
+            string ServiceKey = this.GetKey(tService.FullName!, shortName);
+
+            if (!containerDic.ContainsKey(ServiceKey))
             {
                 //this.containerDic.Add(typeof(TService).FullName!, typeof(TImplementation));
                 //this.containerDic.Add(typeof(TService).FullName, new RegisterTypeModel()
 
-                
-
                 this.containerDic.Add(ServiceKey, new RegisterTypeModel()
                 {
-                    TargetType = typeof(TImplementation),
+                    TargetType = tImplementation,
                     LifeTimeType = lifeTimeType,
                     SingletonInstance = null
-                }) ;
+                });
 
                 #region keep nominated parameters
 
@@ -62,16 +72,25 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
 
                 #endregion
             }
+
         }
+
+
+        #endregion
+
+
+
+        #region Resolve
+
 
         public TService Resolve<TService>(string shortName = null)
         {       
-            TService instance = (TService)this.Resolve(typeof(TService), shortName);
+            TService instance = (TService)this.ResolveType(typeof(TService), shortName);
             return instance;
         }
 
         //Resolve: create instance by DI
-        private object Resolve(Type ServicType, string shortName = null)
+        public object ResolveType(Type ServicType, string shortName = null)
         {
             
             #region check register dictionary and find target type in register dictionary
@@ -172,7 +191,7 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
                         Type parameterType = p.ParameterType;
 
                         string paraShortName = this.GetShortName(p);
-                        object parameterInsance = this.Resolve(parameterType,paraShortName);//Activator.CreateInstance(targetType)!;
+                        object parameterInsance = this.ResolveType(parameterType,paraShortName);//Activator.CreateInstance(targetType)!;
                         
                         
                         oParameterInstanceList.Add(parameterInsance);
@@ -208,7 +227,7 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
             {
                 Type Ptype = property.PropertyType;
 
-                object propertyInstance = this.Resolve(Ptype);
+                object propertyInstance = this.ResolveType(Ptype);
                 property.SetValue(oInstance, propertyInstance);
 
             }
@@ -227,7 +246,7 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
                 {
                     Type paraType = param.ParameterType;
                     string paraShortName = this.GetShortName(param);
-                    object paraInstance = this.Resolve(paraType, paraShortName);
+                    object paraInstance = this.ResolveType(paraType, paraShortName);
                     paraInjectionList.Add(paraInstance);
                 }
                 method.Invoke(oInstance, paraInjectionList.ToArray());
@@ -283,6 +302,10 @@ namespace P05.IOCDI.Framework.CustomContainerFolder
 
 
         }
+
+        #endregion
+
+
 
 
         private string GetShortName(ICustomAttributeProvider provider)

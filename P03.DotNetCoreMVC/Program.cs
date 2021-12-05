@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -22,13 +23,12 @@ namespace P03.DotNetCoreMVC
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                //.ConfigureLogging(loggingBuilder =>
-                //{
-                //    loggingBuilder.AddLog4Net("CfgFiles\\log4net.config");//add configuration file with default location. 
-
-                //})
+                .ConfigureLogging(loggingBuilder =>
+                {
+                    loggingBuilder.AddLog4Net("CfgFiles\\log4net.config");//add configuration file with default location.             
+                })
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())//change service provider
-
+            
                 ////configure kestrel service factory
                 //.ConfigureServices((context, services) =>
                 //{

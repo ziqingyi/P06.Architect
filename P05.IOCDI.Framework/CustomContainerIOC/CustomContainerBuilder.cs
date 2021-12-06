@@ -20,16 +20,25 @@ namespace P05.IOCDI.Framework.CustomContainerIOC
 
         }
 
-        public void ServiceCollectionToCustomContainer(IServiceCollection services)
+        private void ServiceCollectionToCustomContainer(IServiceCollection services)
         {
             foreach (var service in services)
             {
+                //eg. IHttpHandler -- HttpHandler -- HttpHandlerFactory
+                if(service.ImplementationFactory != null)
+                {
+                    //interface to factory
+                    //
+                }
+
+                //interface to instance
                 if(service.ImplementationInstance != null)
                 {
                     _container.RegisterType(service.ServiceType, service.GetType());
                 }
                 else
                 {
+                    //interface to type
                     _container.RegisterType(service.ServiceType, service.ImplementationType, lifeTimeType: this.LifetimeTypeTranslation(service.Lifetime));
                 }
             }

@@ -24,6 +24,7 @@ namespace P05.IOCDI.Framework.CustomContainerIOC
             this._iServiceCollection = servicesCollection;
         }
 
+
         public object? GetService<T>()
         {
             try
@@ -37,5 +38,18 @@ namespace P05.IOCDI.Framework.CustomContainerIOC
             }
         }
 
+        public object? GetService(Type serviceType)
+        {
+            try
+            {
+                return this._container.ResolveType(serviceType)!;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
+        }
     }
 }

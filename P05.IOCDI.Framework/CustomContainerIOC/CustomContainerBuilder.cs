@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace P05.IOCDI.Framework.CustomContainerIOC
 {
+    // builder is used to provide IServiceProvider.
     public class CustomContainerBuilder
     {
         private static IContainer _container = new CustomContainer();
@@ -34,11 +35,14 @@ namespace P05.IOCDI.Framework.CustomContainerIOC
             }
         }
 
-
+        #region most important function, service provider
         public IServiceProvider GetServiceProvider()
         {
             return new CustomServiceProvider(_container);
         }
+
+        #endregion
+
 
 
         public void RegisterType<TService, TImplementation>(string shortName = null, object[] paraList = null, RegisterLifeTimeType lifeTimeType = RegisterLifeTimeType.Transient) where TService : class where TImplementation : TService

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace P05.IOCDI.Framework.CustomContainerIOC
 {
+    //host builder method: IHostBuilder UseServiceProviderFactory<TContainerBuilder>(IServiceProviderFactory<TContainerBuilder> factory);
     public class CustomContainerFactory:IServiceProviderFactory<CustomContainerBuilder>
     {
         public CustomContainerBuilder CreateBuilder(IServiceCollection services)

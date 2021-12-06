@@ -17,12 +17,30 @@ namespace P05.IOCDI.Framework.CustomContainerIOC
         {
             this._container = container;
         }
-
         public CustomServiceProvider(IContainer container, IServiceCollection servicesCollection)
         {
             this._container = container;
             this._iServiceCollection = servicesCollection;
         }
+
+        #region important
+
+        // interface IServiceProvider require
+        public object? GetService(Type serviceType)
+        {
+            try
+            {
+                return this._container.ResolveType(serviceType)!;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
+        #endregion
+
 
 
         public object? GetService<T>()
@@ -38,18 +56,5 @@ namespace P05.IOCDI.Framework.CustomContainerIOC
             }
         }
 
-        public object? GetService(Type serviceType)
-        {
-            try
-            {
-                return this._container.ResolveType(serviceType)!;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw;
-            }
-
-        }
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using P03.DotNetCoreMVC.Interface.TestServiceInterface;
 using P03.DotNetCoreMVC.Utility.Filters;
+using P03.DotNetCoreMVC.Utility.CustomAOP;
 
 namespace P03.DotNetCoreMVC.Controllers
 {
@@ -63,6 +64,17 @@ namespace P03.DotNetCoreMVC.Controllers
 
             this._logger.LogWarning("this is CThirdController Index");
             #endregion
+
+
+            #region autofac and AOP
+
+            var serviceA = (ITestServiceA)this._testServiceA.AOP(typeof(ITestServiceA));
+
+
+
+
+            #endregion
+
 
             return View();
         }

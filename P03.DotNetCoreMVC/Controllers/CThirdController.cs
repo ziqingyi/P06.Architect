@@ -68,10 +68,12 @@ namespace P03.DotNetCoreMVC.Controllers
 
             #region autofac and AOP
 
-            var serviceA = (ITestServiceA)this._testServiceA.AOP(typeof(ITestServiceA));
+            //autofac show
+            this._testServiceA.Show();
 
-
-
+            //aop show
+            var serviceA_AOP = (ITestServiceA)this._testServiceA.AOP(typeof(ITestServiceA));
+            serviceA_AOP.Show();
 
             #endregion
 

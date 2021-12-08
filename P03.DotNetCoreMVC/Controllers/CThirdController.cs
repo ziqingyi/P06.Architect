@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using P03.DotNetCoreMVC.Interface.TestServiceInterface;
 using P03.DotNetCoreMVC.Utility.Filters;
 using P03.DotNetCoreMVC.Utility.CustomAOP;
+using Microsoft.Extensions.Options;
+using P03.DotNetCoreMVC.Models;
 
 namespace P03.DotNetCoreMVC.Controllers
 {
@@ -29,6 +31,13 @@ namespace P03.DotNetCoreMVC.Controllers
         private readonly IConfiguration _configuration;
         #endregion
 
+        #region options
+
+        private IOptions<EmailOption> _optionsDefault;
+        private IOptionsMonitor<EmailOption> _optionsMonitor;
+        private IOptionsSnapshot<EmailOption> _optionsSnapshot;
+
+        #endregion
 
         public CThirdController(ILogger<CThirdController> logger,
             ILoggerFactory loggerFactory
@@ -38,7 +47,11 @@ namespace P03.DotNetCoreMVC.Controllers
             , ITestServiceD testServiceD
             , ITestServiceE testServiceE
             , IServiceProvider serviceProvider
-            , IConfiguration configuration)
+            , IConfiguration configuration
+
+            , IOptions<EmailOption> optionsDefault//singletion, no change
+            , IOptionsMonitor<EmailOption> optionsMonitor//file update support, monitor file updates
+            , IOptionsSnapshot<EmailOption> optionsSnapshot)//create when have new request, same in same request, 
         {
             _testServiceA = testServiceA;
             _testServiceB = testServiceB;
@@ -50,6 +63,14 @@ namespace P03.DotNetCoreMVC.Controllers
 
             this._logger = logger;
             this._loggerFactory = loggerFactory;
+
+            #region options
+
+            this._optionsDefault = optionsDefault;
+            this._optionsMonitor = optionsMonitor; 
+            this._optionsSnapshot = optionsSnapshot;
+
+            #endregion
         }
 
 
@@ -81,6 +102,34 @@ namespace P03.DotNetCoreMVC.Controllers
             return View();
         }
 
+
+        #region  Test Options
+
+        public IActionResult TestOptions()
+        {
+            base.ViewBag.defaultEmailOption = this._optionsDefault.Value;
+
+            base.ViewBag.defaultEmailOption1 = _optionsMonitor.CurrentValue;//_optionsMonitor.Get(Microsoft.Extensions.Options.Options.DefaultName);
+            
+            base.ViewBag.fromMemoryEmailOption1 = _optionsMonitor.Get("FromMemory");
+
+            //test updates in config json file
+            base.ViewBag.fromConfigurationEmailOption1 = _optionsMonitor.Get("FromConfiguration");
+            base.ViewBag.fromConfigurationEmailOptionNew = _optionsMonitor.Get("FromConfigurationNew");
+
+
+            base.ViewBag.defaultEmailOption2 = _optionsSnapshot.Value;//_optionsSnapshot.Get(Microsoft.Extensions.Options.Options.DefaultName);
+            base.ViewBag.fromMemoryEmailOption2 = _optionsSnapshot.Get("FromMemory");
+            base.ViewBag.fromConfigurationEmailOption2 = _optionsSnapshot.Get("FromConfiguration");
+
+
+            return View();
+        }
+
+        #endregion
+
+
+
         #region Action filters and order
         //order: 0,1,2   2,1,0
         [CustomActionFilter(Order = 1)]
@@ -109,11 +158,6 @@ namespace P03.DotNetCoreMVC.Controllers
         }
 
         #endregion
-
-
-
-
-
 
 
 

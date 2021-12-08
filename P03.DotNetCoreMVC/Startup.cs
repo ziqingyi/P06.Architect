@@ -24,6 +24,7 @@ using P03.DotNetCoreMVC.Utility;
 using P03.DotNetCoreMVC.ProjectUtility.AutofacUtility;
 using P03.DotNetCoreMVC.Utility.CusMiddleWare;
 using P03.DotNetCoreMVC.Utility.Filters;
+using P03.DotNetCoreMVC.Models;
 
 namespace P03.DotNetCoreMVC
 {
@@ -120,6 +121,27 @@ namespace P03.DotNetCoreMVC
                 });
 
             #endregion
+
+
+
+            #region Options configuration
+
+            services.Configure<EmailOption>(op => op.Title = "services.Configure<EmailOption>--DefaultName");
+            services.Configure<EmailOption>("FromMemory", op => op.Title = "services.Configure<EmailOption>---FromMemory");//config name
+
+            services.Configure<EmailOption>("FromConfiguration", Configuration.GetSection("Email"));//read from config files
+            services.Configure<EmailOption>("FromConfigurationNew", Configuration.GetSection("EmailNew"));//read from config files
+
+
+            services.AddOptions<EmailOption>("AddOption").Configure(op => op.Title = "AddOption Title--DefaultName");
+            services.Configure<EmailOption>(null, op => op.From = "services.Configure<EmailOption>--Name null--Same With ConfigureAll");
+
+            services.PostConfigure<EmailOption>(null, op => op.Body = "services.PostConfigure<EmailOption>--Name null--Same With PostConfigureAll");
+
+            #endregion
+
+
+
 
 
 

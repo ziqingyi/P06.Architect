@@ -61,7 +61,7 @@ namespace P06.Architect
                         {
                             Console.WriteLine("This is hello world in HttpContext 3 Response begin ");
 
-                            Console.WriteLine("*******************Core****************************");//await next.Invoke(context); //no next 
+                            Console.WriteLine($"***********Core***********context is : {context}");//await next.Invoke(context); //no next 
 
                             Console.WriteLine("This is hello world in HttpContext 3 Response end ");
                         });
@@ -102,7 +102,7 @@ namespace P06.Architect
 
             MyRequestDelegate app = context =>
             {
-                Console.WriteLine("initial request delegate app");
+                Console.WriteLine("initial request delegate app with context: " + context);
             };
 
             foreach (var component in _components.Reverse())

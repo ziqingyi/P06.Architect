@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace P06.Architect
 {
+    //core: public delegate Task RequestDelegate(HttpContext context);
     public delegate void MyRequestDelegate(string context);
     public static class MiddlewareProcess
     {
@@ -63,6 +64,10 @@ namespace P06.Architect
 
                             Console.WriteLine($"***********Core***********context is : {context}");//await next.Invoke(context); //no next 
 
+
+                            //next.Invoke(context);//core: Status404NotFound 
+
+
                             Console.WriteLine("This is hello world in HttpContext 3 Response end ");
                         });
                 }
@@ -97,17 +102,34 @@ namespace P06.Architect
 
         public MyRequestDelegate Build()
         {
-            //if we reach the end of the pipeline, but we have an endpoint, then something unexpected has happended.
-            //this could happen if use code sets an endpoint, but they forget to add the UseEndpoint middleware. 
-
             MyRequestDelegate app = context =>
             {
                 Console.WriteLine("initial request delegate app with context: " + context);
+                Console.WriteLine("The request reached the end of the pipeline without executing the endpoint, 404");
+
+                /**
+                If we reach the end of the pipeline, but we have an endpoint, then something unexpected has happened.
+                This could happen if user code sets an endpoint, but they forgot to add the UseEndpoint middleware.
+                var endpoint = context.GetEndpoint();
+                var endpointRequestDelegate = endpoint?.RequestDelegate;
+                if (endpointRequestDelegate != null)
+                {
+                    var message =
+                        $"The request reached the end of the pipeline without executing the endpoint: '{endpoint!.DisplayName}'. " +
+                        $"Please register the EndpointMiddleware using '{nameof(IApplicationBuilder)}.UseEndpoints(...)' if using " +
+                        $"routing.";
+                    throw new InvalidOperationException(message);
+                }
+
+                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                return Task.CompletedTask;
+                 */
             };
+
 
             foreach (var component in _components.Reverse())
             {
-                app = component(app);
+                app = component(app);// invoke
             }
 
             return app;

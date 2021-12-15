@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace P06.Architect
+namespace P06.Architect.AspNetCoreCustom
 {
     //core: public delegate Task RequestDelegate(HttpContext context);
     public delegate void MyRequestDelegate(string context);

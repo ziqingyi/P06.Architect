@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -492,7 +492,54 @@ namespace P03.DotNetCoreMVC
 
             app.UseRouting();
 
-            app.UseAuthorization();//authorize permissions
+            #region RequestDelegate between UseRouting and UseEndpoints. 
+
+            app.UseAuthorization();//authorize permissions, between UseRouting and UseEndpoints. 
+
+            Func<RequestDelegate, RequestDelegate> funcBetweenUseRoutingUseEndpoints =new Func<RequestDelegate, RequestDelegate>( next =>
+            {
+                Console.WriteLine("This is middleware between UseRouting and UseEndpoints");
+
+                return new RequestDelegate(
+                    async context =>
+                    {
+                        await Task.Run(() =>
+                        {
+                            Console.WriteLine("************************************************************");
+                            Console.WriteLine("This is middleware between UseRouting and UseEndpoints start");
+
+                            var endpoint = context.GetEndpoint();
+                            if(endpoint is RouteEndpoint routeEndpoint)
+                            {
+                                Console.WriteLine("Endpoint has route pattern: " + routeEndpoint.RoutePattern.RawText);
+                            }
+                            if(endpoint != null)
+                            {
+                                Console.WriteLine($"{endpoint.DisplayName}");
+                                Console.WriteLine($"{string.Join(";", endpoint.Metadata)}");
+                            }
+                            else
+                            {
+                                Console.WriteLine("end point is null");
+                            }
+                        });
+
+                        await next.Invoke(context);
+
+                        await Task.Run(() =>
+                        {
+                            Console.WriteLine("This is middleware between UseRouting and UseEndpoints end");
+                            Console.WriteLine("************************************************************");
+                        });
+                    }
+                    );
+
+            });
+
+            app.Use(funcBetweenUseRoutingUseEndpoints);
+
+            #endregion
+
 
             app.UseEndpoints(endpoints =>
             {

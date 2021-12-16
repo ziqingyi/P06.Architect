@@ -89,15 +89,24 @@ namespace P06.Architect.AspNetCoreCustom
 
     }
 
-    public class MyAppBuilder
+    public class MyAppBuilder: IAppBuilder
     {
         private readonly IList<Func<MyRequestDelegate,MyRequestDelegate>> _components 
             = new List<Func<MyRequestDelegate, MyRequestDelegate>>();
 
+        IServiceProvider IAppBuilder.ApplicationServices 
+        { 
+            get => null; 
+            set
+            {
+                
+            } 
+        }
 
-        public void Use(Func<MyRequestDelegate, MyRequestDelegate> middleware)
+        public IAppBuilder Use(Func<MyRequestDelegate, MyRequestDelegate> middleware)
         {
             _components.Add(middleware);
+            return this;
         }
 
         public MyRequestDelegate Build()
@@ -136,8 +145,72 @@ namespace P06.Architect.AspNetCoreCustom
         }
 
     }
+    //source code: // public delegate Task RequestDelegate(HttpContext context);
+    //
+    // Summary:
+    //     Defines a class that provides the mechanisms to configure an application's request
+    //     pipeline.
+    public interface IAppBuilder
+    {
+
+        //
+        // Summary:
+        //     Adds a middleware delegate to the application's request pipeline.
+        //
+        // Parameters:
+        //   middleware:
+        //     The middleware delegate.
+        //
+        // Returns:
+        //     The Microsoft.AspNetCore.Builder.IApplicationBuilder.
+        IAppBuilder Use(Func<MyRequestDelegate, MyRequestDelegate> middleware);
+        //
+        // Summary:
+        //     Builds the delegate used by this application to process HTTP requests.
+        //
+        // Returns:
+        //     The request handling delegate.
+        MyRequestDelegate Build();
 
 
+        // Summary:
+        //     Gets or sets the System.IServiceProvider that provides access to the application's
+        //     service container.
+        IServiceProvider ApplicationServices
+        {
+            get;
+            set;
+        }
+
+
+        #region  source code
+
+        // Summary:
+        //     Gets the set of HTTP features the application's server provides.
+        //IFeatureCollection ServerFeatures
+        //{
+        //    get;
+        //}
+
+        //
+        // Summary:
+        //     Gets a key/value collection that can be used to share data between middleware.
+        //IDictionary<string, object> Properties
+        //{
+        //    get;
+        //}
+
+        // Summary:
+        //     Creates a new Microsoft.AspNetCore.Builder.IApplicationBuilder that shares the
+        //     Microsoft.AspNetCore.Builder.IApplicationBuilder.Properties of this Microsoft.AspNetCore.Builder.IApplicationBuilder.
+        //
+        // Returns:
+        //     The new Microsoft.AspNetCore.Builder.IApplicationBuilder.
+        //IAppBuilder New();
+
+        #endregion
+
+    }
 
 
 

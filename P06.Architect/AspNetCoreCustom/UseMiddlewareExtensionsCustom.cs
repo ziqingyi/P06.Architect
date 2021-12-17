@@ -12,6 +12,7 @@ using Microsoft.Extensions.Internal;
 
 namespace P06.Architect.AspNetCoreCustom
 {
+    //copy and modify from asp.net core scource code
     public static class UseMiddlewareExtensionsCustom
     {
 

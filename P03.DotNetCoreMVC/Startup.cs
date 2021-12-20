@@ -85,6 +85,18 @@ namespace P03.DotNetCoreMVC
             #endregion
 
 
+            #region  distributed redis
+
+            services.AddDistributedRedisCache(
+                options =>
+                {
+                    options.Configuration = "127.0.0.1:6379";
+                    options.InstanceName = "RedisDistributedSession";
+                }     
+                );
+
+            #endregion
+
 
 
 

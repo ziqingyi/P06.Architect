@@ -12,6 +12,7 @@ using P03.DotNetCoreMVC.Utility.Filters;
 using P03.DotNetCoreMVC.Utility.CustomAOP;
 using Microsoft.Extensions.Options;
 using P03.DotNetCoreMVC.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace P03.DotNetCoreMVC.Controllers
 {
@@ -101,6 +102,23 @@ namespace P03.DotNetCoreMVC.Controllers
 
             return View();
         }
+
+        public IActionResult IndexSession()
+        {
+
+            string user = base.HttpContext.Session.GetString("CurrentUser");
+
+            if(string.IsNullOrEmpty(user))
+            {
+                base.HttpContext.Session.SetString("CurrentUser", $"TestUser-{this._configuration["port"]}");
+                this._logger.LogWarning($"This is CThirdController {this._configuration["port"]} Session");
+            }
+
+            base.ViewBag.SessionUser = base.HttpContext.Session.GetString("CurrentUser");
+
+            return View();
+        }
+
 
 
         #region  Test Options

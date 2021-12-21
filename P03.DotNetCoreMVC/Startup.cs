@@ -561,8 +561,9 @@ namespace P03.DotNetCoreMVC
 
             app.UseEndpoints(endpoints =>
             {
-
+                #region dynamic route
                 endpoints.UseDynamicRouteDefault();//dynamic route in endpoints
+                #endregion
 
                 endpoints.MapControllerRoute(
                     name: "default",
@@ -576,6 +577,9 @@ namespace P03.DotNetCoreMVC
                     
                     );
 
+                #region map get
+                endpoints.UseMapGetDefault();
+                #endregion
 
             });
         }

@@ -12,6 +12,8 @@ namespace P03.DotNetCoreMVC.Utility.Extensions.RouteUse
         /// https://localhost:44322/en/home/index
         /// https://localhost:44322/fr/home1/index1
         /// https://localhost:44322/ch/home2/index2
+        
+        //read mapping from database or config files
         private static Dictionary<string, Dictionary<string, string>> translations 
             = new Dictionary<string, Dictionary<string, string>>()
             {

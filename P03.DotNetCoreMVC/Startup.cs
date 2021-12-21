@@ -25,6 +25,7 @@ using P03.DotNetCoreMVC.ProjectUtility.AutofacUtility;
 using P03.DotNetCoreMVC.Utility.CusMiddleWare;
 using P03.DotNetCoreMVC.Utility.Filters;
 using P03.DotNetCoreMVC.Models;
+using P03.DotNetCoreMVC.Utility.Extensions.RouteUse;
 
 namespace P03.DotNetCoreMVC
 {
@@ -555,6 +556,9 @@ namespace P03.DotNetCoreMVC
 
             app.UseEndpoints(endpoints =>
             {
+
+                endpoints.UseDynamicRouteDefault();
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -99,6 +99,11 @@ namespace P03.DotNetCoreMVC
             #endregion
 
 
+            #region dynamic route
+
+            services.AddDynamicRoute();
+
+            #endregion
 
 
             //services.AddControllersWithViews();
@@ -503,7 +508,7 @@ namespace P03.DotNetCoreMVC
 
 
 
-            app.UseRouting();
+            app.UseRouting();//UseRouting+UseEndpoints together
 
             #region RequestDelegate between UseRouting and UseEndpoints. 
 
@@ -557,7 +562,7 @@ namespace P03.DotNetCoreMVC
             app.UseEndpoints(endpoints =>
             {
 
-                endpoints.UseDynamicRouteDefault();
+                endpoints.UseDynamicRouteDefault();//dynamic route in endpoints
 
                 endpoints.MapControllerRoute(
                     name: "default",

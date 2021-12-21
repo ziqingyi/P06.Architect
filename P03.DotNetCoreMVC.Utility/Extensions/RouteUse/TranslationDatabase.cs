@@ -9,9 +9,9 @@ namespace P03.DotNetCoreMVC.Utility.Extensions.RouteUse
     public class TranslationDatabase
     {
 
-        /// https://localhost:5177/en/home/index
-        /// https://localhost:5177/fr/home1/index1
-        /// https://localhost:5177/ch/home2/index2
+        /// https://localhost:44322/en/home/index
+        /// https://localhost:44322/fr/home1/index1
+        /// https://localhost:44322/ch/home2/index2
         private static Dictionary<string, Dictionary<string, string>> translations 
             = new Dictionary<string, Dictionary<string, string>>()
             {

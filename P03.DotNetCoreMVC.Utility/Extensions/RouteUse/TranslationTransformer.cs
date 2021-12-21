@@ -29,7 +29,7 @@ namespace P03.DotNetCoreMVC.Utility.Extensions.RouteUse
 
             if (controller == null)
                 return values;
-
+            values["controller"] = controller;
 
             var action = await _translationDatabase.Resolve(language, (string)values["action"]);
 

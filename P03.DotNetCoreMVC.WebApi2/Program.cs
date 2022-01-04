@@ -18,6 +18,12 @@ namespace P03.DotNetCoreMVC.WebApi2
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+            .ConfigureLogging(configureLogging =>
+            {
+                configureLogging.AddFilter("System", LogLevel.Warning);
+                configureLogging.AddFilter("Microsoft", LogLevel.Warning);
+                configureLogging.AddLog4Net("ConfigFile/log4net.Config");
+            })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

@@ -79,7 +79,7 @@ namespace P03.DotNetCoreMVC.WebApi2
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }

@@ -23,7 +23,7 @@ namespace P03.DotNetCoreMVC.WebApi2.Controllers
         {
             _logger.LogInformation("GetString");
 
-            return "";
+            return "getString Result";
         }
 
 

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,27 @@ namespace P03.DotNetCoreMVC.WebApi2
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
+
+            #region add for Swagger
+
+            services.AddControllers();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("Doc-V1",
+                    new OpenApiInfo
+                    {
+                        Title = "test",
+                        Version = "v1",
+                        Description = "SwaggerDoc test v1"
+                    });
+            });
+
+            #endregion
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +58,18 @@ namespace P03.DotNetCoreMVC.WebApi2
             {
                 app.UseExceptionHandler("/Error");
             }
+
+            #region add swagger middleware
+
+            app.UseSwagger();
+            app.UseSwaggerUI(
+                s =>
+                {
+                    s.SwaggerEndpoint("/swagger/Doc-V1/swagger.json", "test1");
+                });
+
+            #endregion
+
 
             app.UseStaticFiles();
 

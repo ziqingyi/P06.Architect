@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\P03.DotNetCoreMVC.Utility\P03.DotNetCoreMVC.Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="ConfigFile\log4net.Config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -50,7 +50,7 @@ namespace P03.DotNetCoreMVC.WebApi2.Controllers
 
         [HttpGet]
         [Route("GetInfoByParamterServiceFilter")]
-        [ServiceFilter(typeof(CustomActionFilterLogAttribute))]// register with services
+        [ServiceFilter(typeof(CustomActionFilterLogLogAttribute))]// register with services
         public string GetInfoByParamterServiceFilter(int id, string Name)
         {
             return $"this is GetInfoByParamterServiceFilter:  Id={id},Name={Name}";

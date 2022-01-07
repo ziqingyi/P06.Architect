@@ -6,10 +6,16 @@ using System.Text;
 
 namespace P03.DotNetCoreMVC.Utility.Filters
 {
-    public class CustomControllerParaFilterAttribute : Attribute, IActionFilter
+    public class CustomControllerParaFilterAttribute : Attribute, IActionFilter, IOrderedFilter
     {
 
         private ILogger<CustomControllerParaFilterAttribute> _logger = null;
+
+        public int Order
+        {
+            get;
+            set;
+        }
 
         public CustomControllerParaFilterAttribute(ILogger<CustomControllerParaFilterAttribute> logger)
         {
@@ -18,12 +24,12 @@ namespace P03.DotNetCoreMVC.Utility.Filters
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            _logger.LogInformation($" this is {nameof(CustomControllerParaFilterAttribute)} OnActionExecuting");
+            _logger.LogInformation($" this is {nameof(CustomControllerParaFilterAttribute)} OnActionExecuting" + $" with order {this.Order}");
         }
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            _logger.LogInformation($" this is {nameof(CustomControllerParaFilterAttribute)} OnActionExecuted");
+            _logger.LogInformation($" this is {nameof(CustomControllerParaFilterAttribute)} OnActionExecuted" + $" with order {this.Order}");
         }
 
 

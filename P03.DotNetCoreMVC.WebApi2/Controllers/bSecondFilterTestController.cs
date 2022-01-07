@@ -10,7 +10,7 @@ namespace P03.DotNetCoreMVC.WebApi2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [TypeFilter(typeof(CustomControllerParaFilterAttribute), Order =888)]//affect all actions in this controller
+    [TypeFilter(typeof(CustomControllerParaFilterAttribute), Order = 5)]//affect all actions in this controller
     public class bSecondFilterTestController : ControllerBase
     {
 

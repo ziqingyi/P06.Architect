@@ -17,25 +17,25 @@ namespace P03.DotNetCoreMVC.Utility.Filters
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            _logger.LogInformation($" this is {nameof(CustomGlobalParaFilterAttribute)} OnActionExecuting");
+            _logger.LogInformation($" this is {nameof(CustomGlobalParaFilterAttribute)} OnActionExecuting" + $" with order {this.Order}");
         }
 
         public override void OnActionExecuted(ActionExecutedContext context)
         {
-            _logger.LogInformation($" this is {nameof(CustomGlobalParaFilterAttribute)} OnActionExecuted");
+            _logger.LogInformation($" this is {nameof(CustomGlobalParaFilterAttribute)} OnActionExecuted" + $" with order {this.Order}");
         }
 
 
 
         public override void OnResultExecuting(ResultExecutingContext context)
         {
-            _logger.LogInformation($" this is {nameof(CustomGlobalParaFilterAttribute)} OnResultExecuting");
+            _logger.LogInformation($" this is {nameof(CustomGlobalParaFilterAttribute)} OnResultExecuting" + $" with order {this.Order}");
             //base.OnResultExecuting(context);
         }
 
         public override void OnResultExecuted(ResultExecutedContext context)
         {
-            _logger.LogInformation($" this is {nameof(CustomGlobalParaFilterAttribute)} OnResultExecuted");
+            _logger.LogInformation($" this is {nameof(CustomGlobalParaFilterAttribute)} OnResultExecuted" + $" with order {this.Order}");
             //base.OnResultExecuted(context);
         }
     }

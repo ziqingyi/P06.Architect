@@ -10,7 +10,7 @@ namespace P03.DotNetCoreMVC.WebApi2.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [TypeFilter(typeof(CustomControllerParaFilterAttribute), Order = 5)]//affect all actions in this controller
+    [TypeFilter(typeof(CustomControllerParaFilterAttribute), Order = 0)]//affect all actions in this controller
     public class bSecondFilterTestController : ControllerBase
     {
 
@@ -51,7 +51,7 @@ namespace P03.DotNetCoreMVC.WebApi2.Controllers
 
         [HttpGet]
         [Route("GetInfoByParamterServiceFilter")]
-        [ServiceFilter(typeof(CustomActionFilterLogLogAttribute))]// register with services
+        [ServiceFilter(typeof(CustomActionFilterLogLogAttribute), Order = 10)]// register with services
         public string GetInfoByParamterServiceFilter(int id, string Name)
         {
             return $"this is GetInfoByParamterServiceFilter:  Id={id},Name={Name}";

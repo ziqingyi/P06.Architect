@@ -57,6 +57,16 @@ namespace P03.DotNetCoreMVC.WebApi2.Controllers
         }
 
 
+        [HttpGet]
+        [Route("GetInfoByParamterCustomFilter")]
+        [CustomIOCFilterFactoryPara(typeof(CustomActionFilterLogLogAttribute))]// register with services
+        public string GetInfoByParamterCustomFilter(int id, string Name)
+        {
+            return $"this is GetInfoByParamterCustomFilter:  Id={id},Name={Name}";
+        }
+
+
+
         #region default
 
         // GET: api/<bSecondFilterTestController>

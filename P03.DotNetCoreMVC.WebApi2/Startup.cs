@@ -55,6 +55,7 @@ namespace P03.DotNetCoreMVC.WebApi2
             services.AddMvc(option =>
             {
                 option.Filters.Add( typeof(CustomGlobalParaFilterAttribute),order:0 );
+                option.Filters.Add( typeof(CustomExceptionFilterAttribute) );
             });
 
             #endregion

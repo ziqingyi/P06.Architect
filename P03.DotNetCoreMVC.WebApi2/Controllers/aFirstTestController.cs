@@ -49,7 +49,17 @@ namespace P03.DotNetCoreMVC.WebApi2.Controllers
         }
 
 
+        [HttpGet]
+        [Route("ToError")]
+        public string ToError()
+        {
 
+            int i = 0;
+            int j = 10;
+            int x = j / i;
+            
+            return "ToError";
+        }
 
 
 

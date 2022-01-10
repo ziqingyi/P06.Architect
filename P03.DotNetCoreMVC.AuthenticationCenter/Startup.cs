@@ -17,7 +17,7 @@ using P03.DotNetCoreMVC.Utility.Filters;
 
 namespace P03.DotNetCoreMVC.AuthenticationCenter
 {
-    //dotnet P03.DotNetCoreMVC.AuthenticationCenter.dll  --urls="http://*:44356" --ip="127.0.0.1"
+    //dotnet P03.DotNetCoreMVC.AuthenticationCenter.dll  --urls="https://*:44356" --ip="127.0.0.1"
     public class Startup
     {
         public Startup(IConfiguration configuration)

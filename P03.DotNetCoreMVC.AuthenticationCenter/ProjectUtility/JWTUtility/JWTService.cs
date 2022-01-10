@@ -25,7 +25,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.ProjectUtility.JWTUtility
                 Subject: The subject of the token，token, Gets the subject of the claim
                 Expired: Expiration Time。 token expired time, Unix time
                 iat: Issued At。 token create time， Unix time
-                jti: JWT ID
+                jti: JWT ID, id of this token
          * 
          *
          *
@@ -44,8 +44,8 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.ProjectUtility.JWTUtility
             var creds = new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: _configuration["issuer"],
-                audience: _configuration["audience"],
+                issuer: _configuration["issuer"],      //http://localhost:64747
+                audience: _configuration["audience"],  //http://localhost:64747
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(5),
                 signingCredentials: creds

@@ -56,6 +56,7 @@ namespace P03.DotNetCoreMVC.WebApi2
             {
                 option.Filters.Add( typeof(CustomGlobalParaFilterAttribute),order:0 );
                 option.Filters.Add( typeof(CustomExceptionFilterAttribute) );
+                //option.Filters.Add(typeof(CustomCorsFilterAttribute));
             });
 
             #endregion

@@ -75,7 +75,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P05.IOCDI.WebProjTest", "P0
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.WebApi2", "P03.DotNetCoreMVC.WebApi2\P03.DotNetCoreMVC.WebApi2.csproj", "{7C47AE6F-FE1C-42DB-A22A-DFB26AE0AF5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03.DotNetCoreMVC.WebNUnitTestProject", "P03.DotNetCoreMVC.WebNUnitTestProject\P03.DotNetCoreMVC.WebNUnitTestProject.csproj", "{9205FD64-A044-48DA-804F-FC0CC858A2A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.WebNUnitTestProject", "P03.DotNetCoreMVC.WebNUnitTestProject\P03.DotNetCoreMVC.WebNUnitTestProject.csproj", "{9205FD64-A044-48DA-804F-FC0CC858A2A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst", "P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst\P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.csproj", "{C1CA0CAF-0EE5-479A-A851-ACC91A3E7806}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -215,6 +217,10 @@ Global
 		{9205FD64-A044-48DA-804F-FC0CC858A2A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9205FD64-A044-48DA-804F-FC0CC858A2A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9205FD64-A044-48DA-804F-FC0CC858A2A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1CA0CAF-0EE5-479A-A851-ACC91A3E7806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1CA0CAF-0EE5-479A-A851-ACC91A3E7806}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1CA0CAF-0EE5-479A-A851-ACC91A3E7806}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1CA0CAF-0EE5-479A-A851-ACC91A3E7806}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

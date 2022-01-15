@@ -41,8 +41,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P06.CefSharpDemo", "P06.Cef
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P04.DataStructureAlgorithm", "P04.DataStructureAlgorithm\P04.DataStructureAlgorithm.csproj", "{F58F2AF1-83F5-4C49-9581-78B21E3860B7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P04.DataStructureAlgorithm.SystemImplementation", "P04.DataStructureAlgorithm.SystemImplementation\P04.DataStructureAlgorithm.SystemImplementation.csproj", "{80890358-4104-4170-ACE3-8E57FA3F99DF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P05.IOCDI.BLL", "P05.IOCDI.BLL\P05.IOCDI.BLL.csproj", "{8B8FBB86-25E0-47AB-AF7F-2B83A6DFB512}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "P05.02.BLL", "P05.02.BLL", "{5477F725-28BB-4720-9A6D-8A0558E66375}"
@@ -77,7 +75,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.WebApi2",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.WebNUnitTestProject", "P03.DotNetCoreMVC.WebNUnitTestProject\P03.DotNetCoreMVC.WebNUnitTestProject.csproj", "{9205FD64-A044-48DA-804F-FC0CC858A2A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst", "P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst\P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.csproj", "{C1CA0CAF-0EE5-479A-A851-ACC91A3E7806}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst", "P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst\P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.csproj", "{C1CA0CAF-0EE5-479A-A851-ACC91A3E7806}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P04.DataStructureAlgorithm.SystemImplementation", "P04.DataStructureAlgorithm.SystemImplementation\P04.DataStructureAlgorithm.SystemImplementation.csproj", "{024B5AE0-8B25-4334-88AB-1552CF99F712}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -161,10 +161,6 @@ Global
 		{F58F2AF1-83F5-4C49-9581-78B21E3860B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F58F2AF1-83F5-4C49-9581-78B21E3860B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F58F2AF1-83F5-4C49-9581-78B21E3860B7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80890358-4104-4170-ACE3-8E57FA3F99DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80890358-4104-4170-ACE3-8E57FA3F99DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80890358-4104-4170-ACE3-8E57FA3F99DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80890358-4104-4170-ACE3-8E57FA3F99DF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8B8FBB86-25E0-47AB-AF7F-2B83A6DFB512}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8B8FBB86-25E0-47AB-AF7F-2B83A6DFB512}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B8FBB86-25E0-47AB-AF7F-2B83A6DFB512}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -221,6 +217,10 @@ Global
 		{C1CA0CAF-0EE5-479A-A851-ACC91A3E7806}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1CA0CAF-0EE5-479A-A851-ACC91A3E7806}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1CA0CAF-0EE5-479A-A851-ACC91A3E7806}.Release|Any CPU.Build.0 = Release|Any CPU
+		{024B5AE0-8B25-4334-88AB-1552CF99F712}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{024B5AE0-8B25-4334-88AB-1552CF99F712}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{024B5AE0-8B25-4334-88AB-1552CF99F712}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{024B5AE0-8B25-4334-88AB-1552CF99F712}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,7 +10,7 @@
 **          of the key.
 **
 ===========================================================*/
-
+/*
 using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Threading;
@@ -107,7 +107,7 @@ namespace System.Collections
 
            --
         */
-
+/*
         private const int InitialSize = 3;
 
         private const string LoadFactorName = "LoadFactor"; // Do not rename (binary serialization)
@@ -1538,3 +1538,4 @@ namespace System.Collections
         }
     }
 }
+*/

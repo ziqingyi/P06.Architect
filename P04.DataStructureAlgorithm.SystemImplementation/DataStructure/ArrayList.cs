@@ -10,7 +10,7 @@
 **          an array as an IList.
 **
 ===========================================================*/
-
+/*
 using System.Diagnostics;
 
 namespace System.Collections
@@ -2703,3 +2703,4 @@ namespace System.Collections
         }
     }
 }
+*/

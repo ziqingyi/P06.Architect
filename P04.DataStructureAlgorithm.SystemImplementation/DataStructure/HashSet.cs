@@ -5,7 +5,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-
+/*
 using Internal.Runtime.CompilerServices;
 
 namespace System.Collections.Generic
@@ -1572,3 +1572,4 @@ namespace System.Collections.Generic
         }
     }
 }
+*/

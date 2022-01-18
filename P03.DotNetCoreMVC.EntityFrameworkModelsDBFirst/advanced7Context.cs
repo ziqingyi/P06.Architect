@@ -79,7 +79,7 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.ModelsFromDB
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.;Database=advanced7;uid=adrian;pwd=adrian");
+                optionsBuilder.UseSqlServer("Server=.;Database=advanced7_new;uid=adrian;pwd=adrian");
             }
         }
 

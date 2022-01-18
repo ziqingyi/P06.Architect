@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.ModelsFromDB;
 
 namespace P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.Migrations
 {
     [DbContext(typeof(advanced7Context))]
-    partial class advanced7ContextModelSnapshot : ModelSnapshot
+    [Migration("20220117221239_Init03")]
+    partial class Init03
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,9 +104,6 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.Migrations
                         .HasMaxLength(500);
 
                     b.Property<string>("Name2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name3")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

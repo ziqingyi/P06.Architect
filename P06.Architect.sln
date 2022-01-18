@@ -79,6 +79,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.EntityFra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P04.DataStructureAlgorithm.SystemImplementation", "P04.DataStructureAlgorithm.SystemImplementation\P04.DataStructureAlgorithm.SystemImplementation.csproj", "{024B5AE0-8B25-4334-88AB-1552CF99F712}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03.DotNetCoreMVC.EntityFrameworkModels.TestProject", "P03.DotNetCoreMVC.EntityFrameworkModels.TestProject\P03.DotNetCoreMVC.EntityFrameworkModels.TestProject.csproj", "{CA8396AA-5ACE-42E3-993E-B3119510B76C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -221,6 +223,10 @@ Global
 		{024B5AE0-8B25-4334-88AB-1552CF99F712}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{024B5AE0-8B25-4334-88AB-1552CF99F712}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{024B5AE0-8B25-4334-88AB-1552CF99F712}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA8396AA-5ACE-42E3-993E-B3119510B76C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA8396AA-5ACE-42E3-993E-B3119510B76C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA8396AA-5ACE-42E3-993E-B3119510B76C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA8396AA-5ACE-42E3-993E-B3119510B76C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

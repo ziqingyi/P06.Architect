@@ -1,4 +1,6 @@
-﻿using System;
+﻿using P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.ModelsFromDB;
+using System;
+using System.Linq;
 
 namespace P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst
 {
@@ -34,6 +36,30 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst
 
         public static void Main(string[] args)
         {
+            using (advanced7Context context = new advanced7Context())
+            {
+                //delete and create database
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
+
+                
+                    var Addcompany = new Company()
+                    {
+                        Name = "user1111",
+                        CreateTime = DateTime.Now,
+                        CreatorId = 1,
+                        LastModifyTime = DateTime.Now,
+                        LastModifierId = 1
+                    };
+
+                context.Company.Add(Addcompany);
+                context.SaveChanges();
+
+                Company c1 = context.Company.Find(1);
+                var cList = context.Company.Where(c => c.Id > 1);
+            }
+
+
             Console.WriteLine("Hello World!");
         }
     }

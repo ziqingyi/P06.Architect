@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Logging;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -10,6 +11,18 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.ModelsFromDB
 {
     public partial class advanced7Context : DbContext
     {
+        #region add new log factory
+
+        /*
+           1  Microsoft.Extensions.Logging   +   Microsoft.Extensions.Logging.Console 
+           2  myLoggerFactory  
+           3  optionsBuilder.UseLoggerFactory(myLoggerFactory)
+        */
+        public static readonly ILoggerFactory myLoggerFactory = LoggerFactory.Create(builder => { builder.AddConsole(); });
+
+        #endregion
+
+
         public advanced7Context()
         {
         }
@@ -78,8 +91,10 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.ModelsFromDB
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.;Database=advanced7_new;uid=adrian;pwd=adrian");
+                
+                optionsBuilder.UseLoggerFactory(myLoggerFactory)
+                    .UseSqlServer("Server=.;Database=advanced7_new;uid=adrian;pwd=adrian");
+                //optionsBuilder.UseSqlServer("Server=.;Database=advanced7_new;uid=adrian;pwd=adrian");
             }
         }
 

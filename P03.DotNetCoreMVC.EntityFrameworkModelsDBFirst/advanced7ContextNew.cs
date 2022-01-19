@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.ModelsFromDB
 {
-    public partial class advanced7Context : DbContext
+    public partial class advanced7ContextNew : DbContext
     {
         #region add new log factory
 
@@ -23,11 +23,11 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.ModelsFromDB
         #endregion
 
 
-        public advanced7Context()
+        public advanced7ContextNew()
         {
         }
 
-        public advanced7Context(DbContextOptions<advanced7Context> options)
+        public advanced7ContextNew(DbContextOptions<advanced7ContextNew> options)
             : base(options)
         {
         }
@@ -93,7 +93,7 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.ModelsFromDB
             {
                 
                 optionsBuilder.UseLoggerFactory(myLoggerFactory)
-                    .UseSqlServer("Server=.;Database=advanced7;uid=adrian;pwd=adrian");
+                    .UseSqlServer("Server=.;Database=advanced7_new;uid=adrian;pwd=adrian");
                 //optionsBuilder.UseSqlServer("Server=.;Database=advanced7_new;uid=adrian;pwd=adrian");
             }
         }

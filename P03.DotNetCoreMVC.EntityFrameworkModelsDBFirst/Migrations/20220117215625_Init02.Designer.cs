@@ -9,7 +9,7 @@ using P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.ModelsFromDB;
 
 namespace P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.Migrations
 {
-    [DbContext(typeof(advanced7Context))]
+    [DbContext(typeof(advanced7ContextNew))]
     [Migration("20220117215625_Init02")]
     partial class Init02
     {

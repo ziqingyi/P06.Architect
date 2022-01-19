@@ -8,14 +8,14 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModels.TestProject
     {
         static void Main(string[] args)
         {
-          
+            QueryTest.Show();
 
         }
 
 
         private void Test1()
         {
-            using (advanced7Context context = new advanced7Context())
+            using (advanced7ContextNew context = new advanced7ContextNew())
             {
                 //delete and create database
                 context.Database.EnsureDeleted();

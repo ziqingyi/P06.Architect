@@ -36,7 +36,7 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst
 
         public static void Main(string[] args)
         {
-            using (advanced7Context context = new advanced7Context())
+            using (advanced7ContextNew context = new advanced7ContextNew())
             {
                 //delete and create database
                 context.Database.EnsureDeleted();

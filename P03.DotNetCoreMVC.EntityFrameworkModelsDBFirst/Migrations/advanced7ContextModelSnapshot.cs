@@ -8,7 +8,7 @@ using P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.ModelsFromDB;
 
 namespace P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.Migrations
 {
-    [DbContext(typeof(advanced7Context))]
+    [DbContext(typeof(advanced7ContextNew))]
     partial class advanced7ContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

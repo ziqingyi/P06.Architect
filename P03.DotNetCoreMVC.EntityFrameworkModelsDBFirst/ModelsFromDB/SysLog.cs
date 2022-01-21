@@ -18,5 +18,7 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.ModelsFromDB
         public int CreatorId { get; set; }
         public DateTime? LastModifyTime { get; set; }
         public int? LastModifierId { get; set; }
+
+        public virtual SysLogDetail SysLogDetail { get; set; }
     }
 }

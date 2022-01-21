@@ -93,6 +93,7 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.ModelsFromDB
             {
                 
                 optionsBuilder.UseLoggerFactory(myLoggerFactory)
+                    .UseLazyLoadingProxies()
                     .UseSqlServer("Server=.;Database=advanced7_new;uid=adrian;pwd=adrian");
                 //optionsBuilder.UseSqlServer("Server=.;Database=advanced7_new;uid=adrian;pwd=adrian");
             }

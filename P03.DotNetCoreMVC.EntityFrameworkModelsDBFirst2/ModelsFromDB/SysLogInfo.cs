@@ -5,20 +5,18 @@ using System.Collections.Generic;
 // If you have enabled NRTs for your project, then un-comment the following line:
 // #nullable disable
 
-namespace P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.ModelsFromDB
+namespace P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst2.ModelsFromDB
 {
-    public partial class SysLog
+    public partial class SysLogInfo
     {
         public int Id { get; set; }
-        public string UserName { get; set; }
         public string Introduction { get; set; }
         public string Detail { get; set; }
         public byte LogType { get; set; }
-        public DateTime CreateTime { get; set; }
         public int CreatorId { get; set; }
-        public DateTime? LastModifyTime { get; set; }
         public int? LastModifierId { get; set; }
-
-        //public virtual SysLogDetail SysLogDetail { get; set; }
+        public DateTime? LastModifyTime { get; set; }
+        public DateTime CreateTime { get; set; }
+        public string UserName { get; set; }
     }
 }

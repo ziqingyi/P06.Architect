@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst2\P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst2.csproj" />
     <ProjectReference Include="..\P03.DotNetCoreMVC.EntityFrameworkModels\P03.DotNetCoreMVC.EntityFrameworkModels.csproj" />
   </ItemGroup>
 

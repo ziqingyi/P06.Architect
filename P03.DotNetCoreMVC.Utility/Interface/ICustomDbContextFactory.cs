@@ -6,7 +6,7 @@ using P03.DotNetCoreMVC.Utility.DbContextExtension;
 
 namespace P03.DotNetCoreMVC.Utility.Interface
 {
-    internal interface ICustomDbContextFactory
+    public interface ICustomDbContextFactory
     {
         DbContext ConnWriteOrRead(WriteAndReadEnum writeAndRead);
     }

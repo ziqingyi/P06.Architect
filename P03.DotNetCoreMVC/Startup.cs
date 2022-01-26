@@ -26,6 +26,8 @@ using P03.DotNetCoreMVC.Utility.CusMiddleWare;
 using P03.DotNetCoreMVC.Utility.Filters;
 using P03.DotNetCoreMVC.Models;
 using P03.DotNetCoreMVC.Utility.Extensions.RouteUse;
+using P03.DotNetCoreMVC.Utility.DbContextExtension;
+using P03.DotNetCoreMVC.Utility.Interface;
 
 namespace P03.DotNetCoreMVC
 {
@@ -77,6 +79,8 @@ namespace P03.DotNetCoreMVC
             #region add EF DbContext
 
             services.AddScoped<DbContext, JDDbContext>();
+
+            services.AddScoped<ICustomDbContextFactory, CustomDbContextFactory>();
 
             //services.AddEntityFrameworkSqlServer()
             //    .AddDbContext<JDDbContext>(options => { options.UseSqlServer(StaticConstraint.connectionString); });

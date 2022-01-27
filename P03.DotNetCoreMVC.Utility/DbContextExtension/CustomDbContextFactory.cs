@@ -30,12 +30,11 @@ namespace P03.DotNetCoreMVC.Utility.DbContextExtension
             switch(writeAndRead)
             {
                 case WriteAndReadEnum.Write:
-
+                    ToWrite();
                     break;
                 case WriteAndReadEnum.Read:
-
+                    ToRead();
                     break;
-
                 default:
                     break;
             }

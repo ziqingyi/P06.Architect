@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using P03.DotNetCoreMVC.Utility.Models;
 using System.Linq;
 using System.Linq.Expressions;
+using P03.DotNetCoreMVC.Utility.Interface;
 
 namespace P03.DotNetCoreMVC.Services.ServicesUpgrade
 {
@@ -19,43 +20,48 @@ namespace P03.DotNetCoreMVC.Services.ServicesUpgrade
 
         #region Identity
         //protected: only sub class can use. private: only base can set context value
-        protected DbContext Context { get; private set; }
+        protected DbContext WriteDbContext { get; private set; }
+
+        protected DbContext ReadDbContext { get; private set; }
         /// <summary>
         /// share DbContext in one request, use one in a BaseService instance to curd.
         /// </summary>
         /// <param name="context"></param>
-        public BaseServiceUpgrade(ICustomDbContextFactory dbContextFactory)//use super class: DbContext
+        public BaseServiceUpgrade(ICustomDbContextFactory dbContextFactory)//use factory
         {
             this.dbContextFactory = dbContextFactory;
+            WriteDbContext = dbContextFactory.ConnWriteOrRead(WriteAndReadEnum.Write);
         }
         #endregion
 
         #region Query
 
-        public T Find<T>(int id, WriteAndReadEnum writeAndReadEnum = WriteAndReadEnum.Read) where T : class
+        public T Find<T>(int id) where T : class
         {
-
-            return this.Context.Set<T>().Find(id);
+            ReadDbContext = dbContextFactory.ConnWriteOrRead(WriteAndReadEnum.Read);
+            return this.ReadDbContext.Set<T>().Find(id);
         }
 
         [Obsolete("avoid using this,better to use query with Expression tree, using(...)")]
         public IQueryable<T> Set<T>() where T : class
         {
-            return this.Context.Set<T>();
+            ReadDbContext = dbContextFactory.ConnWriteOrRead(WriteAndReadEnum.Read);
+            return this.ReadDbContext.Set<T>();
         }
 
         public IQueryable<T> Query<T>(Expression<Func<T, bool>> funcWhere) where T : class
         {
+            ReadDbContext = dbContextFactory.ConnWriteOrRead(WriteAndReadEnum.Read);
             if (funcWhere == null)
             {
-                return this.Context.Set<T>();
+                return this.ReadDbContext.Set<T>();
             }
-            return this.Context.Set<T>().Where<T>(funcWhere);
+            return this.ReadDbContext.Set<T>().Where<T>(funcWhere);
         }
 
         public PageResult<T> QueryPage<T, S>(Expression<Func<T, bool>> funcWhere, int pageSize, int pageIndex,
             Expression<Func<T, S>> funcOrderby, bool isAsc = true) where T : class
-        {
+        {           
             var list = this.Set<T>();
             if (funcWhere != null)
             {
@@ -85,15 +91,15 @@ namespace P03.DotNetCoreMVC.Services.ServicesUpgrade
 
         public T Insert<T>(T t) where T : class
         {
-            this.Context.Set<T>().Add(t);
+            this.WriteDbContext.Set<T>().Add(t);
             //commit here, otherwise commit manually
             this.Commit();
             return t;
         }
 
         public IEnumerable<T> Insert<T>(IEnumerable<T> tList) where T : class
-        {
-            this.Context.Set<T>().AddRange(tList);
+        {          
+            this.WriteDbContext.Set<T>().AddRange(tList);
             //commit multiple sql
             this.Commit();
             return tList;
@@ -108,9 +114,9 @@ namespace P03.DotNetCoreMVC.Services.ServicesUpgrade
             if (t == null) throw new Exception("t is null");
 
             //t is placed into the context in the unchanged state, like reading from db. 
-            this.Context.Set<T>().Attach(t);
+            this.WriteDbContext.Set<T>().Attach(t);
             //change state
-            this.Context.Entry<T>(t).State = EntityState.Modified;
+            this.WriteDbContext.Entry<T>(t).State = EntityState.Modified;
             this.Commit();
         }
 
@@ -118,8 +124,8 @@ namespace P03.DotNetCoreMVC.Services.ServicesUpgrade
         {
             foreach (T t in tList)
             {
-                this.Context.Set<T>().Attach(t);
-                this.Context.Entry<T>(t).State = EntityState.Modified;
+                this.WriteDbContext.Set<T>().Attach(t);
+                this.WriteDbContext.Entry<T>(t).State = EntityState.Modified;
             }
             this.Commit();//save and state changed to UnChanged
         }
@@ -132,8 +138,8 @@ namespace P03.DotNetCoreMVC.Services.ServicesUpgrade
         public void Delete<T>(T t) where T : class
         {
             if (t == null) throw new Exception("t is null");
-            this.Context.Set<T>().Attach(t);
-            this.Context.Set<T>().Remove(t);
+            this.WriteDbContext.Set<T>().Attach(t);
+            this.WriteDbContext.Set<T>().Remove(t);
             this.Commit();
         }
 
@@ -141,7 +147,7 @@ namespace P03.DotNetCoreMVC.Services.ServicesUpgrade
         {
             T t = this.Find<T>(Id);//can attach as well
             if (t == null) throw new Exception("t is null");
-            this.Context.Set<T>().Remove(t);
+            this.WriteDbContext.Set<T>().Remove(t);
             this.Commit();
         }
 
@@ -149,10 +155,10 @@ namespace P03.DotNetCoreMVC.Services.ServicesUpgrade
         {
             foreach (T t in tList)
             {
-                this.Context.Set<T>().Attach(t);
+                this.WriteDbContext.Set<T>().Attach(t);
             }
 
-            this.Context.Set<T>().RemoveRange(tList);
+            this.WriteDbContext.Set<T>().RemoveRange(tList);
             this.Commit();
         }
 
@@ -165,7 +171,7 @@ namespace P03.DotNetCoreMVC.Services.ServicesUpgrade
 
         public void Commit()
         {
-            this.Context.SaveChanges();
+            this.WriteDbContext.SaveChanges();
         }
 
         public IQueryable<T> ExecuteQuery<T>(string sql, SqlParameter[] parameters) where T : class
@@ -175,7 +181,7 @@ namespace P03.DotNetCoreMVC.Services.ServicesUpgrade
 
 
             //Entity Framework Core Version
-            return this.Context.Set<T>().FromSqlRaw<T>(sql, parameters);
+            return this.WriteDbContext.Set<T>().FromSqlRaw<T>(sql, parameters);
 
 
         }
@@ -185,8 +191,8 @@ namespace P03.DotNetCoreMVC.Services.ServicesUpgrade
             IDbContextTransaction trans = null;
             try
             {
-                trans = this.Context.Database.BeginTransaction();
-                this.Context.Database.ExecuteSqlRaw(sql, parameters);
+                trans = this.WriteDbContext.Database.BeginTransaction();
+                this.WriteDbContext.Database.ExecuteSqlRaw(sql, parameters);
                 trans.Commit();
             }
             catch (Exception ex)
@@ -202,9 +208,13 @@ namespace P03.DotNetCoreMVC.Services.ServicesUpgrade
         //use virtual for sub class overriding. because other services may dispose other objects
         public virtual void Dispose()
         {
-            if (this.Context != null)
+            if (this.WriteDbContext != null)
             {
-                this.Context.Dispose();
+                this.WriteDbContext.Dispose();
+            }
+            if (this.ReadDbContext != null)
+            {
+                this.ReadDbContext.Dispose();
             }
         }
         #endregion

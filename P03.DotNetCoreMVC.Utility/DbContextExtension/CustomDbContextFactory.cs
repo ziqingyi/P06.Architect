@@ -9,19 +9,64 @@ namespace P03.DotNetCoreMVC.Utility.DbContextExtension
 {
     public class CustomDbContextFactory : ICustomDbContextFactory
     {
-        private DbContext _dbContext;
+        private IDbContextHelper _dbContextHelper;
         private DBConnectionOption _readAndWrite;
+        
+        private DbContext dbContextPicked = null;
+        private int numOfReadDbContext = 0;
 
         //IOC inject db connections and DbContext.
-        public CustomDbContextFactory(DbContext context, IOptionsMonitor<DBConnectionOption> options)
+        public CustomDbContextFactory(IDbContextHelper dbContextHelper, IOptionsMonitor<DBConnectionOption> options)  
         {
-            _readAndWrite = options.CurrentValue;
-            this._dbContext = context;
+            this._dbContextHelper = dbContextHelper;
+            this.numOfReadDbContext = dbContextHelper.GetReadDBContextList().Length;
+
+            _readAndWrite = options.CurrentValue;        
         }
 
         public DbContext ConnWriteOrRead(WriteAndReadEnum writeAndRead)
         {
-            throw new NotImplementedException();
+            
+            switch(writeAndRead)
+            {
+                case WriteAndReadEnum.Write:
+
+                    break;
+                case WriteAndReadEnum.Read:
+
+                    break;
+
+                default:
+                    break;
+            }
+
+            return dbContextPicked;
         }
+
+
+        #region get connection string for write or read operation. 
+
+        private void ToWrite()
+        {
+            dbContextPicked = this._dbContextHelper.GetWriteDBContext();
+        }
+
+        private static int _iSeed = 0;
+        private void ToRead()
+        {
+            if(_iSeed > 100000 )
+            {
+                _iSeed = 0;
+            }
+
+            int index = _iSeed++ % this.numOfReadDbContext;
+            dbContextPicked = this._dbContextHelper.GetReadDBContextList()[index];
+        }
+
+
+        #endregion
+
+
+
     }
 }

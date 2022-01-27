@@ -28,6 +28,7 @@ using P03.DotNetCoreMVC.Models;
 using P03.DotNetCoreMVC.Utility.Extensions.RouteUse;
 using P03.DotNetCoreMVC.Utility.DbContextExtension;
 using P03.DotNetCoreMVC.Utility.Interface;
+using P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst2;
 
 namespace P03.DotNetCoreMVC
 {
@@ -80,7 +81,16 @@ namespace P03.DotNetCoreMVC
 
             services.AddScoped<DbContext, JDDbContext>();
 
-            services.AddScoped<ICustomDbContextFactory, CustomDbContextFactory>();
+
+
+            #region due to different DbContext, currently not dependency injection
+
+            services.AddSingleton<IDbContextHelper, DbContextHelper>();
+            services.AddSingleton<ICustomDbContextFactory, CustomDbContextFactory>();
+         
+            #endregion
+
+
 
             //services.AddEntityFrameworkSqlServer()
             //    .AddDbContext<JDDbContext>(options => { options.UseSqlServer(StaticConstraint.connectionString); });

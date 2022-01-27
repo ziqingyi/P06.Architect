@@ -21,7 +21,7 @@ namespace P03.DotNetCoreMVC.Utility.DbContextExtension
             this._dbContextHelper = dbContextHelper;
             this.numOfReadDbContext = dbContextHelper.GetReadDBContextList().Length;
 
-            _readAndWrite = options.CurrentValue;        
+            this._readAndWrite = options.CurrentValue;        
         }
 
         public DbContext ConnWriteOrRead(WriteAndReadEnum writeAndRead)

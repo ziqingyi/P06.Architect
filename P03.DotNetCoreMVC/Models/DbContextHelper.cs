@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst2;
+using P03.DotNetCoreMVC.Utility.DbContextExtension;
 using P03.DotNetCoreMVC.Utility.Interface;
 using System.Collections.Generic;
 
@@ -7,35 +8,38 @@ namespace P03.DotNetCoreMVC.Models
 {
     public class DbContextHelper: IDbContextHelper
     {
-        private DbContext _dbContext;
+        private DbContext _dbContextWrite;
 
-        private string[] readConnStringFromConfig = 
-            { "Data Source=.;Initial Catalog=EFCoreContext_subscription;User ID=adrian;Password=adrian",
-      "Data Source=.;Initial Catalog=EFCoreContext_subscription2;User ID=adrian;Password=adrian"};
+        //  private string[] readConnStringFromConfig = 
+        //      { "Data Source=.;Initial Catalog=EFCoreContext_subscription;User ID=adrian;Password=adrian",
+        //"Data Source=.;Initial Catalog=EFCoreContext_subscription2;User ID=adrian;Password=adrian"};
 
-        public DbContextHelper()//DbContext dbContext
+        private List<DbContext> _dbContextReadList = new List<DbContext>();
+        public DbContextHelper(DBConnectionOption dBConnectionOption)//DbContext dbContext
         {
-            DbContext dbContext = new EFCoreContextContext();
+            EFCoreContextContext dbContext = new EFCoreContextContext();
+            dbContext.conn = dBConnectionOption.WriteConnection;
+            this._dbContextWrite = dbContext;
 
-            this._dbContext = dbContext;
+            //prepare read DbContext
+            foreach (string connString in dBConnectionOption.ReadConnectionList)
+            { 
+                EFCoreContextContext dbContextRead = new EFCoreContextContext();
+
+                dbContextRead.conn = connString;
+
+                _dbContextReadList.Add(dbContextRead);
+            }      
         }
 
         public DbContext GetWriteDBContext()
         {
-            return _dbContext;
+            return _dbContextWrite;
         }
 
         public DbContext[] GetReadDBContextList()
         {
-            List<DbContext> list = new List<DbContext>();
-            EFCoreContextContext dbContext = new EFCoreContextContext();
-            foreach (string connString in readConnStringFromConfig)
-            {
-                dbContext.conn = connString;
-
-                list.Add(dbContext);
-            }
-            return list.ToArray();
+            return _dbContextReadList.ToArray();
         }
 
 

@@ -85,9 +85,11 @@ namespace P03.DotNetCoreMVC
 
             #region due to different DbContext, currently not dependency injection
 
+            services.Configure<DBConnectionOption>(Configuration.GetSection("connectionStrings2"));//inject DBConnectionOption with connectionStrings
+
             services.AddSingleton<IDbContextHelper, DbContextHelper>();
             services.AddSingleton<ICustomDbContextFactory, CustomDbContextFactory>();
-         
+
             #endregion
 
 

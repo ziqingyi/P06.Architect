@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using P03.DotNetCoreMVC.Interface.ServiceInterfaceUpgrade;
 using P03.DotNetCoreMVC.Utility.DbContextExtension;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +8,7 @@ using P03.DotNetCoreMVC.Utility.Models;
 using System.Linq;
 using System.Linq.Expressions;
 using P03.DotNetCoreMVC.Utility.Interface;
+using P03.DotNetCoreMVC.Interface.ServiceInterfaceUpgrade;
 
 namespace P03.DotNetCoreMVC.Services.ServicesUpgrade
 {
@@ -36,9 +35,9 @@ namespace P03.DotNetCoreMVC.Services.ServicesUpgrade
 
         #region Query
 
-        public T Find<T>(int id) where T : class
+        public T Find<T>(int id, WriteAndReadEnum writeAndReadEnum = WriteAndReadEnum.Read) where T : class
         {
-            ReadDbContext = dbContextFactory.ConnWriteOrRead(WriteAndReadEnum.Read);
+            ReadDbContext = dbContextFactory.ConnWriteOrRead(writeAndReadEnum);
             return this.ReadDbContext.Set<T>().Find(id);
         }
 

@@ -10,6 +10,7 @@ using P03.DotNetCoreMVC.Interface;
 using P03.DotNetCoreMVC.Interface.TestServiceInterface;
 using P03.DotNetCoreMVC.ProjectUtility.InterceptService;
 using P03.DotNetCoreMVC.Services;
+using P03.DotNetCoreMVC.Services.ServicesUpgrade;
 
 namespace P03.DotNetCoreMVC.ProjectUtility.AutofacUtility
 {
@@ -58,6 +59,9 @@ namespace P03.DotNetCoreMVC.ProjectUtility.AutofacUtility
             containerBuilder.RegisterType<UserService>().As<IUserService>();
 
             containerBuilder.RegisterType<A>().As<IA>();
+
+
+            //containerBuilder.RegisterType<CompanyServiceUpgrade>().As<ICompanyServiceUpgrade>();
 
             #endregion
 

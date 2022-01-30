@@ -59,8 +59,6 @@ namespace P03.DotNetCoreMVC.Interface.ServiceInterfaceUpgrade
 
         public void Execute<T>(string sql, SqlParameter[] parameters) where T : class;
 
-        //use virtual for sub class overriding. because other services may dispose other objects
-        public virtual void Dispose();
         #endregion
     }
 }

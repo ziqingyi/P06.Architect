@@ -1,11 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,13 +18,13 @@ using P03.DotNetCoreMVC.Interface.TestServiceInterface;
 using P03.DotNetCoreMVC.Services;
 using P03.DotNetCoreMVC.Utility;
 using P03.DotNetCoreMVC.ProjectUtility.AutofacUtility;
-using P03.DotNetCoreMVC.Utility.CusMiddleWare;
 using P03.DotNetCoreMVC.Utility.Filters;
 using P03.DotNetCoreMVC.Models;
 using P03.DotNetCoreMVC.Utility.Extensions.RouteUse;
 using P03.DotNetCoreMVC.Utility.DbContextExtension;
 using P03.DotNetCoreMVC.Utility.Interface;
-using P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst2;
+using P03.DotNetCoreMVC.Services.ServicesUpgrade;
+using P03.DotNetCoreMVC.Interface.ServiceInterfaceUpgrade;
 
 namespace P03.DotNetCoreMVC
 {
@@ -89,6 +85,8 @@ namespace P03.DotNetCoreMVC
 
             services.AddSingleton<IDbContextHelper, DbContextHelper>();
             services.AddSingleton<ICustomDbContextFactory, CustomDbContextFactory>();
+
+            services.AddSingleton<ICompanyServiceUpgrade, CompanyServiceUpgrade>();
 
             #endregion
 

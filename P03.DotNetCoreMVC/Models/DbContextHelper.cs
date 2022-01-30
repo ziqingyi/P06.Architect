@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst2;
 using P03.DotNetCoreMVC.Utility.DbContextExtension;
 using P03.DotNetCoreMVC.Utility.Interface;
@@ -15,8 +16,10 @@ namespace P03.DotNetCoreMVC.Models
         //"Data Source=.;Initial Catalog=EFCoreContext_subscription2;User ID=adrian;Password=adrian"};
 
         private List<DbContext> _dbContextReadList = new List<DbContext>();
-        public DbContextHelper(DBConnectionOption dBConnectionOption)//DbContext dbContext
+        public DbContextHelper(IOptionsMonitor<DBConnectionOption> optionsMonitor)//(DBConnectionOption dBConnectionOption)//DbContext dbContext
         {
+            DBConnectionOption dBConnectionOption = optionsMonitor.CurrentValue;
+
             EFCoreContextContext dbContext = new EFCoreContextContext();
             dbContext.conn = dBConnectionOption.WriteConnection;
             this._dbContextWrite = dbContext;

@@ -83,7 +83,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.EntityFra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst2", "P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst2\P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst2.csproj", "{6466F92B-8E68-42E6-8174-2B3B503DD82C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03.DotNetCoreMVC.AuthenticationDemo", "P03.DotNetCoreMVC.AuthenticationDemo\P03.DotNetCoreMVC.AuthenticationDemo.csproj", "{D7EC4907-0944-46DA-A803-3280F490654A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03.DotNetCoreMVC.AuthenticationDemo", "P03.DotNetCoreMVC.AuthenticationDemo\P03.DotNetCoreMVC.AuthenticationDemo.csproj", "{2E8104EC-D919-442D-AFB4-BBF8A0A77CC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -235,10 +235,10 @@ Global
 		{6466F92B-8E68-42E6-8174-2B3B503DD82C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6466F92B-8E68-42E6-8174-2B3B503DD82C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6466F92B-8E68-42E6-8174-2B3B503DD82C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D7EC4907-0944-46DA-A803-3280F490654A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7EC4907-0944-46DA-A803-3280F490654A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7EC4907-0944-46DA-A803-3280F490654A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7EC4907-0944-46DA-A803-3280F490654A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E8104EC-D919-442D-AFB4-BBF8A0A77CC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E8104EC-D919-442D-AFB4-BBF8A0A77CC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E8104EC-D919-442D-AFB4-BBF8A0A77CC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E8104EC-D919-442D-AFB4-BBF8A0A77CC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

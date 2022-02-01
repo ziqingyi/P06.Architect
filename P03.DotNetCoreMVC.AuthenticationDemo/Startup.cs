@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace P03.DotNetCoreMVC.AuthenticationDemo
 {
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -30,19 +31,15 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo
 
 
             #region add Authentication, 
-            
+
             //just add the service, no need to UseAuthentication() if filtered by attribute
 
-            services.AddAuthentication(options => {
+            services.AddAuthentication(options =>
+            {
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             }).AddCookie();
 
             #endregion
-
-
-
-
-
 
 
         }
@@ -87,4 +84,8 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo
             });
         }
     }
+
+
+
+
 }

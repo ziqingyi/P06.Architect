@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using P03.DotNetCoreMVC.Utility.Filters.AuthFilters;
 
 namespace P03.DotNetCoreMVC.AuthenticationDemo.Controllers
 {
+    [CustomAuthorizationFilter]
     public class aCookieTestController : Controller
     {
         public IActionResult Index()

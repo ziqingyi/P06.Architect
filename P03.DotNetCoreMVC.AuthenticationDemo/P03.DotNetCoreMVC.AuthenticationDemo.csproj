@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\P03.DotNetCoreMVC.Utility\P03.DotNetCoreMVC.Utility.csproj" />
+  </ItemGroup>
+
 </Project>

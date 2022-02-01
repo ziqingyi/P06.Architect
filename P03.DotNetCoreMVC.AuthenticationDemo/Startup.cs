@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +27,24 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+
+
+            #region add Authentication, 
+            
+            //just add the service, no need to UseAuthentication() if filtered by attribute
+
+            services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie();
+
+            #endregion
+
+
+
+
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

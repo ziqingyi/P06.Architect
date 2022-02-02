@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using P03.DotNetCoreMVC.Utility.Filters.AuthFilters;
+using P03.DotNetCoreMVC.Utility.Models;
 using System;
+using System.Diagnostics;
 
 namespace P03.DotNetCoreMVC.AuthenticationDemo.Controllers
 {
@@ -35,5 +37,22 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Controllers
                 Message = "Login Successfully!"
             });
         }
+
+
+
+
+        public IActionResult Error()
+        {
+            ErrorViewModel evm = new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            };
+
+            return View(evm);
+        }
+
+
+
+
     }
 }

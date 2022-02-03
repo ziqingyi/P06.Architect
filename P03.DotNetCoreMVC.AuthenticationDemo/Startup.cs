@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using P03.DotNetCoreMVC.AuthenticationDemo.AuthUtility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,10 +35,9 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo
 
             //just add the service, no need to UseAuthentication() if filtered by attribute
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            }).AddCookie();
+            services.AddAuthentication().AddCookie();
+
+            services.AddAuthenticationCore(options => options.AddScheme<CustomAuthenticationHandler>("CustomScheme","DemoScheme"));
 
             #endregion
 
@@ -76,7 +76,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            //app.UseAuthorization(); //use your own attribute, don't use core middleware
 
             app.UseEndpoints(endpoints =>
             {

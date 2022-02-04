@@ -1,4 +1,4 @@
-﻿//using Microsoft.AspNetCore.Authentication;
+﻿using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -67,12 +67,82 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Controllers
 
             }
 
+        }
+
+        public async Task<IActionResult> AuthenticationAndAuthorization()
+        {
+
+            #region Authentication
+
+            var result = await base.HttpContext.AuthenticateAsync("CustomScheme");
+            if (result?.Principal != null)
+            {
+                base.HttpContext.User = result.Principal;
+
+            }
+            else
+            {
+                return new JsonResult(
+                    new
+                    {
+                        Result = true,
+                        Message = $"Authenticate Failed, do not has user: {base.HttpContext.User.Identity.Name}"
+                    });
+            }
+
+            #endregion
+
+            #region Authorization
+
+            var user = base.HttpContext.User;
+            if(user?.Identity?.IsAuthenticated?? false)
+            {
+                if (user.Identity.Name.Equals("admin", StringComparison.OrdinalIgnoreCase))
+                {
+                    await base.HttpContext.ForbidAsync("CustomScheme");
+                    return new JsonResult(
+                        new
+                        {
+                            Result = true,
+                            Message = $"Authorise successfully,  {user.Identity.Name} has authorization",
+                            Html = "Hello!"
+                        });
+                }
+                else
+                {
+                    return new JsonResult(
+                        new
+                        {
+                            Result = true,
+                            Message = $"Authorise failed, {user.Identity.Name} do not has authorization"
+                        });
+                }
+            }
+            else
+            {
+                await base.HttpContext.ChallengeAsync("CustomScheme");
+
+                return new JsonResult(
+                    new
+                    {
+                        Result = true,
+                        Message = $"Authorise failed, not logged in "
+                    });
+            }
+            #endregion
 
         }
 
 
-
-
+        public async Task<IActionResult> Logout()
+        {
+            await base.HttpContext.SignOutAsync("CustomScheme");
+            return new JsonResult(new
+            {
+                Result = true,
+                Message = "Log out successfully "
+            });
+        }
 
 
 

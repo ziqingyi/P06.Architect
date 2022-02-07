@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using IdentityModel;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -24,11 +25,26 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Controllers
         public async Task<IActionResult> Login(string name, string password)
         {
 
-            var claimIdentity = new ClaimsIdentity("Custom");
+            #region normal claim types
+
+            var claimIdentity = new ClaimsIdentity("Cookie");
             claimIdentity.AddClaim(new Claim(ClaimTypes.Name, name));
             claimIdentity.AddClaim(new Claim(ClaimTypes.Email, "xxxx@gmail.com"));
 
-            await base.HttpContext.SignInAsync(new ClaimsPrincipal(claimIdentity),
+            #endregion
+
+            #region Jwt claim types, shorter than ClaimTypes
+
+            var claimIdentity2 = new ClaimsIdentity("Cookie");
+            claimIdentity2.AddClaim(new Claim(JwtClaimTypes.Name, name));
+            claimIdentity2.AddClaim(new Claim(JwtClaimTypes.Email, "yyyy@gmail.com"));
+
+            #endregion
+
+
+
+
+            await base.HttpContext.SignInAsync(new ClaimsPrincipal(claimIdentity2),
              new AuthenticationProperties
              {
                  ExpiresUtc = System.DateTime.UtcNow.AddMinutes(30)

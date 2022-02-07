@@ -6,13 +6,17 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using P03.DotNetCoreMVC.AuthenticationDemo.AuthUtility;
 using Microsoft.AspNetCore.Authentication;
+using P03.DotNetCoreMVC.Utility.Filters.AuthFilters;
 
 namespace P03.DotNetCoreMVC.AuthenticationDemo.Controllers
 {
+    //use CustomAuthenticationHandler  without app.UseAuthentication(); and app.UseAuthorization();  
     public class bCookieAuthController : Controller
     {
         public IActionResult Index()
         {
+            var user = base.HttpContext.User;
+
             return View();
         }
 

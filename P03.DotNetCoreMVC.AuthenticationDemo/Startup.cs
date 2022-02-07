@@ -31,15 +31,33 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo
             services.AddControllersWithViews();
 
 
-            #region add Authentication, 
+            #region add Authentication for custom handler
 
-            //just add the service, no need to UseAuthentication() if filtered by attribute
+            ////just add the service, no need to UseAuthentication() if filtered by cus attribute
 
-            services.AddAuthentication().AddCookie();
+            //services.AddAuthentication().AddCookie();
 
-            services.AddAuthenticationCore(options => options.AddScheme<CustomAuthenticationHandler>("CustomScheme","DemoScheme"));
+            //services.AddAuthenticationCore(options => options.AddScheme<CustomAuthenticationHandler>("CustomScheme","DemoScheme"));
+            #endregion
+
+
+
+
+            #region system authentication
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+
+                options.DefaultChallengeScheme = "Cookie/Login";
+            }).AddCookie();
 
             #endregion
+
+
+
 
 
         }
@@ -76,7 +94,14 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo
 
             app.UseRouting();
 
-            //app.UseAuthorization(); //use your own attribute, don't use core middleware
+            #region System authorization
+
+            app.UseAuthentication();
+
+            app.UseAuthorization(); //if use your own attribute, don't use core middleware
+
+            #endregion
+
 
             app.UseEndpoints(endpoints =>
             {

@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using P03.DotNetCoreMVC.AuthenticationDemo.AuthUtility;
+using P03.DotNetCoreMVC.Utility.AuthExtension;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -45,6 +46,12 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo
 
             #region system authentication
 
+            #region memory cache
+            services.AddScoped<ITicketStore, MemoryCacheTicketStore>();
+            services.AddMemoryCache();
+            #endregion
+
+
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -52,7 +59,30 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
                 options.DefaultChallengeScheme = "Cookie/Login";
-            }).AddCookie();
+            }).AddCookie(
+                options=>
+                {
+                    options.SessionStore = services.BuildServiceProvider().GetService<ITicketStore>();
+
+                    options.Events = new CookieAuthenticationEvents()
+                    {
+                        OnSignedIn = new Func<CookieSignedInContext, Task>(
+                            async context =>
+                            {
+                                Console.WriteLine($"{context.Request.Path} is OnSinged In");
+                                await Task.CompletedTask;
+                            }
+                            ),
+                        OnSigningOut = new Func<CookieSigningOutContext, Task>(
+                            async context =>
+                            {
+                                Console.WriteLine($"{context.Request.Path} is OnSinging Out");
+                                await Task.CompletedTask;
+                            }
+                            )
+                    };
+                }              
+                );
 
             #endregion
 

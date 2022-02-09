@@ -42,50 +42,66 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo
             #endregion
 
 
-
-
             #region system authentication
 
             #region memory cache
-            services.AddScoped<ITicketStore, MemoryCacheTicketStore>();
-            services.AddMemoryCache();
+            //services.AddScoped<ITicketStore, MemoryCacheTicketStore>();
+            //services.AddMemoryCache();
+            #endregion
+            ////write key into Cookie in server, similar to Session.
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+
+            //    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+
+            //    options.DefaultChallengeScheme = "Cookie/Login";
+            //}).AddCookie(
+            //    options=>
+            //    {
+            //        options.SessionStore = services.BuildServiceProvider().GetService<ITicketStore>();
+
+            //        options.Events = new CookieAuthenticationEvents()
+            //        {
+            //            OnSignedIn = new Func<CookieSignedInContext, Task>(
+            //                async context =>
+            //                {
+            //                    Console.WriteLine($"{context.Request.Path} is OnSinged In");
+            //                    await Task.CompletedTask;
+            //                }
+            //                ),
+            //            OnSigningOut = new Func<CookieSigningOutContext, Task>(
+            //                async context =>
+            //                {
+            //                    Console.WriteLine($"{context.Request.Path} is OnSinging Out");
+            //                    await Task.CompletedTask;
+            //                }
+            //                )
+            //        };
+            //    }              
+            //    );
+
             #endregion
 
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            #region  Cookie authentication  using role
 
-                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-
-                options.DefaultChallengeScheme = "Cookie/Login";
-            }).AddCookie(
-                options=>
+            services.AddAuthentication(
+                options =>
                 {
-                    options.SessionStore = services.BuildServiceProvider().GetService<ITicketStore>();
+                    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                })
+                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+                options =>
+                {
+                    options.LoginPath = "/dAuthorization/Index";
+                    options.AccessDeniedPath = "/dAuthorization/Index";
+                });
 
-                    options.Events = new CookieAuthenticationEvents()
-                    {
-                        OnSignedIn = new Func<CookieSignedInContext, Task>(
-                            async context =>
-                            {
-                                Console.WriteLine($"{context.Request.Path} is OnSinged In");
-                                await Task.CompletedTask;
-                            }
-                            ),
-                        OnSigningOut = new Func<CookieSigningOutContext, Task>(
-                            async context =>
-                            {
-                                Console.WriteLine($"{context.Request.Path} is OnSinging Out");
-                                await Task.CompletedTask;
-                            }
-                            )
-                    };
-                }              
-                );
+
 
             #endregion
-
 
 
 

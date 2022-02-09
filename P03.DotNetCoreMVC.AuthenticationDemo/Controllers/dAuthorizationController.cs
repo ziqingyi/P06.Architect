@@ -65,7 +65,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Controllers
 
         }
 
-        #region pages need to authorize
+        #region pages need to authorize by Role
 
         [Authorize(Roles = "Admin")]
         public IActionResult InfoAdmin()
@@ -108,7 +108,40 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Controllers
         #endregion
 
 
+        #region  pages need to authorize by Policy
 
+        [Authorize(AuthenticationSchemes = "Cookies", Policy = "AdminPolicy")]
+        public IActionResult InfoAdminPolicy()
+        {
+            return new JsonResult(new
+            {
+                Result = true,
+                Message = "Information of Admin Policy"
+            });
+        }
+
+
+        [Authorize(AuthenticationSchemes = "Cookies", Policy = "UserPolicy")]
+        public IActionResult InfoUserPolicy()
+        {
+            return new JsonResult(new
+            {
+                Result = true,
+                Message = "Information of User Policy"
+            });
+        }
+
+        [Authorize(AuthenticationSchemes = "Cookies", Policy = "EmailPolicy")]
+        public IActionResult InfoEmail()
+        {
+            return new JsonResult(new
+            {
+                Result = true,
+                Message = "Information of Email Policy"
+            });
+        }
+
+        #endregion
 
 
 

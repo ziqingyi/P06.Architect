@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace P03.DotNetCoreMVC.AuthenticationDemo
@@ -31,8 +32,10 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo
         {
             services.AddControllersWithViews();
 
+            //The default value used for CookieAuthenticationOptions.AuthenticationScheme
+            //public const string AuthenticationScheme = "Cookies";
 
-            #region add Authentication for custom handler
+            #region 1 add Authentication for custom handler
 
             ////just add the service, no need to UseAuthentication() if filtered by cus attribute
 
@@ -42,7 +45,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo
             #endregion
 
 
-            #region system authentication
+            #region 2 system authentication
 
             #region memory cache
             //services.AddScoped<ITicketStore, MemoryCacheTicketStore>();
@@ -84,24 +87,65 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo
             #endregion
 
 
-            #region  Cookie authentication  using role
+            #region  3 Cookie authentication using role
 
-            services.AddAuthentication(
-                options =>
-                {
-                    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                })
-                .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-                options =>
+            //services.AddAuthentication(
+            //    options =>
+            //    {
+            //        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //        options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            //    })
+            //    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+            //    options =>
+            //    {
+            //        options.LoginPath = "/dAuthorization/Index";
+            //        options.AccessDeniedPath = "/dAuthorization/Index";
+            //    });
+
+
+
+            #endregion
+
+
+            #region  4 Policy Authorization
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddCookie(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                options=>
                 {
                     options.LoginPath = "/dAuthorization/Index";
                     options.AccessDeniedPath = "/dAuthorization/Index";
                 });
 
+            services.AddAuthorization(
+                options => 
+                {
+                    options.AddPolicy("AdminPolicy",
+                        policy => policy
+                        .RequireRole("Admin")
+                        .RequireUserName("AdminUser1")
+                        .RequireClaim(ClaimTypes.Email)
+                        );
 
+                    options.AddPolicy("UserPolicy",
+                        policy =>
+                        policy.RequireAssertion(
+                            context =>
+                                context.User.HasClaim(c =>c.Type == ClaimTypes.Role)
+                                &&
+                                context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Role)).Value.ToLower() == "admin"
+                            )
+                        );
+                });
 
             #endregion
+
+
+
 
 
 

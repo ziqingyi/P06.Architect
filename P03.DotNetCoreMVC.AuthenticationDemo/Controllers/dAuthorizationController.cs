@@ -73,16 +73,17 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Controllers
             return View();
         }
 
-        [Authorize(AuthenticationSchemes = "Cookies")]
-        public IActionResult InfoScheme()
+
+        [Authorize(Roles = "User")]
+        public IActionResult InfoUser()
         {
             return new JsonResult(new
             {
                 Result = true,
-                Message = "Information of Scheme"
-            }); 
+                Message = "Information of Everyone"
+            });
         }
-
+        
         [Authorize(Roles = "Admin,User")]
         public IActionResult InfoEveryone()
         {
@@ -93,7 +94,15 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Controllers
             });
         }
 
-
+        [Authorize(AuthenticationSchemes = "Cookies")]
+        public IActionResult InfoScheme()
+        {
+            return new JsonResult(new
+            {
+                Result = true,
+                Message = "Information of Scheme"
+            }); 
+        }
 
 
         #endregion

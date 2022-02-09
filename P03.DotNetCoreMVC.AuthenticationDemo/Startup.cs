@@ -137,7 +137,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo
                             context =>
                                 context.User.HasClaim(c =>c.Type == ClaimTypes.Role)
                                 &&
-                                context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Role)).Value.ToLower() == "admin"
+                                context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Role)).Value.ToLower() == "userrole"
                             )
                         );
                 });

@@ -18,10 +18,20 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Controllers
 
 
         [AllowAnonymous]
-        public async Task<IActionResult> Login(string name, string password, string role="Admin")
+        public async Task<IActionResult> Login(string name, string password)
         {
             //The default value used for CookieAuthenticationOptions.AuthenticationScheme
             //public const string AuthenticationScheme = "Cookies";
+            string role;
+            if(name.ToLower().Contains("admin"))
+            {
+                role = "Admin";
+            }
+            else
+            {
+                role = "UserRole";
+            }
+
 
             #region normal claim types
 

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -140,7 +141,15 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo
                                 context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Role)).Value.ToLower() == "userrole"
                             )
                         );
+
+
+                    options.AddPolicy("DoubleEmail", policyBuilder => policyBuilder.Requirements.Add(new DoubleEMailRequirement()));
+
                 });
+
+
+            services.AddSingleton<IAuthorizationHandler,GMailHandler>();
+            services.AddSingleton<IAuthorizationHandler,OutlookMailHandler>();
 
             #endregion
 

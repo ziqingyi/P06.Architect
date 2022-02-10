@@ -37,7 +37,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Controllers
 
             var claimIdentity = new ClaimsIdentity("Cookie");
             claimIdentity.AddClaim(new Claim(ClaimTypes.Name, name));
-            claimIdentity.AddClaim(new Claim(ClaimTypes.Email, "xxxx@gmail.com"));
+            claimIdentity.AddClaim(new Claim(ClaimTypes.Email, "xxxx@outlook.com"));
             claimIdentity.AddClaim(new Claim(ClaimTypes.Role, role));
 
             #endregion
@@ -148,6 +148,17 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Controllers
             {
                 Result = true,
                 Message = "Information of Email Policy"
+            });
+        }
+
+
+        [Authorize(AuthenticationSchemes = "Cookies", Policy = "DoubleEmail")]
+        public IActionResult InfoDoubleEmail()
+        {
+            return new JsonResult(new
+            {
+                Result = true,
+                Message = "Information of Double Email Policy"
             });
         }
 

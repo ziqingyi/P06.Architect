@@ -142,14 +142,21 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo
                             )
                         );
 
+                    #region add custom requirement
 
                     options.AddPolicy("DoubleEmail", policyBuilder => policyBuilder.Requirements.Add(new DoubleEMailRequirement()));
 
+                    #endregion
                 });
 
+            #region add custom requirement
 
             services.AddSingleton<IAuthorizationHandler,GMailHandler>();
             services.AddSingleton<IAuthorizationHandler,OutlookMailHandler>();
+
+            #endregion
+
+
 
             #endregion
 

@@ -306,8 +306,9 @@ namespace P03.DotNetCoreMVC.Utility.Extensions
         public static LoginResult ApiLogin<T>(string name, string password,
             Func<string, T> funcToGetT,
             Func<T, string, bool> checkPassFunc,
-            Func<T, bool> checkStatusFunc)
+            Func<T, bool> checkStatusFunc, out CurrentUserCore userInfo)
         {
+            userInfo = null;
             T t = funcToGetT.Invoke(name);
             if (t == null)
             {
@@ -332,9 +333,10 @@ namespace P03.DotNetCoreMVC.Utility.Extensions
                     Account = (string)(type.GetProperty("Account")?.GetValue(t)),
                     Email = (string)(type.GetProperty("Email")?.GetValue(t)),
                     Password = (string)(type.GetProperty("Password")?.GetValue(t)),
+                    Role = (string)(type.GetProperty("Role")?.GetValue(t)),
                     LastLoginTime = DateTime.Now
                 };
-
+                userInfo = currentUser;
                 logger.LogInformation(string.Format("user id={0} Name={1} log in system", currentUser.Id, currentUser.Name));
 
                 return LoginResult.Success;

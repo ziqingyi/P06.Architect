@@ -59,9 +59,10 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter
 
             #endregion
 
-            #region  HmacSha256
+            #region  HMAC with SHA-256             AND             RSA Signature with SHA-256
 
             services.AddScoped<IJWTHSService, JWTHSService>();
+            services.AddScoped<IJWTRSService, JWTRSService>();
 
             #endregion
 

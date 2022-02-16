@@ -10,6 +10,8 @@ using P03.DotNetCoreMVC.Interface;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using P03.DotNetCoreMVC.AuthenticationCenter.ProjectUtility.JWTUtilityUpgradeV1;
+using P03.DotNetCoreMVC.Utility.Models;
 
 namespace P03.DotNetCoreMVC.AuthenticationCenter.Controllers
 {
@@ -23,16 +25,28 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Controllers
         private ILoggerFactory _Factory = null;
         private ILogger<AuthenticationController> _logger = null;
         private IUserService _userService = null;
+
         private IJWTService _iJwtService;
-        public AuthenticationController(IUserService userService,
+        private IJWTHSService _iJwtHSService;
+        private IJWTRSService _iJwtRSService;
+        public AuthenticationController(
+            IUserService userService,
+
             IConfiguration configuration,
             ILoggerFactory loggerFactory,
-            IJWTService JwtService)
+
+            IJWTService JwtService,
+            IJWTHSService JWTHSService,
+            IJWTRSService JWTRSService)
         {
             this._Factory = loggerFactory;
             this._logger = new Logger<AuthenticationController>(this._Factory);
             this._userService = userService;
+
+            //JWT services
             this._iJwtService = JwtService;
+            this._iJwtHSService = JWTHSService;
+            this._iJwtRSService = JWTRSService;
 
             loginHelper = new LoginHelper(userService);
         }
@@ -47,17 +61,33 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Controllers
             return new List<int>() { 1, 2, 3, 4, 6, 7 };
         }
 
+        //
         [Route("Login")]
         [HttpPost]
-        public string Login(string name, string password)
+        public string Login(string name, string password, string s="")
         {
+            CurrentUserCore userInfo = null;
             LoginResult result = UserManagerCore.ApiLogin(name, password,
-                loginHelper.GetUser, loginHelper.CheckPass, loginHelper.CheckStatusActive);
+                loginHelper.GetUser, loginHelper.CheckPass, loginHelper.CheckStatusActive, out userInfo);
 
             if (result == LoginResult.Success)
             {
-                string token = this._iJwtService.GetToken(name);
+                string token = "";
 
+                if(s.Trim() == "")
+                {
+                    token = this._iJwtService.GetToken(name);
+                }
+                else if(s.Trim().ToLower() == "hs")
+                {
+                    token = this._iJwtHSService.GetToken(userInfo);
+                }
+                else if (s.Trim().ToLower() == "rs")
+                {
+                    token = this._iJwtRSService.GetToken(userInfo);
+                }
+
+                //convert to json
                 string jToken = JsonConvert.SerializeObject(new
                 {
                     result = true,

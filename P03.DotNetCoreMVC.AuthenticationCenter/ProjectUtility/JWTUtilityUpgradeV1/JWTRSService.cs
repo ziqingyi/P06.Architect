@@ -11,6 +11,13 @@ using System.Text;
 
 namespace P03.DotNetCoreMVC.AuthenticationCenter.ProjectUtility.JWTUtilityUpgradeV1
 {
+    //SHA-256 is a patented cryptographic hash function that outputs a value that is 256 bits long.
+    //RS256:(RSA Signature with SHA-256) 
+    /* RS256  is an asymmetric algorithm, and it uses a public/private key pair: the identity provider has a private (secret) key 
+     * used to generate the signature, and the consumer of the JWT gets a public key to validate the signature.
+     * Since the public key, as opposed to the private key, doesn’t need to be kept secured, most identity providers 
+     * make it easily available for consumers to obtain and use (usually through a metadata URL).
+     */
     public class JWTRSService : IJWTRSService
     {
 

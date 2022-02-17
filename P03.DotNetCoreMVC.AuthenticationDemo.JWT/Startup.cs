@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -5,10 +6,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using P03.DotNetCoreMVC.Utility.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT
@@ -25,9 +29,60 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddRazorPages();
+            #region update to controller
 
+            //services.AddRazorPages();
             services.AddControllersWithViews();
+
+            #endregion
+
+
+            #region JWT HS
+
+            JWTTokenOptions tokenOptions = new JWTTokenOptions();
+            Configuration.Bind("JWTTokenOptions", tokenOptions);
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(
+                options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidAudience = tokenOptions.Audience,
+                        ValidIssuer = tokenOptions.Issuer,
+                        //get security key
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.SecurityKey))
+
+
+                    };
+                });
+
+
+            //services.AddAuthorization(
+            //    options =>
+            //    {
+
+
+
+
+
+            //    });
+
+
+
+
+
+
+
+
+
+            #endregion
+
+
 
 
 
@@ -67,6 +122,8 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT
 
             app.UseAuthorization();
 
+
+            #region update to controller
             app.UseEndpoints(endpoints =>
             {
                 //endpoints.MapRazorPages();
@@ -77,6 +134,8 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT
                     );
 
             });
+            #endregion
+
         }
     }
 }

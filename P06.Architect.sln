@@ -83,7 +83,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.EntityFra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst2", "P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst2\P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst2.csproj", "{6466F92B-8E68-42E6-8174-2B3B503DD82C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03.DotNetCoreMVC.AuthenticationDemo", "P03.DotNetCoreMVC.AuthenticationDemo\P03.DotNetCoreMVC.AuthenticationDemo.csproj", "{2E8104EC-D919-442D-AFB4-BBF8A0A77CC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.AuthenticationDemo", "P03.DotNetCoreMVC.AuthenticationDemo\P03.DotNetCoreMVC.AuthenticationDemo.csproj", "{2E8104EC-D919-442D-AFB4-BBF8A0A77CC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

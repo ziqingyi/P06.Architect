@@ -9,11 +9,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            return new JsonResult(new
-            {
-                Result = true,
-                Message = "aJWT index "
-            });
+            return View();
 
         }
         [Authorize(Policy = "Admin")]
@@ -22,7 +18,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT.Controllers
             return new JsonResult(new
             {
                 Result = true,
-                Message = "aJWT index "
+                Message = "aJWT IndexRole "
             });
 
         }
@@ -32,7 +28,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT.Controllers
             return new JsonResult(new
             {
                 Result = true,
-                Message = "aJWT index "
+                Message = "aJWT IndexPolicy "
             });
 
         }
@@ -43,7 +39,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT.Controllers
             return new JsonResult(new
             {
                 Result = true,
-                Message = "aJWT index "
+                Message = "aJWT IndexEmails "
             });
 
         }

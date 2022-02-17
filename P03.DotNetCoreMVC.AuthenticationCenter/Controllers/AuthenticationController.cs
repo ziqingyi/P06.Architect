@@ -50,17 +50,17 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Controllers
 
             loginHelper = new LoginHelper(userService);
         }
-        
+
         #endregion
 
-
+        //https://localhost:44356/api/Authentication/get
         [Route("Get")]
         [HttpGet]
         public IEnumerable<int> Get()
         {
             return new List<int>() { 1, 2, 3, 4, 6, 7 };
         }
-
+        //https://localhost:44356/api/Authentication/login?name=Admin&&password=123&&s=hs
         //https://localhost:44397/api/Authentication/login?name=Admin&&password=123&&s=hs
         [Route("Login")]
         [HttpPost]

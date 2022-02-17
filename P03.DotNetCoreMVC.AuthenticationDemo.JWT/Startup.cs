@@ -120,8 +120,12 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT
 
             app.UseRouting();
 
+            #region jwt 
+            
+            app.UseAuthentication();
+            #endregion
+            
             app.UseAuthorization();
-
 
             #region update to controller
             app.UseEndpoints(endpoints =>

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT.Controllers
 {
+    //https://localhost:44369/aJWT
     public class aJWTController : Controller
     {
         [Authorize]

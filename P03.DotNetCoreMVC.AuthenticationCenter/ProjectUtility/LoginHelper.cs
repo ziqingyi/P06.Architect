@@ -44,7 +44,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.ProjectUtility
                     Password = u.Password,
                     Email = u.Email,
                     State = u.State == 1 ? true : false,
-                    Role = "",
+                    Role = u.UserType == 1? "Admin": "Staff",
                     LastLoginTime = u.LastLoginTime ?? DateTime.Now,
                     CreateTime = u.CreateTime,
                     Datas = null

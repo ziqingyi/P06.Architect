@@ -39,7 +39,8 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.ProjectUtility.JWTUtilityUpgrad
                 new Claim("Account",currentUserInfo.Account),
                 new Claim(ClaimTypes.Name, currentUserInfo.Name),
                 new Claim(ClaimTypes.Email, currentUserInfo.Email),
-                new Claim("Role",currentUserInfo.Role)
+                //new Claim("Role",currentUserInfo.Role==""? "staff":currentUserInfo.Role)//error, "Role" is not ClaimTypes.Role 
+                new Claim(ClaimTypes.Role,currentUserInfo.Role==""? "staff":currentUserInfo.Role)//correct
             };
 
             string keyDir = Directory.GetCurrentDirectory();

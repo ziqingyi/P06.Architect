@@ -45,8 +45,10 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.ProjectUtility.JWTUtilityUpgrad
                 new Claim("Id",currentUserInfo.Id.ToString()),
                 new Claim("Account",currentUserInfo.Account),
                 new Claim(ClaimTypes.Name, currentUserInfo.Name),
-                new Claim(ClaimTypes.Email, currentUserInfo.Email),                         
-                new Claim("Role",currentUserInfo.Role==""? "staff":currentUserInfo.Role)
+                new Claim(ClaimTypes.Email, currentUserInfo.Email),       
+                
+                //new Claim("Role",currentUserInfo.Role==""? "staff":currentUserInfo.Role)//error, "Role" is not ClaimTypes.Role 
+                new Claim(ClaimTypes.Role,currentUserInfo.Role==""? "staff":currentUserInfo.Role)//correct
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this._JWTTokenOptions.SecurityKey));

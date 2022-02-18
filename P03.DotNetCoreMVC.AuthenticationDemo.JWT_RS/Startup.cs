@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT_RS
 {
+    //dotnet P03.DotNetCoreMVC.AuthenticationDemo.JWT_RS.dll  --urls="https://*:44369" --ip="127.0.0.1"
     public class Startup
     {
         public Startup(IConfiguration configuration)

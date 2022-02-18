@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31829.152
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P06.Architect", "P06.Architect\P06.Architect.csproj", "{7373C9C1-71D3-4D7A-863D-11C57EDB063D}"
 EndProject
@@ -85,7 +85,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.EntityFra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.AuthenticationDemo", "P03.DotNetCoreMVC.AuthenticationDemo\P03.DotNetCoreMVC.AuthenticationDemo.csproj", "{2E8104EC-D919-442D-AFB4-BBF8A0A77CC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03.DotNetCoreMVC.AuthenticationDemo.JWT", "P03.DotNetCoreMVC.AuthenticationDemo.JWT\P03.DotNetCoreMVC.AuthenticationDemo.JWT.csproj", "{FC531F9B-F867-4E8D-9F34-0741BF208562}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.AuthenticationDemo.JWT", "P03.DotNetCoreMVC.AuthenticationDemo.JWT\P03.DotNetCoreMVC.AuthenticationDemo.JWT.csproj", "{FC531F9B-F867-4E8D-9F34-0741BF208562}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03.DotNetCoreMVC.AuthenticationDemo.JWT_RS", "P03.DotNetCoreMVC.AuthenticationDemo.JWT_RS\P03.DotNetCoreMVC.AuthenticationDemo.JWT_RS.csproj", "{5258C9BD-70CB-4469-9B5D-6D20894B371B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -245,6 +247,10 @@ Global
 		{FC531F9B-F867-4E8D-9F34-0741BF208562}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC531F9B-F867-4E8D-9F34-0741BF208562}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC531F9B-F867-4E8D-9F34-0741BF208562}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5258C9BD-70CB-4469-9B5D-6D20894B371B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5258C9BD-70CB-4469-9B5D-6D20894B371B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5258C9BD-70CB-4469-9B5D-6D20894B371B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5258C9BD-70CB-4469-9B5D-6D20894B371B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

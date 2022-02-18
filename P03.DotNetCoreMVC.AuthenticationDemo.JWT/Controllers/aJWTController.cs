@@ -12,7 +12,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT.Controllers
             return View();
 
         }
-        [Authorize(Policy = "Admin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult IndexRole()
         {
             return new JsonResult(new

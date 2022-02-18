@@ -62,15 +62,22 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT
                 });
 
 
-            //services.AddAuthorization(
-            //    options =>
-            //    {
+            services.AddAuthorization(
+                options =>
+                {
+                    options.AddPolicy("AdminPolicy",
+                        policyBuilder => policyBuilder
+                        .RequireRole("Admin")//need to have a role of Admin
+                        .RequireUserName("Admin")//name is Admin
+                        .RequireClaim("Email")//must have Email claim 
+
+                        //.AddRequirements(new CustomExtendRequirement())
+
+                        );
 
 
 
-
-
-            //    });
+                });
 
 
 

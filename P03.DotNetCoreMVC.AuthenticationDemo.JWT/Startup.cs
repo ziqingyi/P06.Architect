@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 
 namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT
 {
+    //dotnet P03.DotNetCoreMVC.AuthenticationDemo.JWT.dll  --urls="https://*:44371" --ip="127.0.0.1"
     public class Startup
     {
         public Startup(IConfiguration configuration)

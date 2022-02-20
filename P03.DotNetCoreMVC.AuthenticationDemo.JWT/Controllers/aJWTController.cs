@@ -43,5 +43,21 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT.Controllers
             });
 
         }
+
+
+
+        public IActionResult Online()
+        {
+            return new JsonResult
+            (
+                new
+                {
+                    Result = true,
+                    Message ="Online"
+                }
+            );
+        }
+
+
     }
 }

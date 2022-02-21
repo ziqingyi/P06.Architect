@@ -86,7 +86,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT
                     #region add policy 2
                     options.AddPolicy("MailPolicy",
                         policyBuilder => policyBuilder
-                        .AddRequirements(new CustomExtendRequirement())
+                        //.AddRequirements(new CustomExtendRequirement())
                         .Requirements.Add(new DoubleEMailRequirement())
                         );
                     #endregion
@@ -97,7 +97,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT
 
             services.AddSingleton<IAuthorizationHandler, GMailHandler>();
             services.AddSingleton<IAuthorizationHandler, OutlookMailHandler>();
-            services.AddSingleton<IAuthorizationHandler, CustomExtendRequirementHandler>();
+            //services.AddSingleton<IAuthorizationHandler, CustomExtendRequirementHandler>();
 
 
             #endregion
@@ -154,7 +154,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT
 
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=aJWT}/{action=Index}"
+                    pattern: "{controller=aJWT}/{action=Online}"
                     );
 
             });

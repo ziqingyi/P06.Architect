@@ -19,7 +19,7 @@ namespace P03.DotNetCoreMVC.Utility.AuthExtension
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, DoubleEMailRequirement requirement)
         {
-            if(context.User != null && context.User.HasClaim(c => c.Type == ClaimTypes.Email))
+            if(context.User != null && context.User.HasClaim(c => c.Type == ClaimTypes.Email|| c.Type == "Email"))
             {
                 var email = context.User.FindFirst(c => c.Type == ClaimTypes.Email).Value;
                 if(email.EndsWith("@gmail.com",StringComparison.OrdinalIgnoreCase))
@@ -40,7 +40,7 @@ namespace P03.DotNetCoreMVC.Utility.AuthExtension
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, DoubleEMailRequirement requirement)
         {
-            if (context.User != null && context.User.HasClaim(c => c.Type == ClaimTypes.Email))
+            if (context.User != null && context.User.HasClaim(c => c.Type == ClaimTypes.Email || c.Type == "Email"))
             {
                 var email = context.User.FindFirst(c => c.Type == ClaimTypes.Email).Value;
                 if (email.EndsWith("@outlook.com", StringComparison.OrdinalIgnoreCase))

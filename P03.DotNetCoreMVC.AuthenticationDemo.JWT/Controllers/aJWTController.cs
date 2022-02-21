@@ -33,7 +33,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT.Controllers
 
         }
 
-        [Authorize(Policy = "MultiEmail")]
+        [Authorize(Policy = "MailPolicy")]
         public IActionResult IndexEmails()
         {
             return new JsonResult(new

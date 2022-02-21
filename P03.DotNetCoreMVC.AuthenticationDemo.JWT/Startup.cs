@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -70,7 +71,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT
                         policyBuilder => policyBuilder
                         .RequireRole("Admin")//need to have a role of Admin
                         .RequireUserName("Admin")//name is Admin
-                        .RequireClaim("Email")//must have Email claim 
+                        .RequireClaim(ClaimTypes.Email)//must have Email claim , not "Email"
 
                         //.AddRequirements(new CustomExtendRequirement())
 

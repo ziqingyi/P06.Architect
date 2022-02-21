@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using P03.DotNetCoreMVC.Utility.AuthExtension;
 using P03.DotNetCoreMVC.Utility.Models;
 using System;
 using System.Collections.Generic;
@@ -67,6 +69,8 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT
             services.AddAuthorization(
                 options =>
                 {
+
+                    #region  add policy 1
                     options.AddPolicy("AdminPolicy",
                         policyBuilder => policyBuilder
                         .RequireRole("Admin")//need to have a role of Admin
@@ -76,17 +80,24 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT
                         //.AddRequirements(new CustomExtendRequirement())
 
                         );
+                    #endregion
 
+
+                    #region add policy 2
+                    options.AddPolicy("MailPolicy",
+                        policyBuilder => policyBuilder
+                        .AddRequirements(new CustomExtendRequirement())
+                        .Requirements.Add(new DoubleEMailRequirement())
+                        );
+                    #endregion
 
 
                 });
 
 
-
-
-
-
-
+            services.AddSingleton<IAuthorizationHandler, GMailHandler>();
+            services.AddSingleton<IAuthorizationHandler, OutlookMailHandler>();
+            services.AddSingleton<IAuthorizationHandler, CustomExtendRequirementHandler>();
 
 
             #endregion

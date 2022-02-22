@@ -77,8 +77,9 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT
                         .RequireUserName("Admin")//name is Admin
                         .RequireClaim(ClaimTypes.Email)//must have Email claim , not "Email"
 
-                        //.AddRequirements(new CustomExtendRequirement())
-
+                        #region add requirement
+                        .AddRequirements(new CustomExtendRequirement())
+                        #endregion
                         );
                     #endregion
 
@@ -86,7 +87,11 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT
                     #region add policy 2
                     options.AddPolicy("MailPolicy",
                         policyBuilder => policyBuilder
-                        //.AddRequirements(new CustomExtendRequirement())
+
+                        #region add requirement
+                        .AddRequirements(new CustomExtendRequirement())
+                        #endregion
+
                         .Requirements.Add(new DoubleEMailRequirement())
                         );
                     #endregion
@@ -97,7 +102,10 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.JWT
 
             services.AddSingleton<IAuthorizationHandler, GMailHandler>();
             services.AddSingleton<IAuthorizationHandler, OutlookMailHandler>();
-            //services.AddSingleton<IAuthorizationHandler, CustomExtendRequirementHandler>();
+
+            #region add requirement
+            services.AddSingleton<IAuthorizationHandler, CustomExtendRequirementHandler>();
+            #endregion
 
 
             #endregion

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
@@ -24,6 +25,33 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+
+            #region Ids4--client credentials
+            services.AddAuthentication("Bearer")
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = "";//ids4 address
+                    options.ApiName = "UserApi";
+                    options.RequireHttpsMetadata = false;
+                });
+
+            services.AddAuthorization(options => 
+            {
+                options.AddPolicy(
+                    "MailPolicy",
+                policyBuilder =>
+                policyBuilder.RequireAssertion(
+                    context =>
+                    context.User.HasClaim(c => c.Type == ClaimTypes.Email)
+                    && context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Email)).Value.EndsWith("@gmail.com")
+                    )
+                    );                
+            });
+
+
+            #endregion
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +71,14 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
             app.UseStaticFiles();
 
             app.UseRouting();
+
+
+            #region Ids4 
+
+            app.UseAuthentication();
+
+            #endregion
+
 
             app.UseAuthorization();
 

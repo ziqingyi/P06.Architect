@@ -42,8 +42,8 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 
             #region  client credentials
             services.AddIdentityServer()
-                .AddDeveloperSigningCredential()
-                .AddInMemoryClients(ClientInitConfig.GetClients())
+                .AddDeveloperSigningCredential()//generate temp pub/pri key. In production, pub/pri key should not be temp. 
+                .AddInMemoryClients(ClientInitConfig.GetClients())//Adds the in memory clients.
                 .AddInMemoryApiResources(ClientInitConfig.GetApiResources());
             #endregion
 
@@ -96,6 +96,9 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                   name: "default",
+                   pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

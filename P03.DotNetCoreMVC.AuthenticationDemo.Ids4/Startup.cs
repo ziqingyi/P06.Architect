@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
 {
+    //dotnet P03.DotNetCoreMVC.AuthenticationDemo.Ids4.dll  --urls="https://*:44350" --ip="127.0.0.1"
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -31,7 +32,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
             services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = "";//ids4 address
+                    options.Authority = "https://localhost:44398";//ids4 address,ids4 authenticaion center. 
                     options.ApiName = "UserApi";
                     options.RequireHttpsMetadata = false;
                 });

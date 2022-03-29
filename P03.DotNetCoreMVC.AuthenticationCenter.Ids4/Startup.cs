@@ -43,8 +43,8 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
             #region  client credentials
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()//generate temp pub/pri key. In production, pub/pri key should not be temp. 
-                .AddInMemoryClients(ClientInitConfig.GetClients())//Adds the in memory clients.
-                .AddInMemoryApiResources(ClientInitConfig.GetApiResources());
+                .AddInMemoryClients(ClientInitConfig.GetClients())//Adds the Clients's info in RAM memory.
+                .AddInMemoryApiResources(ClientInitConfig.GetApiResources());// the resource which can access, can add multi api info inside the class
             #endregion
 
 

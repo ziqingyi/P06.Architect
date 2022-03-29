@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.OpenApi.Models;
 
 namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 {
@@ -48,9 +49,23 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
             #endregion
 
 
-
-
-
+            #region add swagger
+            // Note: Add this service at the end after AddMvc() or AddMvcCore().
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "API",
+                    Version = "v1",
+                    Description = "Description for the API goes here.",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "test",
+                        Email = string.Empty
+                    },
+                });
+            });
+            #endregion
 
         }
 
@@ -60,9 +75,35 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                #region add swagger
+                app.UseSwagger();
+                app.UseSwaggerUI();
+                #endregion
             }
 
             app.UseHttpsRedirection();
+
+
+
+
+            #region add swagger
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
+                // To serve SwaggerUI at application's root page, set the RoutePrefix property to an empty string.
+                c.RoutePrefix = string.Empty;
+            });
+
+            #endregion
+
+
 
 
 

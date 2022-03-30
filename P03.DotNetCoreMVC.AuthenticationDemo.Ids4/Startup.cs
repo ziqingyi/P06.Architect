@@ -32,7 +32,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
             services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = "https://localhost:44398";//ids4 address,ids4 authenticaion center. 
+                    options.Authority = "https://localhost:44398";//ids4 address,ids4 authenticaion center. get public key. 
                     options.ApiName = "UserApi";
                     options.RequireHttpsMetadata = false;
                 });

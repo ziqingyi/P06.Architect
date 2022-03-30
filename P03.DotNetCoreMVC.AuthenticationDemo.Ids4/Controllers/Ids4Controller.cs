@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 
 namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4.Controllers
 {
@@ -8,6 +10,13 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4.Controllers
         [Authorize]
         public IActionResult Index()
         {
+
+            foreach (var item in base.HttpContext.User.Identities.First().Claims)
+            {
+                Console.WriteLine($"{item.Type}:{item.Value}");
+            }
+            Console.WriteLine("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
+
             return View();
 
         }

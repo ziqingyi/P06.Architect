@@ -24,8 +24,9 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
             {
                 new Client
                 {
-                    ClientId = "AuthenticationCenterIds4",//Client Id
-                    ClientSecrets = new [] { new Secret("test123123".Sha256()) },//client security
+                    ClientId = "authenticationcenterids4",//Client Id
+                    ClientSecrets = new [] { new Secret("test123".Sha256()) },//client security
+                     //ClientSecrets = new [] { new Secret("test123123") },//client security
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     
                     AllowedScopes = new [] { "UserApi" },//accessible resources
@@ -34,6 +35,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
                         new ClientClaim(IdentityModel.JwtClaimTypes.NickName,"Admin"),
                         new ClientClaim(ClaimTypes.Email,"abcdefg@gmail.com")
                     }
+                    
                 }
             };
         }

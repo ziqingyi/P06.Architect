@@ -41,11 +41,19 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
             services.AddControllersWithViews();
             #endregion
 
+            //http://localhost:44398/.well-known/openid-configuration
+
             #region  client credentials
+            // get token from http://localhost:44398/connect/token
+            //client_id: authenticationcenterids4
+            //client_secret:test123
+            //grant_type:client_credentials
+
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()//generate temp pub/pri key. In production, pub/pri key should not be temp. 
                 .AddInMemoryClients(ClientInitConfig.GetClients())//Adds the Clients's info in RAM memory.
                 .AddInMemoryApiResources(ClientInitConfig.GetApiResources());// the resource which can access, can add multi api info inside the class
+
             #endregion
 
 
@@ -76,7 +84,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
             {
                 app.UseDeveloperExceptionPage();
 
-                #region add swagger
+                #region add swagger, http://localhost:44398/index.html
                 app.UseSwagger();
                 app.UseSwaggerUI();
                 #endregion

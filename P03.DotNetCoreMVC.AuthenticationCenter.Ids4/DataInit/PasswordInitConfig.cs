@@ -50,6 +50,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
 
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     AllowedScopes = new []{ "UserApi", "TestApi" }
+                    //no claim. 
                 }
             };
 

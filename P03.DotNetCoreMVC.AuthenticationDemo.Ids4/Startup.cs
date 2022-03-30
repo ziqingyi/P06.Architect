@@ -53,6 +53,62 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
 
             #endregion
 
+
+
+            #region  Password mode
+
+            services.AddAuthentication("Bearer")
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = "https://localhost:44398";//ids4 address,ids4 authenticaion center. get public key. 
+                    options.ApiName = "UserApi";
+                    options.RequireHttpsMetadata = false;
+                });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(
+                    "MailPolicy",
+                policyBuilder =>
+                policyBuilder.RequireAssertion(
+                    context =>
+                    context.User.HasClaim(c => c.Type == ClaimTypes.Email)
+                    && context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Email)).Value.EndsWith("@gmail.com")
+                    )
+                    );
+            });
+
+
+            #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

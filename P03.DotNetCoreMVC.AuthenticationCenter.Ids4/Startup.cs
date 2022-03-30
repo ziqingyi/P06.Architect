@@ -67,7 +67,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
                 .AddDeveloperSigningCredential()//developer credential
                 .AddInMemoryApiResources(PasswordInitConfig.GetApiResources())//get resources
                 .AddInMemoryClients(PasswordInitConfig.GetClients())//get clients
-                .AddTestUsers(PasswordInitConfig.GetUsers())//get users
+                .AddTestUsers(PasswordInitConfig.GetUsers());//get users
 
             #endregion
 

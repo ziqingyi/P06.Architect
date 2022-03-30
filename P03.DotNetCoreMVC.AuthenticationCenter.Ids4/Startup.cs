@@ -17,7 +17,7 @@ using Microsoft.OpenApi.Models;
 
 namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 {
-    //dotnet P03.DotNetCoreMVC.AuthenticationCenter.Ids4.dll  --urls="https://*:44398" --ip="127.0.0.1"
+    //dotnet P03.DotNetCoreMVC.AuthenticationCenter.Ids4.dll  --urls="http://*:44398" --ip="127.0.0.1"
     /* quickstart UI
      https://github.com/IdentityServer/IdentityServer4.Quickstart.UI
           //dotnet new -i identityserver4.templates
@@ -43,18 +43,42 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 
             //http://localhost:44398/.well-known/openid-configuration
 
+
+
             #region  client credentials
             // get token from http://localhost:44398/connect/token
-            //client_id: authenticationcenterids4
+            //client_id: ids4client
             //client_secret:test123
             //grant_type:client_credentials
 
-            services.AddIdentityServer()
-                .AddDeveloperSigningCredential()//generate temp pub/pri key. In production, pub/pri key should not be temp. 
-                .AddInMemoryClients(ClientInitConfig.GetClients())//Adds the Clients's info in RAM memory.
-                .AddInMemoryApiResources(ClientInitConfig.GetApiResources());// the resource which can access, can add multi api info inside the class
+            //services.AddIdentityServer()
+            //    .AddDeveloperSigningCredential()//generate temp pub/pri key. In production, pub/pri key should not be temp. 
+            //    .AddInMemoryClients(ClientInitConfig.GetClients())//Adds the Clients's info in RAM memory.
+            //    .AddInMemoryApiResources(ClientInitConfig.GetApiResources());// the resource which can access, can add multi api info inside the class
 
             #endregion
+
+
+
+
+            #region
+
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()//developer credential
+                .AddInMemoryApiResources(PasswordInitConfig.GetApiResources())//get resources
+                .AddInMemoryClients(PasswordInitConfig.GetClients())//get clients
+                .AddTestUsers(PasswordInitConfig.GetUsers())//get users
+
+            #endregion
+
+
+
+
+
+
+
+
+
 
 
             #region add swagger
@@ -111,10 +135,6 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 
             #endregion
 
-
-
-
-
             #region config 1
             //wwwroot folder is must for running in console
             StaticFileOptions sfo = new StaticFileOptions()
@@ -125,6 +145,8 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
             };
             app.UseStaticFiles(sfo);
             #endregion
+
+
 
             #region IdentityServer Middleware
 

@@ -24,7 +24,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
             {
                 new Client
                 {
-                    ClientId = "authenticationcenterids4",//Client Id
+                    ClientId = "ids4client",//Client Id
                     ClientSecrets = new [] { new Secret("test123".Sha256()) },//client security
                      //ClientSecrets = new [] { new Secret("test123123") },//client security
                     AllowedGrantTypes = GrantTypes.ClientCredentials,

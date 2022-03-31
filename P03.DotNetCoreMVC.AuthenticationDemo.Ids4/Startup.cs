@@ -60,7 +60,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
             services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = "https://localhost:44398";//ids4 address,ids4 authenticaion center. get public key. 
+                    options.Authority = "http://localhost:44398";//ids4 address,ids4 authenticaion center. get public key. 
                     options.ApiName = "UserApi";
                     options.RequireHttpsMetadata = false;
                 });
@@ -87,15 +87,47 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
 
             #region Implicit
 
-
-
-
+            services.AddAuthentication("Bearer")
+              .AddIdentityServerAuthentication(options =>
+              {
+                  options.Authority = "http://localhost:44398";
+                  options.ApiName = "UserApi";
+                  options.RequireHttpsMetadata = false;
+              });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("MailPolicy",
+                    policyBuilder => policyBuilder
+                    .RequireAssertion(context =>
+                    context.User.HasClaim(c => c.Type == ClaimTypes.Email)
+                    && context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Email)).Value.EndsWith("@gmail.com")));//Client
+            });
 
 
             #endregion
 
 
 
+            #region Code
+
+            services.AddAuthentication("Bearer")
+              .AddIdentityServerAuthentication(options =>
+              {
+                  options.Authority = "http://localhost:44398";
+                  options.ApiName = "UserApi";
+                  options.RequireHttpsMetadata = false;
+              });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("MailPolicy",
+                    policyBuilder => policyBuilder
+                    .RequireAssertion(context =>
+                    context.User.HasClaim(c => c.Type == ClaimTypes.Email)
+                    && context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Email)).Value.EndsWith("@gmail.com")));//Client
+            });
+
+
+            #endregion
 
 
 

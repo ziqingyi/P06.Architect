@@ -86,6 +86,18 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 
 
 
+            #region Code
+
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddInMemoryApiResources(CodeInitConfig.GetApiResources())
+                .AddInMemoryClients(CodeInitConfig.GetClients())
+                .AddTestUsers(CodeInitConfig.GetUsers());
+
+            #endregion
+
+
+
             #region add swagger
             // Note: Add this service at the end after AddMvc() or AddMvcCore().
             services.AddSwaggerGen(c =>

@@ -1,27 +1,31 @@
-﻿using IdentityServer4.Models;
+﻿using System.Collections.Generic;
+using IdentityServer4.Models;
 using IdentityServer4.Test;
-using System.Collections.Generic;
 using System.Security.Claims;
 
 
 namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
 {
-    public class PasswordInitConfig
+    public class ImplicitInitConfig
     {
-
         public static IEnumerable<ApiResource> GetApiResources()
         {
             return new[]
             {
-                new ApiResource("UserApi","user api", new List<string>{IdentityModel.JwtClaimTypes.Role,IdentityModel.JwtClaimTypes.Email}),
+                new ApiResource("UserApi",
+                "user api", 
+                new List<string>{IdentityModel.JwtClaimTypes.Role,IdentityModel.JwtClaimTypes.Email}),
 
-                new ApiResource("TestApi","test api",new List<string>{IdentityModel.JwtClaimTypes.Role,IdentityModel.JwtClaimTypes.Email})
+                new ApiResource("TestApi",
+                "test api",
+                new List<string>{IdentityModel.JwtClaimTypes.Role,IdentityModel.JwtClaimTypes.Email})
             };
+
         }
+
 
         public static List<TestUser> GetUsers()
         {
-
             return new List<TestUser>()
             {
                 new TestUser()
@@ -39,6 +43,8 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
             };
         }
 
+
+
         public static IEnumerable<Client> GetClients()
         {
             return new[]
@@ -46,13 +52,17 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
                 new Client
                 {
                     ClientId = "ids4client",
+                    ClientName = "ApiClient for Implicit",
                     ClientSecrets = new []{ new Secret("test123".Sha256())  },
 
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-                    AllowedScopes = new []{ "UserApi", "TestApi" }
-                    //no claim. 
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowedScopes = new []{ "UserApi", "TestApi" },
+
+                    RedirectUris = {"http://localhost:44398/Ids4/IndexToken"},
+                    AllowAccessTokensViaBrowser = true
                 }
             };
+
 
         }
 

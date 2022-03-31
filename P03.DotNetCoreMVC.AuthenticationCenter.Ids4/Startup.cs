@@ -61,22 +61,27 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 
 
 
-            #region
+            #region password, client get username and password, get token and public key. 
 
-            services.AddIdentityServer()
-                .AddDeveloperSigningCredential()//developer credential
-                .AddInMemoryApiResources(PasswordInitConfig.GetApiResources())//get resources
-                .AddInMemoryClients(PasswordInitConfig.GetClients())//get clients
-                .AddTestUsers(PasswordInitConfig.GetUsers());//get users
+            //services.AddIdentityServer()
+            //    .AddDeveloperSigningCredential()//developer credential
+            //    .AddInMemoryApiResources(PasswordInitConfig.GetApiResources())//get resources
+            //    .AddInMemoryClients(PasswordInitConfig.GetClients())//get clients
+            //    .AddTestUsers(PasswordInitConfig.GetUsers());//get users
 
             #endregion
 
 
 
+            #region Implicit
 
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddInMemoryApiResources(ImplicitInitConfig.GetApiResources())
+                .AddInMemoryClients(ImplicitInitConfig.GetClients())
+                .AddTestUsers(ImplicitInitConfig.GetUsers());
 
-
-
+            #endregion
 
 
 

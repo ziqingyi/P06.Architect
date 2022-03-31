@@ -52,18 +52,18 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4.Controllers
 
         }
 
-        //[AllowAnonymous]
-        //public IActionResult IndexToken()
-        //{
-        //    return View();
-        //}
+        [AllowAnonymous]
+        public IActionResult IndexToken()
+        {
+            return View();
+        }
 
-        //[AllowAnonymous]
-        //public IActionResult IndexCodeToken()
-        //{
-        //    
-        //    return View();
-        //}
+        [AllowAnonymous]
+        public IActionResult IndexCodeToken()
+        {
+
+            return View();
+        }
 
 
 

@@ -11,7 +11,7 @@ using Microsoft.OpenApi.Models;
 
 namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 {
-    //dotnet P03.DotNetCoreMVC.AuthenticationCenter.Ids4.dll  --urls="http://*:44398" --ip="127.0.0.1"
+    //dotnet P03.DotNetCoreMVC.AuthenticationCenter.Ids4.dll  --urls="https://*:44398" --ip="127.0.0.1"
     /* quickstart UI
      https://github.com/IdentityServer/IdentityServer4.Quickstart.UI
           //dotnet new -i identityserver4.templates
@@ -35,12 +35,12 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
             services.AddControllersWithViews();
             #endregion
 
-            //http://localhost:44398/.well-known/openid-configuration
+            //https://localhost:44398/.well-known/openid-configuration
 
 
 
             #region  client credentials
-            // get token from http://localhost:44398/connect/token
+            // get token from https://localhost:44398/connect/token
             //client_id: ids4client
             //client_secret:test123
             //grant_type:client_credentials
@@ -119,7 +119,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
             {
                 app.UseDeveloperExceptionPage();
 
-                #region add swagger, http://localhost:44398/index.html
+                #region add swagger, https://localhost:44398/index.html
                 app.UseSwagger();
                 app.UseSwaggerUI();
                 #endregion

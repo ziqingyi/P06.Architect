@@ -24,7 +24,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.Controllers
             _logger = logger;
         }
 
-        //http://localhost:44398/api/ahome
+        //https://localhost:44398/api/ahome
         // GET: api/<aHomeController>
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()

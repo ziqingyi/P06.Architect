@@ -39,7 +39,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
                     
 
                     //https://identityserver4.readthedocs.io/en/latest/topics/resources.html?highlight=IResourceStore#migration-steps-to-v4
-                    //AllowedScopes = new [] { "userapi" },//accessible resources
+                    AllowedScopes = new [] { "UserApi" },//accessible resources
 
 
                     Claims=new List<ClientClaim>(){
@@ -63,26 +63,13 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
  * 3 Scope
  *    https://github.com/IdentityServer/IdentityServer4/issues/4508 
  *    https://identityserver4.readthedocs.io/en/latest/topics/resources.html?highlight=IResourceStore#migration-steps-to-v4
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
+ *  To migrate to v4 you need to split up scope and resource registration, 
+ *  typically by first registering all your scopes (e.g. using the AddInMemoryApiScopes method), 
+ *  and then register the API resources (if any) afterwards. 
+ *  The API resources will then reference the prior registered scopes by name.
  * 
  * 
  */
+
+
+

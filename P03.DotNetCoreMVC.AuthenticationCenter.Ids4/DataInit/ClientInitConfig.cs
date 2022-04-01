@@ -15,6 +15,9 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
             return new[]
             {
                 new ApiResource("UserApi", "User API")
+                {
+                    Scopes = new []{ "UserApi.read" }
+                }
             };
         }
         public static IEnumerable<ApiScope> Apis()
@@ -69,6 +72,9 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
  *  The API resources will then reference the prior registered scopes by name.
  * 
  * 
+ * 4 audience: 
+ *   https://identityserver4.readthedocs.io/en/latest/topics/resources.html?highlight=API%20resource#api-resources
+ *   https://stackoverflow.com/questions/62645604/asp-net-core-3-0-identity-server-4-4-0-0-securitytokeninvalidaudienceexception
  */
 
 

@@ -1,19 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
+
 
 namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 {
@@ -51,11 +45,11 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
             //client_secret:test123
             //grant_type:client_credentials
 
-            //services.AddIdentityServer()
-            //    .AddDeveloperSigningCredential()//generate temp pub/pri key. In production, pub/pri key should not be temp. 
-            //    .AddInMemoryClients(ClientInitConfig.GetClients())//Adds the Clients's info in RAM memory.
-            //    .AddInMemoryApiResources(ClientInitConfig.GetApiResources());// the resource which can access, can add multi api info inside the class
-
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()//generate temp pub/pri key. In production, pub/pri key should not be temp. 
+                .AddInMemoryClients(ClientInitConfig.GetClients())//Adds the Clients's info in RAM memory.
+                .AddInMemoryApiResources(ClientInitConfig.GetApiResources())// the resource which can access, can add multi api info inside the class
+                .AddInMemoryApiScopes(ClientInitConfig.Apis());
             #endregion
 
 
@@ -73,26 +67,26 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 
 
 
-            #region Implicit
+            #region Implicit flow
 
-            services.AddIdentityServer()
-                .AddDeveloperSigningCredential()
-                .AddInMemoryApiResources(ImplicitInitConfig.GetApiResources())
-                .AddInMemoryClients(ImplicitInitConfig.GetClients())
-                .AddTestUsers(ImplicitInitConfig.GetUsers());
+            //services.AddIdentityServer()
+            //    .AddDeveloperSigningCredential()
+            //    .AddInMemoryApiResources(ImplicitInitConfig.GetApiResources())
+            //    .AddInMemoryClients(ImplicitInitConfig.GetClients())
+            //    .AddTestUsers(ImplicitInitConfig.GetUsers());
 
             #endregion
 
 
 
 
-            #region Code
+            #region Code flow
 
-            services.AddIdentityServer()
-                .AddDeveloperSigningCredential()
-                .AddInMemoryApiResources(CodeInitConfig.GetApiResources())
-                .AddInMemoryClients(CodeInitConfig.GetClients())
-                .AddTestUsers(CodeInitConfig.GetUsers());
+            //services.AddIdentityServer()
+            //    .AddDeveloperSigningCredential()
+            //    .AddInMemoryApiResources(CodeInitConfig.GetApiResources())
+            //    .AddInMemoryClients(CodeInitConfig.GetClients())
+            //    .AddTestUsers(CodeInitConfig.GetUsers());
 
             #endregion
 

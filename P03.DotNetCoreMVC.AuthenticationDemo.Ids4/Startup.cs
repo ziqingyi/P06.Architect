@@ -57,74 +57,74 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
 
             #region  Password mode
 
-            services.AddAuthentication("Bearer")
-                .AddIdentityServerAuthentication(options =>
-                {
-                    options.Authority = "http://localhost:44398";//ids4 address,ids4 authenticaion center. get public key. 
-                    options.ApiName = "UserApi";
-                    options.RequireHttpsMetadata = false;
-                });
+            //services.AddAuthentication("Bearer")
+            //    .AddIdentityServerAuthentication(options =>
+            //    {
+            //        options.Authority = "http://localhost:44398";//ids4 address,ids4 authenticaion center. get public key. 
+            //        options.ApiName = "UserApi";
+            //        options.RequireHttpsMetadata = false;
+            //    });
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy(
-                    "MailPolicy",
-                policyBuilder =>
-                policyBuilder.RequireAssertion(
-                    context =>
-                    context.User.HasClaim(c => c.Type == ClaimTypes.Email)
-                    && context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Email)).Value.EndsWith("@gmail.com")
-                    )
-                    );
-            });
-
-
-            #endregion
-
-
-
-
-
-            #region Implicit
-
-            services.AddAuthentication("Bearer")
-              .AddIdentityServerAuthentication(options =>
-              {
-                  options.Authority = "http://localhost:44398";
-                  options.ApiName = "UserApi";
-                  options.RequireHttpsMetadata = false;
-              });
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("MailPolicy",
-                    policyBuilder => policyBuilder
-                    .RequireAssertion(context =>
-                    context.User.HasClaim(c => c.Type == ClaimTypes.Email)
-                    && context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Email)).Value.EndsWith("@gmail.com")));//Client
-            });
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy(
+            //        "MailPolicy",
+            //    policyBuilder =>
+            //    policyBuilder.RequireAssertion(
+            //        context =>
+            //        context.User.HasClaim(c => c.Type == ClaimTypes.Email)
+            //        && context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Email)).Value.EndsWith("@gmail.com")
+            //        )
+            //        );
+            //});
 
 
             #endregion
 
 
 
-            #region Code
 
-            services.AddAuthentication("Bearer")
-              .AddIdentityServerAuthentication(options =>
-              {
-                  options.Authority = "http://localhost:44398";
-                  options.ApiName = "UserApi";
-                  options.RequireHttpsMetadata = false;
-              });
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("MailPolicy",
-                    policyBuilder => policyBuilder
-                    .RequireAssertion(context =>
-                    context.User.HasClaim(c => c.Type == ClaimTypes.Email)
-                    && context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Email)).Value.EndsWith("@gmail.com")));//Client
-            });
+
+            #region Implicit flow
+
+            //services.AddAuthentication("Bearer")
+            //  .AddIdentityServerAuthentication(options =>
+            //  {
+            //      options.Authority = "http://localhost:44398";
+            //      options.ApiName = "UserApi";
+            //      options.RequireHttpsMetadata = false;
+            //  });
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("MailPolicy",
+            //        policyBuilder => policyBuilder
+            //        .RequireAssertion(context =>
+            //        context.User.HasClaim(c => c.Type == ClaimTypes.Email)
+            //        && context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Email)).Value.EndsWith("@gmail.com")));//Client
+            //});
+
+
+            #endregion
+
+
+
+            #region Code flow
+
+            //services.AddAuthentication("Bearer")
+            //  .AddIdentityServerAuthentication(options =>
+            //  {
+            //      options.Authority = "http://localhost:44398";
+            //      options.ApiName = "UserApi";
+            //      options.RequireHttpsMetadata = false;
+            //  });
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("MailPolicy",
+            //        policyBuilder => policyBuilder
+            //        .RequireAssertion(context =>
+            //        context.User.HasClaim(c => c.Type == ClaimTypes.Email)
+            //        && context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Email)).Value.EndsWith("@gmail.com")));//Client
+            //});
 
 
             #endregion

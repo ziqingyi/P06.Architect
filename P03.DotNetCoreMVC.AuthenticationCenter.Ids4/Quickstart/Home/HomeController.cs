@@ -35,7 +35,7 @@ namespace IdentityServerHost.Quickstart.UI
                 return View();
             }
 
-            _logger.LogInformation($"Environment is {_environment.EnvironmentName} Homepage is disabled in production. Returning 404.");
+            _logger.LogInformation("Homepage is disabled in production. Returning 404.");
             return NotFound();
         }
 

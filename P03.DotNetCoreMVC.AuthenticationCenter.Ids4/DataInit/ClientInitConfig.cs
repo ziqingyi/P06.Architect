@@ -17,6 +17,14 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
                 new ApiResource("UserApi", "User API")
             };
         }
+        public static IEnumerable<ApiScope> Apis()
+        {
+
+            return new List<ApiScope>
+            {
+                new ApiScope("UserApi", "My Api")
+            };
+        }
 
         public static IEnumerable<Client> GetClients()
         {
@@ -24,18 +32,22 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
             {
                 new Client
                 {
-                    ClientId = "ids4client",//Client Id
+                    ClientId = "idsclient",//Client Id
                     ClientSecrets = new [] { new Secret("test123".Sha256()) },//client security
                      //ClientSecrets = new [] { new Secret("test123123") },//client security
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     
-                    AllowedScopes = new [] { "UserApi" },//accessible resources
+
+                    //https://identityserver4.readthedocs.io/en/latest/topics/resources.html?highlight=IResourceStore#migration-steps-to-v4
+                    //AllowedScopes = new [] { "userapi" },//accessible resources
+
+
                     Claims=new List<ClientClaim>(){
                         new ClientClaim(IdentityModel.JwtClaimTypes.Role,"Admin"),
                         new ClientClaim(IdentityModel.JwtClaimTypes.NickName,"Admin"),
                         new ClientClaim(ClaimTypes.Email,"abcdefg@gmail.com")
                     }
-                    
+                    ,AllowOfflineAccess = true
                 }
             };
         }
@@ -44,3 +56,33 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
 
     }
 }
+/*https://identityserver4.readthedocs.io/en/latest/endpoints/token.html
+ * 
+ * 1 Post
+ * 2 body, x-www-form-urlencoded
+ * 3 Scope
+ *    https://github.com/IdentityServer/IdentityServer4/issues/4508 
+ *    https://identityserver4.readthedocs.io/en/latest/topics/resources.html?highlight=IResourceStore#migration-steps-to-v4
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */

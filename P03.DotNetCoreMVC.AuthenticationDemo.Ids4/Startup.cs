@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,13 +32,17 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
 
             #region Ids4--client credentials
             services.AddAuthentication("Bearer")
-                .AddIdentityServerAuthentication(options =>
+                .AddJwtBearer(options =>
                 {
-                    options.Authority = "http://localhost:44398";//ids4 address,ids4 authenticaion center. get public key. 
-                    options.ApiName = "UserApi";
-                    options.RequireHttpsMetadata = false;
+                    options.Authority = "https://localhost:44398";//ids4 address,ids4 authenticaion center. get public key. 
+                    options.Audience = "UserApi";
+                    options.RequireHttpsMetadata = true;
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateAudience = false
+                    };
                 });
-
+            IdentityModelEventSource.ShowPII = true;
             services.AddAuthorization(options => 
             {
                 options.AddPolicy(
@@ -47,7 +53,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
                     context.User.HasClaim(c => c.Type == ClaimTypes.Email)
                     && context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Email)).Value.EndsWith("@gmail.com")
                     )
-                    );                
+                    );   
             });
 
 

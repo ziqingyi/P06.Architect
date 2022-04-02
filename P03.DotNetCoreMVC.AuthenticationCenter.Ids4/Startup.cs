@@ -41,7 +41,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 
             #region  client credentials
             // get token from https://localhost:44398/connect/token
-            //client_id: ids4client
+            //client_id: idsclient
             //client_secret:test123
             //grant_type:client_credentials
 

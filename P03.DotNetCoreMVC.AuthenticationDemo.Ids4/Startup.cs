@@ -47,16 +47,22 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
             {
                 options.AddPolicy(
                     "MailPolicy",
-                policyBuilder =>
-                policyBuilder.RequireAssertion(
-                    context =>
-                    context.User.HasClaim(c => c.Type == ClaimTypes.Email)
-                    && context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Email)).Value.EndsWith("@gmail.com")
+                    policyBuilder =>
+                    policyBuilder.RequireAssertion(
+                        context =>
+                        context.User.HasClaim(c => c.Type == ClaimTypes.Email)
+                        && 
+                        context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Email)).Value.EndsWith("@gmail.com")
                     )
-                    );   
+                );
+
+                options.AddPolicy("AdminPolicy", builder =>
+                {
+                    builder.RequireRole(new[] { "Admin" });
+                });
+
+
             });
-
-
             #endregion
 
 

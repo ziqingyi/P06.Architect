@@ -44,7 +44,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
                     //https://identityserver4.readthedocs.io/en/latest/topics/resources.html?highlight=IResourceStore#migration-steps-to-v4
                     AllowedScopes = new [] { "UserApi" },//accessible resources
 
-
+                    ClientClaimsPrefix = "",
                     Claims=new List<ClientClaim>(){
                         new ClientClaim(IdentityModel.JwtClaimTypes.Role,"Admin"),
                         new ClientClaim(IdentityModel.JwtClaimTypes.NickName,"Admin"),

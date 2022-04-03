@@ -36,7 +36,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4.Controllers
             return new JsonResult(new
             {
                 Result = true,
-                Message = "Ids4Controller IndexPolicy "
+                Message = "Ids4Controller AdminPolicy "
             });
 
         }
@@ -47,7 +47,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4.Controllers
             return new JsonResult(new
             {
                 Result = true,
-                Message = "Ids4Controller IndexEmails "
+                Message = "Ids4Controller MailPolicy "
             });
 
         }

@@ -34,7 +34,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
             services.AddAuthentication("Bearer")
                 .AddJwtBearer(options =>
                 {
-                    options.Authority = "http://localhost:44398";//ids4 address,ids4 authenticaion center. get public key. 
+                    options.Authority = "https://localhost:44398";//ids4 address,ids4 authenticaion center. get public key. 
                     options.Audience = "UserApi";
                     options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters()

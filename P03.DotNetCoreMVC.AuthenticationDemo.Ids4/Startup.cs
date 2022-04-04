@@ -31,19 +31,48 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
 
 
             #region Ids4--client credentials
+
+            //services.AddAuthentication("Bearer")
+            //    .AddJwtBearer(options =>
+            //    {
+            //        options.Authority = "https://localhost:44398";//ids4 address,ids4 authenticaion center. get public key. 
+            //        options.Audience = "UserApi";
+            //        options.RequireHttpsMetadata = false;
+            //        options.TokenValidationParameters = new TokenValidationParameters()
+            //        {
+            //            ValidateAudience = false
+            //        };
+            //    });
+
+            #endregion
+
+
+
+
+            #region  Password flow
+
             services.AddAuthentication("Bearer")
                 .AddJwtBearer(options =>
                 {
                     options.Authority = "https://localhost:44398";//ids4 address,ids4 authenticaion center. get public key. 
                     options.Audience = "UserApi";
+
                     options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
                         ValidateAudience = false
                     };
                 });
+
+            #endregion
+
+
+
+
+            #region add authorization
+
             IdentityModelEventSource.ShowPII = true;
-            services.AddAuthorization(options => 
+            services.AddAuthorization(options =>
             {
                 options.AddPolicy(
                     "MailPolicy",
@@ -51,7 +80,7 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
                     policyBuilder.RequireAssertion(
                         context =>
                         context.User.HasClaim(c => c.Type == ClaimTypes.Email)
-                        && 
+                        &&
                         context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Email)).Value.EndsWith("@gmail.com")
                     )
                 );
@@ -61,39 +90,9 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
                     builder.RequireRole(new[] { "Admin" });
                 });
 
-
             });
-            #endregion
-
-
-
-            #region  Password mode
-
-            //services.AddAuthentication("Bearer")
-            //    .AddIdentityServerAuthentication(options =>
-            //    {
-            //        options.Authority = "http://localhost:44398";//ids4 address,ids4 authenticaion center. get public key. 
-            //        options.ApiName = "UserApi";
-            //        options.RequireHttpsMetadata = false;
-            //    });
-
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy(
-            //        "MailPolicy",
-            //    policyBuilder =>
-            //    policyBuilder.RequireAssertion(
-            //        context =>
-            //        context.User.HasClaim(c => c.Type == ClaimTypes.Email)
-            //        && context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Email)).Value.EndsWith("@gmail.com")
-            //        )
-            //        );
-            //});
-
 
             #endregion
-
-
 
 
 

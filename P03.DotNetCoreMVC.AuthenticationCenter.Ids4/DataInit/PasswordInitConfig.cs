@@ -13,12 +13,32 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
         {
             return new[]
             {
-                new ApiResource("UserApi","user api", new List<string>{IdentityModel.JwtClaimTypes.Role,IdentityModel.JwtClaimTypes.Email}),
+                new ApiResource("UserApi",
+                "user api",
+                 new List<string> { IdentityModel.JwtClaimTypes.Role })
+                {             
+                    Enabled = true,
+                    Scopes = new []{ "UserApi" }          
+                },
 
-                new ApiResource("TestApi","test api",new List<string>{IdentityModel.JwtClaimTypes.Role,IdentityModel.JwtClaimTypes.Email})
+                new ApiResource("TestApi",
+                "test api",
+                new List<string>{IdentityModel.JwtClaimTypes.Role})
+                {
+                    Enabled = true,
+                    Scopes = new []{ "TestApi" }
+                }
             };
         }
+        public static IEnumerable<ApiScope> Apis()
+        {
 
+            return new List<ApiScope>
+            {
+                new ApiScope("UserApi", "My Api"),
+                 new ApiScope("TestApi", "test Api")
+            };
+        }
         public static List<TestUser> GetUsers()
         {
 
@@ -45,12 +65,17 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
             {
                 new Client
                 {
-                    ClientId = "ids4client",
-                    ClientSecrets = new []{ new Secret("test123".Sha256())  },
+                    ClientId = "idsclient",
+                    //ClientSecrets = new []{ new Secret("test123".Sha256())  },
+
+                    AllowAccessTokensViaBrowser = false,//provide password to Client 
+                    RequireClientSecret = false,  // no client pass
+
+                    ClientClaimsPrefix = "",
 
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     AllowedScopes = new []{ "UserApi", "TestApi" }
-                    //no claim. 
+                    //no claim. claim will not be passed if password flow. 
                 }
             };
 
@@ -61,3 +86,19 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
 
     }
 }
+/*
+ 
+ https://stackoverflow.com/questions/45374721/getting-claims-in-identity-server-using-resource-owner-password
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ */

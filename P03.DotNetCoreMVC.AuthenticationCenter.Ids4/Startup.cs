@@ -45,11 +45,11 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
             //client_secret:test123
             //grant_type:client_credentials
 
-            services.AddIdentityServer()
-                .AddDeveloperSigningCredential()//generate temp pub/pri key. In production, pub/pri key should not be temp. 
-                .AddInMemoryClients(ClientInitConfig.GetClients())//Adds the Clients's info in RAM memory.
-                .AddInMemoryApiResources(ClientInitConfig.GetApiResources())// the resource which can access, can add multi api info inside the class
-                .AddInMemoryApiScopes(ClientInitConfig.Apis());
+            //services.AddIdentityServer()
+            //    .AddDeveloperSigningCredential()//generate temp pub/pri key. In production, pub/pri key should not be temp. 
+            //    .AddInMemoryClients(ClientInitConfig.GetClients())//Adds the Clients's info in RAM memory.
+            //    .AddInMemoryApiResources(ClientInitConfig.GetApiResources())// the resource which can access, can add multi api info inside the class
+            //    .AddInMemoryApiScopes(ClientInitConfig.Apis());
             #endregion
 
 
@@ -57,12 +57,12 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 
             #region password, client get username and password, get token and public key. 
 
-            //services.AddIdentityServer()
-            //    .AddDeveloperSigningCredential()//developer credential
-            //    .AddInMemoryApiResources(PasswordInitConfig.GetApiResources())//get resources
-            //    .AddInMemoryClients(PasswordInitConfig.GetClients())//get clients
-            //    .AddTestUsers(PasswordInitConfig.GetUsers());//get users
-
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()//developer credential
+                .AddInMemoryClients(PasswordInitConfig.GetClients())//get clients
+                .AddInMemoryApiResources(PasswordInitConfig.GetApiResources())//get resources
+                .AddTestUsers(PasswordInitConfig.GetUsers())//get users                                                                              //
+                .AddInMemoryApiScopes(PasswordInitConfig.Apis());
             #endregion
 
 

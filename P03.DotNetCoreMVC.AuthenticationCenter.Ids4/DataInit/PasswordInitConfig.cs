@@ -90,7 +90,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
  
  https://stackoverflow.com/questions/45374721/getting-claims-in-identity-server-using-resource-owner-password
  
- 
+ https://stackoverflow.com/questions/61588752/identityserver4-client-for-password-flow-not-including-testuser-claims-in-access
  
  
  

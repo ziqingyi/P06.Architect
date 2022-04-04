@@ -21,7 +21,11 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
             {
                 new ApiResource("UserApi",
                 "user api", 
-                new List<string>{IdentityModel.JwtClaimTypes.Role,IdentityModel.JwtClaimTypes.Email}),
+                new List<string>{IdentityModel.JwtClaimTypes.Role})
+                {
+                    Enabled = true,
+                    Scopes = new []{ "UserApi" }
+                },
 
                 new ApiResource("TestApi",
                 "test api",
@@ -68,12 +72,12 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
                 {
                     ClientId = "idsclient",
                     ClientName = "ApiClient for Implicit",
-                    ClientSecrets = new []{ new Secret("test123".Sha256())  },
+                    //ClientSecrets = new []{ new Secret("test123".Sha256())  },
 
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowedScopes = new []{ "UserApi", "TestApi" },
 
-                    RedirectUris = {"https://localhost:44350/Ids4/IndexToken"},//client not keep password
+                    RedirectUris = {"https://localhost:44350/Ids4/IndexToken"},//client not keep password, can be multiple uri.
                     AllowAccessTokensViaBrowser = true //via browser
 
 
@@ -90,3 +94,15 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
 
     }
 }
+
+
+
+
+/*
+ 
+ 
+ 
+ 
+ 
+ 
+ */

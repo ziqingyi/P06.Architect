@@ -6,6 +6,13 @@ using System.Security.Claims;
 
 namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
 {
+    //provided by client when user access 
+    //https://localhost:44398/connect/authorize?client_id=idsclient&redirect_uri=https://localhost:44350/Ids4/IndexToken&response_type=token&scope=UserApi
+    //
+    /*
+     https://localhost:44350/Ids4/IndexToken#access_token=eyJhbGciOiJSUzI1NiIsImtpZCI6IjUxOTBCMjc3NTRFNjBBQjBFRERFNUNGNEFDNUQ3MEVEIiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE2NDkwNTYzODYsImV4cCI6MTY0OTA1OTk4NiwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NDQzOTgiLCJjbGllbnRfaWQiOiJpZHNjbGllbnQiLCJzdWIiOiIwIiwiYXV0aF90aW1lIjoxNjQ5MDU2Mzg2LCJpZHAiOiJsb2NhbCIsImp0aSI6IkU1MDZDQTk5OTcyQTY5Q0VEQjE0NDI2QTI4RjU5MzBEIiwic2lkIjoiRTk5QkUxOThGREQ4QTZERjk0OUYzNjZFQjIyRDYwMUMiLCJpYXQiOjE2NDkwNTYzODYsInNjb3BlIjpbIlVzZXJBcGkiXSwiYW1yIjpbInB3ZCJdfQ.j6N_UvB-bUZ4TpcN8_xsnJRkCmEd8zAaiHfos3nAA9WhG_obPALrcVgTCBZANRcwrBVkvvVmDrK5lBle3cI4kNoX2qiLt_Y6RjMRTmZnBW8I74K9CcprLzxwK4TR4JpmUFWcEhom9rJxdiFTI47ynSGW2wweW0d9bOInJWfLv6JQzEYzvK04cHjgA3FjtiqjhHtIiWHiz9ioio9Hf7m4dTeYboRijIAebnAjp1euNnpCoFPhQjvyEknVqDFiu4fG0WElndZ7LgNZ15uHuSv3T4H_zaSRrLTcWR03cwZrPsDeGNQAGIJR1Hg9CyHxPTVHeL0i3RlOP6kXQcAEuplYxA&token_type=Bearer&expires_in=3600&scope=UserApi
+     
+     */
     public class ImplicitInitConfig
     {
         public static IEnumerable<ApiResource> GetApiResources()
@@ -18,7 +25,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
 
                 new ApiResource("TestApi",
                 "test api",
-                new List<string>{IdentityModel.JwtClaimTypes.Role,IdentityModel.JwtClaimTypes.Email})
+                new List<string>{IdentityModel.JwtClaimTypes.Role})
             };
 
         }
@@ -43,7 +50,15 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
             };
         }
 
+        public static IEnumerable<ApiScope> Apis()
+        {
 
+            return new List<ApiScope>
+            {
+                new ApiScope("UserApi", "My Api"),
+                 new ApiScope("TestApi", "test Api")
+            };
+        }
 
         public static IEnumerable<Client> GetClients()
         {
@@ -51,15 +66,19 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
             {
                 new Client
                 {
-                    ClientId = "ids4client",
+                    ClientId = "idsclient",
                     ClientName = "ApiClient for Implicit",
                     ClientSecrets = new []{ new Secret("test123".Sha256())  },
 
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowedScopes = new []{ "UserApi", "TestApi" },
 
-                    RedirectUris = {"http://localhost:44398/Ids4/IndexToken"},
-                    AllowAccessTokensViaBrowser = true
+                    RedirectUris = {"https://localhost:44350/Ids4/IndexToken"},//client not keep password
+                    AllowAccessTokensViaBrowser = true //via browser
+
+
+                    //no claim here
+
                 }
             };
 

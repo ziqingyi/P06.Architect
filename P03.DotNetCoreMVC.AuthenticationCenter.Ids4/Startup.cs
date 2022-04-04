@@ -57,23 +57,24 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 
             #region password, client get username and password, get token and public key. 
 
-            services.AddIdentityServer()
-                .AddDeveloperSigningCredential()//developer credential
-                .AddInMemoryClients(PasswordInitConfig.GetClients())//get clients
-                .AddInMemoryApiResources(PasswordInitConfig.GetApiResources())//get resources
-                .AddTestUsers(PasswordInitConfig.GetUsers())//get users                                                                              //
-                .AddInMemoryApiScopes(PasswordInitConfig.Apis());
-            #endregion
+            //services.AddIdentityServer()
+            //    .AddDeveloperSigningCredential()//developer credential
+            //    .AddInMemoryClients(PasswordInitConfig.GetClients())//get clients
+            //    .AddInMemoryApiResources(PasswordInitConfig.GetApiResources())//get resources
+            //    .AddTestUsers(PasswordInitConfig.GetUsers())//get users                                                                              //
+            //    .AddInMemoryApiScopes(PasswordInitConfig.Apis());
 
+            #endregion
 
 
             #region Implicit flow
 
-            //services.AddIdentityServer()
-            //    .AddDeveloperSigningCredential()
-            //    .AddInMemoryApiResources(ImplicitInitConfig.GetApiResources())
-            //    .AddInMemoryClients(ImplicitInitConfig.GetClients())
-            //    .AddTestUsers(ImplicitInitConfig.GetUsers());
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddInMemoryClients(ImplicitInitConfig.GetClients())
+                .AddInMemoryApiResources(ImplicitInitConfig.GetApiResources())              
+                .AddTestUsers(ImplicitInitConfig.GetUsers())
+                .AddInMemoryApiScopes(ImplicitInitConfig.Apis()); ;
 
             #endregion
 

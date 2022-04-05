@@ -66,19 +66,42 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
 
             #region Implicit flow
 
+            //services.AddAuthentication("Bearer")
+            //  .AddJwtBearer(options =>
+            //  {
+            //      options.Authority = "https://localhost:44398";
+            //      options.Audience = "UserApi";
+
+            //      options.RequireHttpsMetadata = false;
+            //      options.TokenValidationParameters = new TokenValidationParameters()
+            //      {
+            //          ValidateAudience = false
+            //      };
+            //  });
+            #endregion
+
+
+
+            #region Authorization Code flow
+
             services.AddAuthentication("Bearer")
               .AddJwtBearer(options =>
               {
                   options.Authority = "https://localhost:44398";
                   options.Audience = "UserApi";
-
                   options.RequireHttpsMetadata = false;
                   options.TokenValidationParameters = new TokenValidationParameters()
                   {
                       ValidateAudience = false
                   };
               });
+            
             #endregion
+
+
+
+
+
 
 
             #region add authorization
@@ -105,42 +128,6 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
             });
 
             #endregion
-
-
-
-
-
-
-            #region Code flow
-
-            //services.AddAuthentication("Bearer")
-            //  .AddIdentityServerAuthentication(options =>
-            //  {
-            //      options.Authority = "http://localhost:44398";
-            //      options.ApiName = "UserApi";
-            //      options.RequireHttpsMetadata = false;
-            //  });
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("MailPolicy",
-            //        policyBuilder => policyBuilder
-            //        .RequireAssertion(context =>
-            //        context.User.HasClaim(c => c.Type == ClaimTypes.Email)
-            //        && context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Email)).Value.EndsWith("@gmail.com")));//Client
-            //});
-
-
-            #endregion
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -69,26 +69,26 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 
             #region Implicit flow
 
-            services.AddIdentityServer()
-                .AddDeveloperSigningCredential()
-                .AddInMemoryClients(ImplicitInitConfig.GetClients())
-                .AddInMemoryApiResources(ImplicitInitConfig.GetApiResources())              
-                .AddTestUsers(ImplicitInitConfig.GetUsers())
-                .AddInMemoryApiScopes(ImplicitInitConfig.Apis()); ;
+            //services.AddIdentityServer()
+            //    .AddDeveloperSigningCredential()
+            //    .AddInMemoryClients(ImplicitInitConfig.GetClients())
+            //    .AddInMemoryApiResources(ImplicitInitConfig.GetApiResources())              
+            //    .AddTestUsers(ImplicitInitConfig.GetUsers())
+            //    .AddInMemoryApiScopes(ImplicitInitConfig.Apis()); 
 
             #endregion
 
 
 
 
-            #region Code flow
+            #region Authorization code flow
 
-            //services.AddIdentityServer()
-            //    .AddDeveloperSigningCredential()
-            //    .AddInMemoryApiResources(CodeInitConfig.GetApiResources())
-            //    .AddInMemoryClients(CodeInitConfig.GetClients())
-            //    .AddTestUsers(CodeInitConfig.GetUsers());
-
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddInMemoryApiResources(CodeInitConfig.GetApiResources())
+                .AddInMemoryClients(CodeInitConfig.GetClients())
+                .AddTestUsers(CodeInitConfig.GetUsers())
+                .AddInMemoryApiScopes(CodeInitConfig.Apis());
             #endregion
 
 

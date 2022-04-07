@@ -80,17 +80,29 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 
 
 
-
             #region Authorization code flow
+
+            //services.AddIdentityServer()
+            //    .AddDeveloperSigningCredential()
+            //    .AddInMemoryApiResources(CodeInitConfig.GetApiResources())
+            //    .AddInMemoryClients(CodeInitConfig.GetClients())
+            //    .AddTestUsers(CodeInitConfig.GetUsers())
+            //    .AddInMemoryApiScopes(CodeInitConfig.Apis());
+            #endregion
+
+
+
+            #region Hybrid flow
 
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
-                .AddInMemoryApiResources(CodeInitConfig.GetApiResources())
-                .AddInMemoryClients(CodeInitConfig.GetClients())
-                .AddTestUsers(CodeInitConfig.GetUsers())
-                .AddInMemoryApiScopes(CodeInitConfig.Apis());
-            #endregion
+                .AddInMemoryIdentityResources(HybridInitConfig.GetIdentityResources())
+                .AddInMemoryApiResources(HybridInitConfig.GetApiResources())
+                .AddInMemoryClients(HybridInitConfig.GetClients())
+                .AddTestUsers(HybridInitConfig.GetUsers())
+                .AddInMemoryApiScopes(HybridInitConfig.Apis());
 
+            #endregion
 
 
             #region add swagger

@@ -84,22 +84,36 @@ namespace P03.DotNetCoreMVC.AuthenticationDemo.Ids4
 
             #region Authorization Code flow
 
-            services.AddAuthentication("Bearer")
-              .AddJwtBearer(options =>
-              {
-                  options.Authority = "https://localhost:44398";
-                  options.Audience = "UserApi";
-                  options.RequireHttpsMetadata = false;
-                  options.TokenValidationParameters = new TokenValidationParameters()
-                  {
-                      ValidateAudience = false
-                  };
-              });
-            
+            //services.AddAuthentication("Bearer")
+            //  .AddJwtBearer(options =>
+            //  {
+            //      options.Authority = "https://localhost:44398";
+            //      options.Audience = "UserApi";
+            //      options.RequireHttpsMetadata = false;
+            //      options.TokenValidationParameters = new TokenValidationParameters()
+            //      {
+            //          ValidateAudience = false
+            //      };
+            //  });
+
             #endregion
 
 
+            #region Hybrid flow
 
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = "https://localhost:44398";
+                    options.Audience = "UserApi";
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidateAudience = false
+                    };
+                });
+
+            #endregion
 
 
 

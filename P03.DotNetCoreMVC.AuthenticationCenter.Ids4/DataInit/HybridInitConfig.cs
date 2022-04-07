@@ -6,6 +6,12 @@ using System.Security.Claims;
 
 namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
 {
+    /*https://localhost:44398/connect/authorize?client_id=idsclient&redirect_uri=https://localhost:44350/Ids4/IndexCodeToken&response_type=code%20token%20id_token&scope=read%20openid%20CustomIdentityResource&response_model=fragment&nonce=12345
+     *
+     * id_token: user information,jwt token
+     * access_token: used for authorization. get api info
+     *
+     */
     public class HybridInitConfig
     {
 
@@ -48,7 +54,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
                   new ApiResource(
                       "UserApi",
                 "user api",
-                new List<string>{IdentityModel.JwtClaimTypes.Role})
+                new List<string>{IdentityModel.JwtClaimTypes.Role,IdentityModel.JwtClaimTypes.Email})
                 {
                     Enabled = true,
                     Scopes = new []{ "read", "write"}
@@ -76,7 +82,10 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
                 new IdentityResource(
                     "CustomIdentityResource",
                     "This is Custom Model",
-                    new List<string>(){ "phonemodel","phoneprise", IdentityModel.JwtClaimTypes.Email})
+                    new List<string>(){IdentityModel.JwtClaimTypes.Role 
+                        , IdentityModel.JwtClaimTypes.NickName
+                        , IdentityModel.JwtClaimTypes.Email
+                        ,"phonemodel" })
             };
 
         }
@@ -111,22 +120,27 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
                 new Client
                 {
                     AlwaysIncludeUserClaimsInIdToken = true,
-                    AllowOfflineAccess = true,
-
 
                     ClientId = "idsclient",
-                    ClientName = "ApiClient for Implicit",
+                    ClientName = "ApiClient for hybrid",
                     ClientSecrets = new []{ new Secret("test123".Sha256())  },
-                    
-                    AccessTokenLifetime = 3600,
+
                     AllowedGrantTypes = GrantTypes.Hybrid,
                     AllowedScopes = new []{ "read", "write","TestApi.delete",
                     IdentityServerConstants.StandardScopes.OpenId,
                     IdentityServerConstants.StandardScopes.Profile,
                     "CustomIdentityResource"},
 
+                    RequirePkce = false,
+                    //in version 4.0 and above, the code flow + PKCE is used by default, so disable it. 
+                    RequireClientSecret = false,
+                    AccessTokenLifetime = 3600,
+
                     RedirectUris = {"https://localhost:44350/Ids4/IndexCodeToken"},//client not keep password, can be multiple uri.
-                    AllowAccessTokensViaBrowser = true //via browser
+                    AllowAccessTokensViaBrowser = true, //via browser
+
+                    AllowOfflineAccess = true,
+                    RefreshTokenUsage = TokenUsage.ReUse
                 }
             };
 

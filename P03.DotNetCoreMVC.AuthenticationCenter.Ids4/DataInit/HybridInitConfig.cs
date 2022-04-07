@@ -30,7 +30,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
          * The constructor allows you to pass the name of the scope (e.g. calendar or documents).
          *
          */
-        public static IEnumerable<ApiScope> Apis()
+        public static IEnumerable<ApiScope> ApiScopes()
         {
 
             return new List<ApiScope>

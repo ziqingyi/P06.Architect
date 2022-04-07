@@ -49,7 +49,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
             //    .AddDeveloperSigningCredential()//generate temp pub/pri key. In production, pub/pri key should not be temp. 
             //    .AddInMemoryClients(ClientInitConfig.GetClients())//Adds the Clients's info in RAM memory.
             //    .AddInMemoryApiResources(ClientInitConfig.GetApiResources())// the resource which can access, can add multi api info inside the class
-            //    .AddInMemoryApiScopes(ClientInitConfig.Apis());
+            //    .AddInMemoryApiScopes(ClientInitConfig.ApiScopes());
             #endregion
 
 
@@ -62,7 +62,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
             //    .AddInMemoryClients(PasswordInitConfig.GetClients())//get clients
             //    .AddInMemoryApiResources(PasswordInitConfig.GetApiResources())//get resources
             //    .AddTestUsers(PasswordInitConfig.GetUsers())//get users                                                                              //
-            //    .AddInMemoryApiScopes(PasswordInitConfig.Apis());
+            //    .AddInMemoryApiScopes(PasswordInitConfig.ApiScopes());
 
             #endregion
 
@@ -74,7 +74,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
             //    .AddInMemoryClients(ImplicitInitConfig.GetClients())
             //    .AddInMemoryApiResources(ImplicitInitConfig.GetApiResources())              
             //    .AddTestUsers(ImplicitInitConfig.GetUsers())
-            //    .AddInMemoryApiScopes(ImplicitInitConfig.Apis()); 
+            //    .AddInMemoryApiScopes(ImplicitInitConfig.ApiScopes()); 
 
             #endregion
 
@@ -87,7 +87,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
             //    .AddInMemoryApiResources(CodeInitConfig.GetApiResources())
             //    .AddInMemoryClients(CodeInitConfig.GetClients())
             //    .AddTestUsers(CodeInitConfig.GetUsers())
-            //    .AddInMemoryApiScopes(CodeInitConfig.Apis());
+            //    .AddInMemoryApiScopes(CodeInitConfig.ApiScopes());
             #endregion
 
 
@@ -100,7 +100,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
                 .AddInMemoryApiResources(HybridInitConfig.GetApiResources())
                 .AddInMemoryClients(HybridInitConfig.GetClients())
                 .AddTestUsers(HybridInitConfig.GetUsers())
-                .AddInMemoryApiScopes(HybridInitConfig.Apis());
+                .AddInMemoryApiScopes(HybridInitConfig.ApiScopes());
 
             #endregion
 

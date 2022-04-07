@@ -13,6 +13,17 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
     public class CodeInitConfig
     {
 
+        public static IEnumerable<ApiScope> ApiScopes()
+        {
+
+            return new List<ApiScope>
+            {
+                new ApiScope("read", "Read your data."),
+                new ApiScope("write", "Write your data."),
+                new ApiScope("TestApi.delete", "delete your test api.")
+            };
+        }
+
         public static IEnumerable<ApiResource> GetApiResources()
         {
             return new[]
@@ -57,16 +68,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
                 }
             };
         }
-        public static IEnumerable<ApiScope> Apis()
-        {
 
-            return new List<ApiScope>
-            {
-                new ApiScope("read", "Read your data."),
-                new ApiScope("write", "Write your data."),
-                new ApiScope("TestApi.delete", "delete your test api.")
-            };
-        }
         public static IEnumerable<Client> GetClients()
         {
 

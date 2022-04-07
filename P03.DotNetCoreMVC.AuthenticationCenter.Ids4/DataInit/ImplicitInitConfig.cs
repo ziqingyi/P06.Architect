@@ -15,7 +15,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
      */
     public class ImplicitInitConfig
     {
-        public static IEnumerable<ApiScope> Apis()
+        public static IEnumerable<ApiScope> ApiScopes()
         {
 
             return new List<ApiScope>

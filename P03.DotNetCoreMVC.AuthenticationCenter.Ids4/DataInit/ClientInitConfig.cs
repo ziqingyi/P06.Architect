@@ -10,22 +10,38 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
 {
     public class ClientInitConfig
     {
-        public static IEnumerable<ApiResource> GetApiResources()
-        {
-            return new[]
-            {
-                new ApiResource("UserApi", "User API")
-                {
-                    Scopes = new []{ "UserApi.read" }
-                }
-            };
-        }
+
         public static IEnumerable<ApiScope> Apis()
         {
 
             return new List<ApiScope>
             {
-                new ApiScope("UserApi", "My Api")
+                new ApiScope("read", "Read your data."),
+                new ApiScope("write", "Write your data."),
+                new ApiScope("TestApi.delete", "delete your test api.")
+            };
+        }
+        public static IEnumerable<ApiResource> GetApiResources()
+        {
+            return new[]
+            {
+                new ApiResource(
+                    "UserApi",
+                    "user api",
+                    new List<string>{IdentityModel.JwtClaimTypes.Role})
+                {
+                    Enabled = true,
+                    Scopes = new []{ "read", "write"}
+                },
+
+                new ApiResource(
+                    "TestApi",
+                    "test api",
+                    new List<string>{IdentityModel.JwtClaimTypes.Role})
+                {
+                    Enabled = true,
+                    Scopes = new []{ "read", "write", "TestApi.delete" }
+                }
             };
         }
 
@@ -42,7 +58,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
                     
 
                     //https://identityserver4.readthedocs.io/en/latest/topics/resources.html?highlight=IResourceStore#migration-steps-to-v4
-                    AllowedScopes = new [] { "UserApi" },//accessible resources
+                    AllowedScopes = new [] {  "read", "write", "TestApi.delete" },//accessible resources
 
                     ClientClaimsPrefix = "",
                     Claims=new List<ClientClaim>(){

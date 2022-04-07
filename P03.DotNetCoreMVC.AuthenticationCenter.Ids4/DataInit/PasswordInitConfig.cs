@@ -8,37 +8,41 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
 {
     public class PasswordInitConfig
     {
-
-        public static IEnumerable<ApiResource> GetApiResources()
-        {
-            return new[]
-            {
-                new ApiResource("UserApi",
-                "user api",
-                 new List<string> { IdentityModel.JwtClaimTypes.Role })
-                {             
-                    Enabled = true,
-                    Scopes = new []{ "UserApi" }          
-                },
-
-                new ApiResource("TestApi",
-                "test api",
-                new List<string>{IdentityModel.JwtClaimTypes.Role})
-                {
-                    Enabled = true,
-                    Scopes = new []{ "TestApi" }
-                }
-            };
-        }
         public static IEnumerable<ApiScope> Apis()
         {
 
             return new List<ApiScope>
             {
-                new ApiScope("UserApi", "My Api"),
-                 new ApiScope("TestApi", "test Api")
+                new ApiScope("read", "Read your data."),
+                new ApiScope("write", "Write your data."),
+                new ApiScope("TestApi.delete", "delete your test api.")
             };
         }
+        public static IEnumerable<ApiResource> GetApiResources()
+        {
+            return new[]
+            {
+                new ApiResource(
+                    "UserApi",
+                    "user api",
+                    new List<string>{IdentityModel.JwtClaimTypes.Role})
+                {
+                    Enabled = true,
+                    Scopes = new []{ "read", "write"}
+                },
+
+                new ApiResource(
+                    "TestApi",
+                    "test api",
+                    new List<string>{IdentityModel.JwtClaimTypes.Role})
+                {
+                    Enabled = true,
+                    Scopes = new []{ "read", "write", "TestApi.delete" }
+                }
+            };
+        }
+
+
         public static List<TestUser> GetUsers()
         {
 
@@ -74,7 +78,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
                     ClientClaimsPrefix = "",
 
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-                    AllowedScopes = new []{ "UserApi", "TestApi" }
+                    AllowedScopes = new []{ "read", "write", "TestApi.delete" }
                     //no claim. claim will not be passed if password flow. 
                 }
             };

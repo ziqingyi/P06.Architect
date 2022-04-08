@@ -8,10 +8,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
 {
     /*https://localhost:44398/connect/authorize?client_id=idsclient&redirect_uri=https://localhost:44350/Ids4/IndexCodeToken&response_type=code%20token%20id_token&scope=read%20openid%20CustomIdentityResource&response_model=fragment&nonce=12345
      *
-     * id_token: user information,jwt token
-     * access_token: used for authorization. get api info
-     *
-     */
+    */
     public class HybridInitConfig
     {
 
@@ -155,3 +152,17 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
 
     }
 }
+
+/*
+*  id_token: user information, jwt token, Single sign-on (SSO).
+   access_token: used for authorization.get api info
+*
+ *
+ *
+ *
+ *
+ *
+ * SSO is an authentication method that enables users to securely authenticate with multiple
+ * applications and websites by using just one set of credentials.
+*
+*/

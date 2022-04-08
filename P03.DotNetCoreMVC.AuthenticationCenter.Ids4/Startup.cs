@@ -7,7 +7,8 @@ using Microsoft.Extensions.Hosting;
 using P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit;
 using System.IO;
 using Microsoft.OpenApi.Models;
-
+using IdentityServer4.EntityFramework.DbContexts;
+using P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit.DB;
 
 namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 {
@@ -94,15 +95,39 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 
             #region Hybrid flow
 
-            services.AddIdentityServer()
-                .AddDeveloperSigningCredential()
-                .AddInMemoryIdentityResources(HybridInitConfig.GetIdentityResources())
-                .AddInMemoryApiResources(HybridInitConfig.GetApiResources())
-                .AddInMemoryClients(HybridInitConfig.GetClients())
-                .AddTestUsers(HybridInitConfig.GetUsers())
-                .AddInMemoryApiScopes(HybridInitConfig.ApiScopes());
+            //services.AddIdentityServer()
+            //    .AddDeveloperSigningCredential()
+            //    .AddInMemoryIdentityResources(HybridInitConfig.GetIdentityResources())
+            //    .AddInMemoryApiResources(HybridInitConfig.GetApiResources())
+            //    .AddInMemoryClients(HybridInitConfig.GetClients())
+            //    .AddTestUsers(HybridInitConfig.GetUsers())
+            //    .AddInMemoryApiScopes(HybridInitConfig.ApiScopes());
 
             #endregion
+
+
+            #region password flow with Entity Framework
+
+            //ConfigurationDbContext: keep Client, IdentityResource,ApiScopes, ApiResources
+            //PersistedGrantDbContext: keep PersistedGrants,DeviceFlowCodes
+            //    CustomUserDbContext: need to implement. 
+
+            string connectionString = this.Configuration.GetConnectionString("DefaultConnection");
+            
+
+
+
+
+            //services.InitSeedData(connectionString);
+            //services.AddIdentityServer()
+            //    .AddDeveloperSigningCredential()//developer credential
+            //    .AddInMemoryClients(PasswordInitConfig.GetClients())//get clients
+            //    .AddInMemoryApiResources(PasswordInitConfig.GetApiResources())//get resources
+            //    .AddTestUsers(PasswordInitConfig.GetUsers())//get users                                                                              //
+            //    .AddInMemoryApiScopes(PasswordInitConfig.ApiScopes());
+
+            #endregion
+
 
 
             #region add swagger

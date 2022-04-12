@@ -4,11 +4,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit;
 using System.IO;
+using System.Reflection;
 using Microsoft.OpenApi.Models;
 using IdentityServer4.EntityFramework.DbContexts;
+using Microsoft.EntityFrameworkCore;
 using P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit.DB;
+using P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit;
 
 namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 {
@@ -112,19 +114,35 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
             //PersistedGrantDbContext: keep PersistedGrants,DeviceFlowCodes
             //    CustomUserDbContext: need to implement. 
 
+            ////  add-migration InitialIdentityServerConfigurationDbMigration -c ConfigurationDbContext -o Data/Migrations/IdentityServer/ConfigurationDb 
+            ////  add-migration InitialIdentityServerPersistedGrantDbMigration -c PersistedGrantDbContext -o Data/Migrations/IdentityServer/PersistedGrantDb
+
             string connectionString = this.Configuration.GetConnectionString("DefaultConnection");
-            
+            string migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;//P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 
+            //services.AddDbContext<ConfigurationDbContext>(
+            //    opt =>
+            //        opt.UseSqlServer(
+            //            connectionString,
+            //            b => b.MigrationsAssembly(migrationsAssembly)
+            //            )
+            //        );
+            //services.AddDbContext<PersistedGrantDbContext>(
+            //    opt =>
+            //        opt.UseSqlServer(
+            //            connectionString,
+            //            b => b.MigrationsAssembly(migrationsAssembly)
+            //            )
+            //        );
 
-
-
-            //services.InitSeedData(connectionString);
+            services.InitSeedData(connectionString);
             //services.AddIdentityServer()
             //    .AddDeveloperSigningCredential()//developer credential
             //    .AddInMemoryClients(PasswordInitConfig.GetClients())//get clients
             //    .AddInMemoryApiResources(PasswordInitConfig.GetApiResources())//get resources
             //    .AddTestUsers(PasswordInitConfig.GetUsers())//get users                                                                              //
-            //    .AddInMemoryApiScopes(PasswordInitConfig.ApiScopes());
+            //    .AddInMemoryApiScopes(PasswordInitConfig.ApiScopes())
+            //    ;
 
             #endregion
 

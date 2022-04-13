@@ -13,6 +13,9 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit.DB
 {
     public static class SeedDataInitForPassword
     {
+        /* Configuration Store is used for encapsulating the configuration data and tables such as clients, resources and scopes,        
+         * Operational Store is keeping the temporary data such as authorization codes and refresh tokens. 
+         */
         public static void InitSeedDataForPassword(this IServiceCollection service, string connectionString)
         {
             string migtationAssembly = typeof(SeedDataInitForPassword).GetTypeInfo().Assembly.GetName().Name;
@@ -45,14 +48,35 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit.DB
             }
 
         }
-        // keep data in database 
+        // keep data in database, update with refresh ?
         private static void InitCustomSeedData(ConfigurationDbContext context)
         {
-            if (!context.ApiScopes.Any())
+            #region clean existing data first
+
+            if (context.Clients.Any())
             {
-                foreach (var scope in PasswordInitConfig.ApiScopes())
+                context.Clients.RemoveRange(context.Clients);
+                context.SaveChanges();
+            }
+
+            if (context.ApiResources.Any())
+            {
+                context.ApiResources.RemoveRange(context.ApiResources);
+                context.SaveChanges();
+            }
+            if (context.ApiScopes.Any())
+            {
+                context.ApiScopes.RemoveRange(context.ApiScopes);
+                context.SaveChanges();
+            }            
+
+            #endregion
+
+            if (!context.Clients.Any())
+            {
+                foreach (var client in PasswordInitConfig.GetClients())
                 {
-                    context.ApiScopes.Add(scope.ToEntity());
+                    context.Clients.Add(client.ToEntity());
                 }
                 context.SaveChanges();
             }
@@ -64,14 +88,15 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit.DB
                 context.SaveChanges();
             }
 
-            if (!context.Clients.Any())
+            if (!context.ApiScopes.Any())
             {
-                foreach (var client in PasswordInitConfig.GetClients())
+                foreach (var scope in PasswordInitConfig.ApiScopes())
                 {
-                    context.Clients.Add(client.ToEntity());
+                    context.ApiScopes.Add(scope.ToEntity());
                 }
                 context.SaveChanges();
             }
+
 
             //if (!context.IdentityResources.Any())
             //{

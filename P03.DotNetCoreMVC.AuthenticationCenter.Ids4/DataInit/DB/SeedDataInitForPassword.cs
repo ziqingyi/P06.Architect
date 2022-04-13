@@ -11,11 +11,11 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit.DB
 {
-    public static class SeedDataInit
+    public static class SeedDataInitForPassword
     {
-        public static void InitSeedData(this IServiceCollection service, string connectionString)
+        public static void InitSeedDataForPassword(this IServiceCollection service, string connectionString)
         {
-            string migtationAssembly = typeof(SeedDataInit).GetTypeInfo().Assembly.GetName().Name;
+            string migtationAssembly = typeof(SeedDataInitForPassword).GetTypeInfo().Assembly.GetName().Name;
             service.AddConfigurationDbContext(
                 options =>
                 {
@@ -45,21 +45,31 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit.DB
             }
 
         }
-
+        // keep data in database 
         private static void InitCustomSeedData(ConfigurationDbContext context)
         {
+            if (!context.ApiScopes.Any())
+            {
+                foreach (var scope in PasswordInitConfig.ApiScopes())
+                {
+                    context.ApiScopes.Add(scope.ToEntity());
+                }
+                context.SaveChanges();
+            }
+
+            if (!context.ApiResources.Any())
+            {
+                foreach (var api in PasswordInitConfig.GetApiResources())
+                    context.ApiResources.Add(api.ToEntity());
+                context.SaveChanges();
+            }
+
             if (!context.Clients.Any())
             {
                 foreach (var client in PasswordInitConfig.GetClients())
                 {
                     context.Clients.Add(client.ToEntity());
                 }
-                context.SaveChanges();
-            }
-            if (!context.ApiResources.Any())
-            {
-                foreach (var api in PasswordInitConfig.GetApiResources())
-                    context.ApiResources.Add(api.ToEntity());
                 context.SaveChanges();
             }
 

@@ -120,6 +120,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
             string connectionString = this.Configuration.GetConnectionString("DefaultConnection");
             string migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;//P03.DotNetCoreMVC.AuthenticationCenter.Ids4
 
+            /*
             //services.AddDbContext<ConfigurationDbContext>(
             //    opt =>
             //        opt.UseSqlServer(
@@ -134,10 +135,27 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
             //            b => b.MigrationsAssembly(migrationsAssembly)
             //            )
             //        );
+            */
 
-            services.InitSeedData(connectionString);
-            //services.AddIdentityServer()
-            //    .AddDeveloperSigningCredential()//developer credential
+            services.InitSeedDataForPassword(connectionString);
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential() //developer credential
+                .AddConfigurationStore(options =>
+                {
+                    options.ConfigureDbContext = builder =>
+                    {
+                        builder.UseSqlServer(connectionString);
+                    };
+                })
+                .AddOperationalStore(options =>
+                {
+                    options.ConfigureDbContext = builder =>
+                    {
+                        builder.UseSqlServer(connectionString);
+                    };
+                })
+                .AddTestUsers(PasswordInitConfig.GetUsers());
+            ////memory mode
             //    .AddInMemoryClients(PasswordInitConfig.GetClients())//get clients
             //    .AddInMemoryApiResources(PasswordInitConfig.GetApiResources())//get resources
             //    .AddTestUsers(PasswordInitConfig.GetUsers())//get users                                                                              //
@@ -241,3 +259,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
         }
     }
 }
+
+
+//https://stackoverflow.com/questions/60055581/how-to-use-persistedgrantdbcontext-to-select-persistedgrant
+//https://stackoverflow.com/questions/44618235/using-identityserver4-with-custom-configration-dbcontext

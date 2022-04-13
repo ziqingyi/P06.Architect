@@ -25,7 +25,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
                 new ApiResource(
                     "UserApi",
                     "user api",
-                    new List<string>{IdentityModel.JwtClaimTypes.Role})
+                    new List<string>{IdentityModel.JwtClaimTypes.Role,IdentityModel.JwtClaimTypes.Email})
                 {
                     Enabled = true,
                     Scopes = new []{ "read", "write"}

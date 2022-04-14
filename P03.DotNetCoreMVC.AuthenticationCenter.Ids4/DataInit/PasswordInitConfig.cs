@@ -8,6 +8,7 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit
 {
     public class PasswordInitConfig
     {
+        //The scopes requested by the client control what user claims are returned in the tokens to the client.
         public static IEnumerable<ApiScope> ApiScopes()
         {
 

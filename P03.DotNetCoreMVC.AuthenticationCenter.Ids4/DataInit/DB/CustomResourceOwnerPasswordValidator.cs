@@ -50,14 +50,18 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit.DB
     }
     public interface IUserServiceTest
     {
+        UserTestDTO userDto { get; set; }
         UserTestDTO Login(string userName, string password);
     }
 
     public class UserServiceTest : IUserServiceTest
     {
+
+        public UserTestDTO userDto { get; set; }
+
         public UserTestDTO Login(string userName, string password)
         {
-            return new UserTestDTO()
+            userDto = new UserTestDTO()
             {
                 UId = 123,
                 UserName = userName,
@@ -68,7 +72,9 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4.DataInit.DB
                     new Claim(IdentityModel.JwtClaimTypes.Email,"abcdefg@gmail.com")
                 }
             };
+            return userDto;
         }
+
     }
 
 

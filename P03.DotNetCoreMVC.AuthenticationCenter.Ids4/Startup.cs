@@ -154,13 +154,33 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
                         builder.UseSqlServer(connectionString);
                     };
                 })
-                .AddTestUsers(PasswordInitConfig.GetUsers());
-            ////memory mode
+                #region configured IdentityServer4.Test.TestUser
+
+                //.AddTestUsers(PasswordInitConfig.GetUsers());
+
+                #endregion
+                #region configure own custom password validator for your  users
+
+                .AddResourceOwnerValidator<CustomResourceOwnerPasswordValidator>();
+
+                services.AddTransient<IUserServiceTest,UserServiceTest>();
+                #endregion
+
+
+
+
+            ////old memory mode
             //    .AddInMemoryClients(PasswordInitConfig.GetClients())//get clients
             //    .AddInMemoryApiResources(PasswordInitConfig.GetApiResources())//get resources
             //    .AddTestUsers(PasswordInitConfig.GetUsers())//get users                                                                              //
             //    .AddInMemoryApiScopes(PasswordInitConfig.ApiScopes())
             //    ;
+
+
+
+
+
+
 
             #endregion
 

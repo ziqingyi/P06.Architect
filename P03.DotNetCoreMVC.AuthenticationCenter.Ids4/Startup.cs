@@ -155,26 +155,24 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Ids4
                     };
                 })
 
-                #region configured IdentityServer4.Test.TestUser
+            #region configured IdentityServer4.Test.TestUser
 
                 //.AddTestUsers(PasswordInitConfig.GetUsers());
 
-                #endregion
-
-
-                .AddProfileService<CustomProfileService>()//add profile service
-
-
-                #region configure own custom password validator for your  users
-
-                .AddResourceOwnerValidator<CustomResourceOwnerPasswordValidator>();
-
-                
-
-            services.AddTransient<IUserServiceTest, UserServiceTest>();
             #endregion
 
-  
+            #region configure own custom password validator for your  users
+
+                .AddResourceOwnerValidator<CustomResourceOwnerPasswordValidator>()
+
+                .AddProfileService<CustomProfileService>();//add profile service
+
+            #endregion
+
+
+
+
+            services.AddTransient<IUserServiceTest, UserServiceTest>();
 
 
             ////old memory mode

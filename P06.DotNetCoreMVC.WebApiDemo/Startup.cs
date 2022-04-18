@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using P06.DotNetCoreMVC.WebApiDemo.Models;
 
 namespace P06.DotNetCoreMVC.WebApiDemo
@@ -32,6 +33,15 @@ namespace P06.DotNetCoreMVC.WebApiDemo
 
             services.AddApiVersioning(opt => opt.ReportApiVersions = true);
 
+
+            services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "Products",
+                Description = "The ultimate e-commerce store for all your needs",
+                Version = "v1"
+            }));
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +53,10 @@ namespace P06.DotNetCoreMVC.WebApiDemo
             }
 
             app.UseRouting();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(opt => opt.SwaggerEndpoint("/swagger/v1/swagger.json", "Products v1"));
+
 
             app.UseAuthorization();
 

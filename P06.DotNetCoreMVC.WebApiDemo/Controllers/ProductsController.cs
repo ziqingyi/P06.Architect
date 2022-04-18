@@ -25,15 +25,15 @@ namespace P06.DotNetCoreMVC.WebApiDemo.Controllers
         }
 
 
-        //[HttpGet]
-        //[Route("")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //public ActionResult<IQueryable<Product>> GetProducts()
-        //{
-        //    var result = _context.Products as IQueryable<Product>;
+        [HttpGet]
+        [Route("all")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<IQueryable<Product>> GetProducts()
+        {
+            var result = _context.Products as IQueryable<Product>;
 
-        //    return Ok(result.OrderBy(p => p.ProductNumber));
-        //}
+            return Ok(result.OrderBy(p => p.ProductNumber));
+        }
 
 
         [HttpGet]

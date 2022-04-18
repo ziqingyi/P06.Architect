@@ -43,6 +43,22 @@ namespace P06.DotNetCoreMVC.WebApiDemo.Controllers
 
 
         [HttpGet]
+        [Route("{productNumber}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Product> GetProductByProductNumber([FromRoute] string productNumber)
+        {
+            var productDb = _context.Products
+                .FirstOrDefault(p => p.ProductNumber.Equals(productNumber,
+                    StringComparison.InvariantCultureIgnoreCase));
+
+            if (productDb == null) return NotFound();
+
+            return Ok(productDb);
+        }
+
+
+        [HttpGet]
         [Route("")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IQueryable<Product>> GetProducts([FromQuery] string department ,[FromQuery] ProductRequest request)
@@ -68,13 +84,56 @@ namespace P06.DotNetCoreMVC.WebApiDemo.Controllers
 
         }
 
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<Product> PostProduct([FromBody] Product product)
+        {
+            try
+            {
+                _context.Products.Add(product);
+                _context.SaveChanges();
+
+                return new CreatedResult($"/products/{product.ProductNumber.ToLower()}", product);
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning(e, "Unable to POST product.");
+
+                return ValidationProblem(e.Message);
+            }
+        }
 
 
 
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<Product> PutProduct([FromBody] Product product)
+        {
+            try
+            {
+                var productDb = _context.Products
+                    .FirstOrDefault(p => p.ProductNumber.Equals(product.ProductNumber,
+                        StringComparison.InvariantCultureIgnoreCase));
 
+                if (productDb == null) return NotFound();
 
+                productDb.Name = product.Name;
+                productDb.Price = product.Price;
+                productDb.Department = product.Department;
+                _context.SaveChanges();
 
+                return Ok(product);
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning(e, "Unable to PUT product.");
 
+                return ValidationProblem(e.Message);
+            }
+        }
 
 
 

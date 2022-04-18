@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using P06.DotNetCoreMVC.WebApiDemo.Extensions;
 using P06.DotNetCoreMVC.WebApiDemo.Models;
 
@@ -14,9 +15,12 @@ namespace P06.DotNetCoreMVC.WebApiDemo.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly ProductContext _context;
+        private readonly ILogger<ProductsController> _logger;
 
-        public ProductsController(ProductContext context)
+        public ProductsController(ProductContext context, ILogger<ProductsController> logger)
         {
+            _logger = logger;
+
             _context = context;
 
             if (_context.Products.Any()) return;
@@ -30,6 +34,8 @@ namespace P06.DotNetCoreMVC.WebApiDemo.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IQueryable<Product>> GetProducts()
         {
+            _logger.LogInformation("Requesting more than 100 products.");
+
             var result = _context.Products as IQueryable<Product>;
 
             return Ok(result.OrderBy(p => p.ProductNumber));
@@ -41,6 +47,10 @@ namespace P06.DotNetCoreMVC.WebApiDemo.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<IQueryable<Product>> GetProducts([FromQuery] string department ,[FromQuery] ProductRequest request)
         {
+            if (request.Limit >= 100)
+                _logger.LogInformation("Requesting more than 100 products.");
+
+
             var result = _context.Products as IQueryable<Product>;
             
             if (!string.IsNullOrEmpty(department))

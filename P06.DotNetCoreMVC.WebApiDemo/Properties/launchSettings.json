@@ -25,6 +25,16 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
+    },
+
+    "Logging": {
+      "LogLevel": {
+        "Default": "Information",
+        "Microsoft": "None",
+        "Microsoft.AspNetCore": "Error",
+        "Microsoft.Hosting.Lifetime": "Information"
+      }
     }
+
   }
 }

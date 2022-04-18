@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using P06.DotNetCoreMVC.WebApiDemo.Extensions;
@@ -134,6 +135,63 @@ namespace P06.DotNetCoreMVC.WebApiDemo.Controllers
                 return ValidationProblem(e.Message);
             }
         }
+
+
+
+
+        [HttpPatch]
+        [Route("{productNumber}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<Product> PatchProduct([FromRoute]  string productNumber, [FromBody] JsonPatchDocument<Product> patch)
+        {
+            try
+            {
+                var productDb = _context.Products
+                    .FirstOrDefault(p => p.ProductNumber.Equals(productNumber,
+                        StringComparison.InvariantCultureIgnoreCase));
+
+                if (productDb == null) return NotFound();
+
+                patch.ApplyTo(productDb, ModelState);
+
+                if (!ModelState.IsValid || !TryValidateModel(productDb))
+                    return ValidationProblem(ModelState);
+
+                _context.SaveChanges();
+
+                return Ok(productDb);
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning(e, "Unable to PATCH product.");
+
+                return ValidationProblem(e.Message);
+            }
+        }
+
+
+
+
+        [HttpDelete]
+        [Route("{productNumber}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Product> DeleteProduct([FromRoute]  string productNumber)
+        {
+            var productDb = _context.Products
+                .FirstOrDefault(p => p.ProductNumber.Equals(productNumber,
+                    StringComparison.InvariantCultureIgnoreCase));
+
+            if (productDb == null) return NotFound();
+
+            _context.Products.Remove(productDb);
+            _context.SaveChanges();
+
+            return NoContent();
+        }
+
 
 
 

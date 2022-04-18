@@ -89,9 +89,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.Authentic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.AuthenticationDemo.JWT_RS", "P03.DotNetCoreMVC.AuthenticationDemo.JWT_RS\P03.DotNetCoreMVC.AuthenticationDemo.JWT_RS.csproj", "{5258C9BD-70CB-4469-9B5D-6D20894B371B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03.DotNetCoreMVC.AuthenticationCenter.Ids4", "P03.DotNetCoreMVC.AuthenticationCenter.Ids4\P03.DotNetCoreMVC.AuthenticationCenter.Ids4.csproj", "{841FE9A1-8414-4179-A3A0-1A29AE94F30E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.AuthenticationCenter.Ids4", "P03.DotNetCoreMVC.AuthenticationCenter.Ids4\P03.DotNetCoreMVC.AuthenticationCenter.Ids4.csproj", "{841FE9A1-8414-4179-A3A0-1A29AE94F30E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03.DotNetCoreMVC.AuthenticationDemo.Ids4", "P03.DotNetCoreMVC.AuthenticationDemo.Ids4\P03.DotNetCoreMVC.AuthenticationDemo.Ids4.csproj", "{FBD522A7-A060-4A48-AD3B-B80D6A35B813}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.AuthenticationDemo.Ids4", "P03.DotNetCoreMVC.AuthenticationDemo.Ids4\P03.DotNetCoreMVC.AuthenticationDemo.Ids4.csproj", "{FBD522A7-A060-4A48-AD3B-B80D6A35B813}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P06.DotNetCoreMVC.WebApiDemo", "P06.DotNetCoreMVC.WebApiDemo\P06.DotNetCoreMVC.WebApiDemo.csproj", "{01436F93-8808-4588-BA04-63924BF00AF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -263,6 +265,10 @@ Global
 		{FBD522A7-A060-4A48-AD3B-B80D6A35B813}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBD522A7-A060-4A48-AD3B-B80D6A35B813}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBD522A7-A060-4A48-AD3B-B80D6A35B813}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01436F93-8808-4588-BA04-63924BF00AF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01436F93-8808-4588-BA04-63924BF00AF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01436F93-8808-4588-BA04-63924BF00AF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01436F93-8808-4588-BA04-63924BF00AF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "P05.gRPC.DemoServer";
+
+package CustomMathPackage;
+
+// The greeting service definition.
+service CustomMath {
+  // Sends a greeting
+  rpc SayHello (HelloRequestMath) returns (HelloReplyMath);
+}
+
+// The request message containing the user's name.
+message HelloRequestMath {
+  string name = 1;
+}
+
+// The response message containing the greetings.
+message HelloReplyMath {
+  string message = 1;
+}

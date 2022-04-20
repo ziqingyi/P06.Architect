@@ -16,7 +16,7 @@ static async Task TestHello()
             var reply = await client.SayHelloAsync(new HelloRequest { Name = "User1" });
             Console.WriteLine("Greeter reply : " + reply.Message);
 
-            //client.SayHello(new HelloRequest { Name = "Eleven" });
+            client.SayHello(new HelloRequest { Name = "User2" });
         }
 
 

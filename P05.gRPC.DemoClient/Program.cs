@@ -6,7 +6,7 @@ using P05.gRPC.DemoServer;
 
 Console.WriteLine("Hello, World!");
 
-TestHello().Wait();
+TestMath().Wait();
 
 static async Task TestHello()
 {
@@ -18,9 +18,25 @@ static async Task TestHello()
 
             client.SayHello(new HelloRequest { Name = "User2" });
         }
-
-
 }
+
+
+static async Task TestMath()
+{
+    using (var channel = GrpcChannel.ForAddress("https://localhost:5001"))
+    {
+        var client = new CustomMath.CustomMathClient(channel);
+        var reply = await client.SayHelloAsync(new HelloRequestMath { Name = "User1",Id = 10});
+        Console.WriteLine("Greeter reply : " + reply.Message);
+
+        client.SayHello(new HelloRequestMath { Name = "User2" });
+    }
+}
+
+
+
+
+
 
 
 

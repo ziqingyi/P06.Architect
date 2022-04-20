@@ -9,7 +9,7 @@ namespace P05.gRPC.DemoServer.Services
         {
             return Task.FromResult<HelloReplyMath>(new HelloReplyMath()
             {
-                Message = "This is User1"
+                Message = $"This is {request.Name} id: {request.Id}"
             });
         }
 

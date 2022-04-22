@@ -32,9 +32,12 @@ static async Task TestMath()
     var headers = new Metadata { { "Authorization", $"Bearer {token}" } };
     #endregion
      
-    using (var channel = GrpcChannel.ForAddress("https://localhost:5001"))
+    using (var channel = GrpcChannel.ForAddress("http://localhost:5000"))
     {
         var client = new CustomMath.CustomMathClient(channel);
+
+        #region Unary RPC
+
 
         Console.WriteLine("***************one time call************");
         {
@@ -74,7 +77,14 @@ static async Task TestMath()
             Console.WriteLine($"random {countResult.Count}");
             var rand = new Random(DateTime.Now.Millisecond);
         }
-        Console.WriteLine("**************************client flow *****************************");
+
+        #endregion
+
+
+        #region Streaming
+
+        Console.Clear();
+        Console.WriteLine("--------------client streaming , multiple -> one response---------------------------");
         {
             var bathCat = client.SelfIncreaseClient();
             for (int i = 0; i < 10; i++)
@@ -83,19 +93,20 @@ static async Task TestMath()
                 await Task.Delay(100);
                 Console.WriteLine($"This is {i} Request {Thread.CurrentThread.ManagedThreadId}");
             }
-            Console.WriteLine("**********************************");
+            Console.WriteLine("--------------------------------------");
             
             await bathCat.RequestStream.CompleteAsync();
-            Console.WriteLine("sent 10 id");
+            Console.WriteLine("all id are sent");
             Console.WriteLine("receive result: ");
 
             foreach (var item in bathCat.ResponseAsync.Result.Number)
             {
                 Console.WriteLine($"This is {item} Result");
             }
-            Console.WriteLine("**********************************");
+            Console.WriteLine("--------------------------------------");
         }
-        Console.WriteLine("**************************Server side flow *****************************");
+        Console.Clear();
+        Console.WriteLine("----------------------Server side streaming ----------------------");
         {
             IntArrayModel intArrayModel = new IntArrayModel();
             for (int i = 0; i < 15; i++)
@@ -104,7 +115,7 @@ static async Task TestMath()
             }
 
             CancellationTokenSource cts = new CancellationTokenSource();
-            cts.CancelAfter(TimeSpan.FromSeconds(5.5)); //cancel after 5.5s
+            //cts.CancelAfter(TimeSpan.FromSeconds(5.5)); //cancel after 5.5s
             var bathCat = client.SelfIncreaseServer(intArrayModel, cancellationToken: cts.Token);
 
             //var bathCat = client.SelfIncreaseServer(intArrayModel);//no cancel token
@@ -112,22 +123,75 @@ static async Task TestMath()
             {
                 await foreach (var resp in bathCat.ResponseStream.ReadAllAsync())
                 {
-                    Console.WriteLine(resp.Message);
-                    Console.WriteLine($"This is  Response {Thread.CurrentThread.ManagedThreadId}");
-                    Console.WriteLine("**********************************");
+                    Console.WriteLine("Message from server: "+resp.Message);
+                    Console.WriteLine($"This is  Response thread: {Thread.CurrentThread.ManagedThreadId}");
+                    Console.WriteLine("--------------------------------------");
                 }
             });
-            Console.WriteLine("客户端已发送完10个id");
+            Console.WriteLine("all id are sent");
             //start receiving  response
             await bathCatRespTask;
         }
 
 
 
+        Console.WriteLine("----------------------Bi-directional streaming----------------------");
+        {
+            var bathCat = client.SelfIncreaseDouble();
+            var bathCatRespTask = Task.Run(async () =>
+            {
+                await foreach (var resp in bathCat.ResponseStream.ReadAllAsync())
+                {
+                    Console.WriteLine(resp.Message);
+                    Console.WriteLine($"This is  Response {Thread.CurrentThread.ManagedThreadId}");
+                    Console.WriteLine("--------------------------------------");
+                }
+            });
+            for (int i = 0; i < 10; i++)
+            {
+                await bathCat.RequestStream.WriteAsync(new BathTheCatReq() { Id = new Random().Next(0, 20) });
+                await Task.Delay(100);
+                Console.WriteLine($"This is {i} Request {Thread.CurrentThread.ManagedThreadId}");
+                Console.WriteLine("--------------------------------------");
+            }
+
+            await bathCat.RequestStream.CompleteAsync();
+            Console.WriteLine("all id are sent");
+
+            await bathCatRespTask;
+        }
+
+        Console.WriteLine("----------------------Bi-directional streaming with cancellation token----------------------");
+        {
+            CancellationTokenSource cts = new CancellationTokenSource();
+            //cts.CancelAfter(TimeSpan.FromSeconds(2.5)); //cancel after some seconds
+            var bathCat = client.SelfIncreaseDouble(cancellationToken: cts.Token);
+            var bathCatRespTask = Task.Run(async () =>
+            {
+                await foreach (var resp in bathCat.ResponseStream.ReadAllAsync())
+                {
+                    Console.WriteLine(resp.Message);
+                    Console.WriteLine($"This is  Response {Thread.CurrentThread.ManagedThreadId}");
+                    Console.WriteLine("--------------------------------------");
+                }
+            });
+            for (int i = 0; i < 10; i++)
+            {
+                await bathCat.RequestStream.WriteAsync(new BathTheCatReq() { Id = new Random().Next(0, 20) });
+                await Task.Delay(100);
+                Console.WriteLine($"This is {i} Request {Thread.CurrentThread.ManagedThreadId}");
+                Console.WriteLine("--------------------------------------");
+            }
+            await bathCat.RequestStream.CompleteAsync();
+            Console.WriteLine("all id are sent");
+
+            await bathCatRespTask;
+        }
 
 
 
 
+        #endregion
     }
 
 

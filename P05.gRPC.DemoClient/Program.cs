@@ -89,9 +89,10 @@ static async Task TestMath()
             var bathCat = client.SelfIncreaseClient();
             for (int i = 0; i < 10; i++)
             {
-                await bathCat.RequestStream.WriteAsync(new BathTheCatReq() { Id = new Random().Next(0, 20) });
+                int tempId = new Random().Next(0, 20);
+                await bathCat.RequestStream.WriteAsync(new BathTheCatReq() { Id = tempId });
                 await Task.Delay(100);
-                Console.WriteLine($"This is {i} Request {Thread.CurrentThread.ManagedThreadId}");
+                Console.WriteLine($"This is {i} Request with id {tempId} on thread {Thread.CurrentThread.ManagedThreadId}");
             }
             Console.WriteLine("--------------------------------------");
             
@@ -101,7 +102,7 @@ static async Task TestMath()
 
             foreach (var item in bathCat.ResponseAsync.Result.Number)
             {
-                Console.WriteLine($"This is {item} Result");
+                Console.WriteLine($"This is response item: {item} Result");
             }
             Console.WriteLine("--------------------------------------");
         }

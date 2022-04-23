@@ -26,18 +26,17 @@ namespace P05.gRPC.DemoServer.Services
         }
 
 
-        public override Task<CountResult> Count(Empty request, ServerCallContext context)
-        {
-            Console.WriteLine("-----------CustomMathService.Count() service   " );
-            return Task.FromResult(new CountResult()
-            {
-                Count = DateTime.Now.Year
-            });
-        }
-
         public override Task<ResponseResult> Plus(RequestPara request, ServerCallContext context)
         {
             Console.WriteLine("-----------CustomMathService.Plus() service   "   );
+            if (context.RequestHeaders.Count > 0)
+            {
+                for (int i = 0; i < context.RequestHeaders.Count; i++)
+                {
+                    Console.WriteLine(context.RequestHeaders[i]);
+                }
+            }
+            
             int iResult = request.ILeft + request.IRight;
             ResponseResult responseResult = new ResponseResult()
             {
@@ -48,6 +47,29 @@ namespace P05.gRPC.DemoServer.Services
             return Task.FromResult(responseResult);
         }
 
+        public override Task<CountResult> Count(Empty request, ServerCallContext context)
+        {
+            Console.WriteLine("-----------CustomMathService.Count() service   " );
+            return Task.FromResult(new CountResult()
+            {
+                Count = DateTime.Now.Year
+            });
+        }
+
+        public override async Task<IntArrayModel> SelfIncreaseClient(IAsyncStreamReader<BathTheCatReq> requestStream, ServerCallContext context)
+        {
+            Console.Clear();
+            Console.WriteLine("-----------CustomMathService.SelfIncreaseServer() service   " );
+
+            IntArrayModel intArrayModel = new IntArrayModel();
+            while (await requestStream.MoveNext())
+            {
+                intArrayModel.Number.Add(requestStream.Current.Id + 1);
+                Console.WriteLine($"SelfIncreaseClient Number {requestStream.Current.Id} received and process..");
+                Thread.Sleep(5000);
+            }
+            return intArrayModel;
+        }
 
         public override async Task SelfIncreaseServer(IntArrayModel request, IServerStreamWriter<BathTheCatResp> responseStream, ServerCallContext context)
         {
@@ -62,19 +84,6 @@ namespace P05.gRPC.DemoServer.Services
             }
         }
 
-        public override async Task<IntArrayModel> SelfIncreaseClient(IAsyncStreamReader<BathTheCatReq> requestStream, ServerCallContext context)
-        {
-            Console.WriteLine("-----------CustomMathService.SelfIncreaseServer() service   " );
-
-            IntArrayModel intArrayModel = new IntArrayModel();
-            while (await requestStream.MoveNext())
-            {
-                intArrayModel.Number.Add(requestStream.Current.Id + 1);
-                Console.WriteLine($"SelfIncreaseClient Number {requestStream.Current.Id} received and process..");
-                Thread.Sleep(100);
-            }
-            return intArrayModel;
-        }
 
         public override async Task SelfIncreaseDouble(IAsyncStreamReader<BathTheCatReq> requestStream, IServerStreamWriter<BathTheCatResp> responseStream, ServerCallContext context)
         {

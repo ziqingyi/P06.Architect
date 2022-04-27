@@ -21,7 +21,7 @@ namespace P05.gRPC.DemoServer.Services
             Console.WriteLine("-----------CustomMathService.SayHello() service   " );
             return Task.FromResult<HelloReplyMath>(new HelloReplyMath()
             {
-                Message = $"This is {request.Name} id: {request.Id}"
+                Message = $" {DateTime.Now} This is {request.Name} id: {request.Id}"
             });
         }
 
@@ -64,21 +64,22 @@ namespace P05.gRPC.DemoServer.Services
             IntArrayModel intArrayModel = new IntArrayModel();
             while (await requestStream.MoveNext())
             {
+                Console.WriteLine($"{DateTime.Now} SelfIncreaseClient Number {requestStream.Current.Id} received and process..");
                 intArrayModel.Number.Add(requestStream.Current.Id + 1);
-                Console.WriteLine($"SelfIncreaseClient Number {requestStream.Current.Id} received and process..");
-                Thread.Sleep(5000);
+                Thread.Sleep(2000);
             }
             return intArrayModel;
         }
 
         public override async Task SelfIncreaseServer(IntArrayModel request, IServerStreamWriter<BathTheCatResp> responseStream, ServerCallContext context)
         {
+            Console.Clear();
             Console.WriteLine("-----------CustomMathService.SelfIncreaseServer() service   " );
 
             foreach (var item in request.Number)
             {
                 int number = item;
-                Console.WriteLine($"This is {number} invoke");
+                Console.WriteLine($"{DateTime.Now} This is {number} invoke");
                 await responseStream.WriteAsync(new BathTheCatResp() { Message = $"number++ ={++number}！" });
                 await Task.Delay(500);
             }
@@ -87,11 +88,12 @@ namespace P05.gRPC.DemoServer.Services
 
         public override async Task SelfIncreaseDouble(IAsyncStreamReader<BathTheCatReq> requestStream, IServerStreamWriter<BathTheCatResp> responseStream, ServerCallContext context)
         {
+            Console.Clear();
             Console.WriteLine("-----------CustomMathService.SelfIncreaseDouble() service   " );
 
             while (await requestStream.MoveNext())
             {
-                Console.WriteLine($"SelfIncreaseDouble Number {requestStream.Current.Id} received and process..");
+                Console.WriteLine($"{DateTime.Now} SelfIncreaseDouble Number {requestStream.Current.Id} received and process..");
                 await responseStream.WriteAsync(new BathTheCatResp() { Message = $"number++ ={requestStream.Current.Id + 1}！" });
                 await Task.Delay(500);
             }

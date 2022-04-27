@@ -92,17 +92,17 @@ static async Task TestMath()
                 int tempId = new Random().Next(0, 20);
                 await bathCat.RequestStream.WriteAsync(new BathTheCatReq() { Id = tempId });
                 await Task.Delay(100);
-                Console.WriteLine($"This is {i} Request with id {tempId} on thread {Thread.CurrentThread.ManagedThreadId}");
+                Console.WriteLine($"{DateTime.Now} This is {i} Request with id {tempId} on thread {Thread.CurrentThread.ManagedThreadId}");
             }
             Console.WriteLine("--------------------------------------");
             
             await bathCat.RequestStream.CompleteAsync();
-            Console.WriteLine("all id are sent");
+            Console.WriteLine("all id are sent" + DateTime.Now);
             Console.WriteLine("receive result: ");
 
             foreach (var item in bathCat.ResponseAsync.Result.Number)
             {
-                Console.WriteLine($"This is response item: {item} Result");
+                Console.WriteLine($"{DateTime.Now} This is response item: {item} Result");
             }
             Console.WriteLine("--------------------------------------");
         }
@@ -124,7 +124,7 @@ static async Task TestMath()
             {
                 await foreach (var resp in bathCat.ResponseStream.ReadAllAsync())
                 {
-                    Console.WriteLine("Message from server: "+resp.Message);
+                    Console.WriteLine(DateTime.Now + "Message from server: "+resp.Message);
                     Console.WriteLine($"This is  Response thread: {Thread.CurrentThread.ManagedThreadId}");
                     Console.WriteLine("--------------------------------------");
                 }
@@ -135,7 +135,7 @@ static async Task TestMath()
         }
 
 
-
+        Console.Clear();
         Console.WriteLine("----------------------Bi-directional streaming----------------------");
         {
             var bathCat = client.SelfIncreaseDouble();
@@ -143,25 +143,25 @@ static async Task TestMath()
             {
                 await foreach (var resp in bathCat.ResponseStream.ReadAllAsync())
                 {
-                    Console.WriteLine(resp.Message);
-                    Console.WriteLine($"This is  Response {Thread.CurrentThread.ManagedThreadId}");
+                    Console.WriteLine($"{DateTime.Now}This is  Response in thread {Thread.CurrentThread.ManagedThreadId},Message: {resp.Message}");
                     Console.WriteLine("--------------------------------------");
                 }
             });
             for (int i = 0; i < 10; i++)
             {
-                await bathCat.RequestStream.WriteAsync(new BathTheCatReq() { Id = new Random().Next(0, 20) });
+                int tempId = new Random().Next(0, 20);
+                await bathCat.RequestStream.WriteAsync(new BathTheCatReq() { Id = tempId });
                 await Task.Delay(100);
-                Console.WriteLine($"This is {i} Request {Thread.CurrentThread.ManagedThreadId}");
-                Console.WriteLine("--------------------------------------");
+                Console.WriteLine($"{DateTime.Now}This is {i} Request with id {tempId} on thread {Thread.CurrentThread.ManagedThreadId}");
+                Console.WriteLine("-----------------------------------------");
             }
 
             await bathCat.RequestStream.CompleteAsync();
-            Console.WriteLine("all id are sent");
+            Console.WriteLine("all id are sent" + DateTime.Now );
 
             await bathCatRespTask;
         }
-
+        Console.Clear();
         Console.WriteLine("----------------------Bi-directional streaming with cancellation token----------------------");
         {
             CancellationTokenSource cts = new CancellationTokenSource();
@@ -172,7 +172,7 @@ static async Task TestMath()
                 await foreach (var resp in bathCat.ResponseStream.ReadAllAsync())
                 {
                     Console.WriteLine(resp.Message);
-                    Console.WriteLine($"This is  Response {Thread.CurrentThread.ManagedThreadId}");
+                    Console.WriteLine($"{DateTime.Now} This is  Response {Thread.CurrentThread.ManagedThreadId}");
                     Console.WriteLine("--------------------------------------");
                 }
             });
@@ -180,11 +180,11 @@ static async Task TestMath()
             {
                 await bathCat.RequestStream.WriteAsync(new BathTheCatReq() { Id = new Random().Next(0, 20) });
                 await Task.Delay(100);
-                Console.WriteLine($"This is {i} Request {Thread.CurrentThread.ManagedThreadId}");
+                Console.WriteLine($"{DateTime.Now} This is {i} Request {Thread.CurrentThread.ManagedThreadId}");
                 Console.WriteLine("--------------------------------------");
             }
             await bathCat.RequestStream.CompleteAsync();
-            Console.WriteLine("all id are sent");
+            Console.WriteLine("all id are sent " + DateTime.Now);
 
             await bathCatRespTask;
         }

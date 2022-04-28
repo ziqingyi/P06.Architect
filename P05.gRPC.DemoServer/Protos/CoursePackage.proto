@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option csharp_namespace = "P05.gRPC.DemoServer";
+
+package CoursePackage;
+
+// The greeting service definition.
+service Course {
+  // Sends a greeting
+  rpc getCourse (CourseRequest) returns (CourseReply);
+}
+
+// The request message containing request id.
+message CourseRequest {
+  int32 Id = 1;
+}
+
+// The response message containing course info in course model.
+message CourseReply {
+    CourseModel CourseInfo = 1;
+    message CourseModel{
+      int32 Id=1;
+      string Name=2;
+      string Remark=3;
+    }
+}

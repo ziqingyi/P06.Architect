@@ -32,6 +32,8 @@ namespace P05.gRPC.DemoServer
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGrpcService<CourseService>();
+
                 endpoints.MapGrpcService<GreeterService>();
 
                 endpoints.MapGrpcService<CustomMathService>();

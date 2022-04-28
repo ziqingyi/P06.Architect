@@ -4,12 +4,15 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
+    <None Remove="Protos\CoursePackage.proto" />
     <None Remove="Protos\CustomMathPackage.proto" />
-  </ItemGroup>
+    <None Remove="Protos\greet.proto" />
+  </ItemGroup>-->
 
   <ItemGroup>
     <Protobuf Include="Protos\CustomMathPackage.proto" GrpcServices="Server" />
+    <Protobuf Include="Protos\CoursePackage.proto" GrpcServices="Server" />
     <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
   </ItemGroup>
 

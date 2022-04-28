@@ -5,7 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
+    <None Remove="Protos\UserPackage.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\UserPackage.proto" GrpcServices="Server" />
   </ItemGroup>
 
   <ItemGroup>

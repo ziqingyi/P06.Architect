@@ -32,7 +32,7 @@ static async Task TestMath()
     var headers = new Metadata { { "Authorization", $"Bearer {token}" } };
     #endregion
      
-    using (var channel = GrpcChannel.ForAddress("http://localhost:5000"))
+    using (var channel = GrpcChannel.ForAddress("https://localhost:5001"))
     {
         var client = new CustomMath.CustomMathClient(channel);
 
@@ -143,7 +143,7 @@ static async Task TestMath()
             {
                 await foreach (var resp in bathCat.ResponseStream.ReadAllAsync())
                 {
-                    Console.WriteLine($"{DateTime.Now}This is  Response in thread {Thread.CurrentThread.ManagedThreadId},Message: {resp.Message}");
+                    Console.WriteLine($"{DateTime.Now} This is  Response in thread {Thread.CurrentThread.ManagedThreadId},Message: {resp.Message}");
                     Console.WriteLine("--------------------------------------");
                 }
             });
@@ -152,7 +152,7 @@ static async Task TestMath()
                 int tempId = new Random().Next(0, 20);
                 await bathCat.RequestStream.WriteAsync(new BathTheCatReq() { Id = tempId });
                 await Task.Delay(100);
-                Console.WriteLine($"{DateTime.Now}This is {i} Request with id {tempId} on thread {Thread.CurrentThread.ManagedThreadId}");
+                Console.WriteLine($"{DateTime.Now} This is {i} Request with id {tempId} on thread {Thread.CurrentThread.ManagedThreadId}");
                 Console.WriteLine("-----------------------------------------");
             }
 

@@ -80,7 +80,7 @@ namespace P05.gRPC.DemoServer.Services
             {
                 int number = item;
                 Console.WriteLine($"{DateTime.Now} This is {number} invoke");
-                await responseStream.WriteAsync(new BathTheCatResp() { Message = $"number++ ={++number}！" });
+                await responseStream.WriteAsync(new BathTheCatResp() { Message = $"{number} invoke:  number++ ={++number}!" });
                 await Task.Delay(500);
             }
         }
@@ -94,7 +94,7 @@ namespace P05.gRPC.DemoServer.Services
             while (await requestStream.MoveNext())
             {
                 Console.WriteLine($"{DateTime.Now} SelfIncreaseDouble Number {requestStream.Current.Id} received and process..");
-                await responseStream.WriteAsync(new BathTheCatResp() { Message = $"number++ ={requestStream.Current.Id + 1}！" });
+                await responseStream.WriteAsync(new BathTheCatResp() { Message = $"{requestStream.Current.Id} invoke:  number++ ={requestStream.Current.Id + 1}!" });
                 await Task.Delay(500);
             }
 

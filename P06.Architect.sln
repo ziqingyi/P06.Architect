@@ -95,9 +95,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.Authentic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P06.DotNetCoreMVC.WebApiDemo", "P06.DotNetCoreMVC.WebApiDemo\P06.DotNetCoreMVC.WebApiDemo.csproj", "{01436F93-8808-4588-BA04-63924BF00AF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P05.gRPC.DemoServer", "P05.gRPC.DemoServer\P05.gRPC.DemoServer.csproj", "{9A337E22-E8CA-4CE8-B18F-3C6C6A758682}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P05.gRPC.DemoServer", "P05.gRPC.DemoServer\P05.gRPC.DemoServer.csproj", "{9A337E22-E8CA-4CE8-B18F-3C6C6A758682}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P05.gRPC.DemoClient", "P05.gRPC.DemoClient\P05.gRPC.DemoClient.csproj", "{FE6C2F74-91BC-4545-AD98-D3F9D2E4140B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P05.gRPC.DemoClient", "P05.gRPC.DemoClient\P05.gRPC.DemoClient.csproj", "{FE6C2F74-91BC-4545-AD98-D3F9D2E4140B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P05.gRPC.DemoClientWeb", "P05.gRPC.DemoClientWeb\P05.gRPC.DemoClientWeb.csproj", "{A12F2BD7-475D-4498-8149-3774AA13600E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -281,6 +283,10 @@ Global
 		{FE6C2F74-91BC-4545-AD98-D3F9D2E4140B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE6C2F74-91BC-4545-AD98-D3F9D2E4140B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE6C2F74-91BC-4545-AD98-D3F9D2E4140B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A12F2BD7-475D-4498-8149-3774AA13600E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A12F2BD7-475D-4498-8149-3774AA13600E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A12F2BD7-475D-4498-8149-3774AA13600E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A12F2BD7-475D-4498-8149-3774AA13600E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

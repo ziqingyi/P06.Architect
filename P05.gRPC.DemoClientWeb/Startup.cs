@@ -50,7 +50,7 @@ namespace P05.gRPC.DemoClientWeb
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=gRPC}/{action=Index}/{id?}");
             });
         }
     }

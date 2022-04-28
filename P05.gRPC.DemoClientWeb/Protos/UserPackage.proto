@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option csharp_namespace = "P05.gRPC.DemoUserServer";
+
+package UserPackage;
+
+
+// The greeting service definition.
+service User {
+  // Sends a greeting
+  rpc FindUser (UserRequest) returns (UserReply);
+}
+
+// The request message containing the request id.
+message UserRequest {
+  int32 Id = 1;
+}
+
+// The response message containing the user info in model.
+message UserReply {
+
+  UserModel user = 1;
+
+  message UserModel{
+        int32 Id = 1;
+        string Name=2;
+        string Account=3;
+        string Password=4;
+  }
+
+}

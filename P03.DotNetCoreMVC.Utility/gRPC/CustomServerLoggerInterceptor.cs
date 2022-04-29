@@ -23,12 +23,10 @@ namespace P03.DotNetCoreMVC.Utility.gRPC
             where TRequest : class
             where TResponse : class
         {
-            Debug.WriteLine("****************LogAOP begin*****************");
-
-            Debug.WriteLine($"{context.RequestHeaders[0]}---{context.Host}--{context.Method}--{context.Peer}");
-            Debug.WriteLine($"Type: {methodType}. Request: {typeof(TRequest)}. Response: {typeof(TResponse)}");
-
-            Debug.WriteLine("****************LogAOP end*****************");
+            Console.WriteLine("****************LogAOP begin*****************");
+            Console.WriteLine($"{context.RequestHeaders[0]}---{context.Host}--{context.Method}--{context.Peer}");
+            Console.WriteLine($"Type: {methodType}. Request: {typeof(TRequest)}. Response: {typeof(TResponse)}");
+            Console.WriteLine("****************LogAOP end*****************");
         }
 
     }

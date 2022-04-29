@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Grpc.Net.Client;
@@ -41,25 +42,10 @@ namespace P05.gRPC.DemoClientWeb.Controllers
 
             System.Diagnostics.Debug.WriteLine("--------------client streaming , multiple -> one response---------------------------");
             {
-                var bathCat = _customMathClient.SelfIncreaseClient();
-                for (int i = 0; i < 10; i++)
-                {
-                    int tempId = new Random().Next(0, 20);
-                    await bathCat.RequestStream.WriteAsync(new BathTheCatReq() { Id = tempId });
-                    await Task.Delay(100);
-                    System.Diagnostics.Debug.WriteLine($"{DateTime.Now} This is {i} Request with id {tempId} on thread {Thread.CurrentThread.ManagedThreadId}");
-                }
-                System.Diagnostics.Debug.WriteLine("--------------------------------------");
-
-                await bathCat.RequestStream.CompleteAsync();
-                System.Diagnostics.Debug.WriteLine("all id are sent" + DateTime.Now);
-                System.Diagnostics.Debug.WriteLine("receive result: ");
-
-                foreach (var item in bathCat.ResponseAsync.Result.Number)
-                {
-                    System.Diagnostics.Debug.WriteLine($"{DateTime.Now} This is response item: {item} Result");
-                }
-                System.Diagnostics.Debug.WriteLine("--------------------------------------");
+                RequestPara requestPara = new RequestPara() { ILeft = 123, IRight = 234 };
+                var replyPlus = await _customMathClient.PlusAsync(requestPara);
+                Debug.WriteLine($"CustomMath {Thread.CurrentThread.ManagedThreadId}  reply result :{replyPlus.Result}  Massage={replyPlus.Message}");
+                Debug.WriteLine("--------------------------------------");
             }
 
             #endregion

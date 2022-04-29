@@ -95,3 +95,11 @@ namespace P05.gRPC.DemoClientWeb
         }
     }
 }
+/*
+ ssl issue: 
+https://docs.microsoft.com/en-us/aspnet/core/security/enforcing-ssl?view=aspnetcore-6.0&tabs=visual-studio#trust-the-aspnet-core-https-development-certificate-on-windows-and-macos
+
+dotnet dev-certs https --clean
+dotnet dev-certs https --trust
+
+*/

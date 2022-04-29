@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using P05.gRPC.DemoServer;
 using P03.DotNetCoreMVC.Utility.gRPC;
+using P05.gRPC.DemoUserServer;
 
 namespace P05.gRPC.DemoClientWeb
 {
@@ -27,7 +28,7 @@ namespace P05.gRPC.DemoClientWeb
         {
             services.AddControllersWithViews();
 
-            #region gRPC
+            #region gRPC clients
 
             services.AddGrpcClient<CustomMath.CustomMathClient>(
                 options =>
@@ -38,7 +39,26 @@ namespace P05.gRPC.DemoClientWeb
                 }
                 );
 
+
+            services.AddGrpcClient<Course.CourseClient>(
+                options =>
+                {
+                    options.Address = new Uri("https://localhost:5001");
+                    //add interceptor
+                    options.Interceptors.Add(new CustomClientLoggerInterceptor());
+                }
+            );
+            services.AddGrpcClient<User.UserClient>(
+                options =>
+                {
+                    options.Address = new Uri("https://localhost:5002");
+                    //add interceptor
+                    options.Interceptors.Add(new CustomClientLoggerInterceptor());
+                }
+            );
             #endregion
+
+            
 
 
 
@@ -61,6 +81,8 @@ namespace P05.gRPC.DemoClientWeb
             app.UseStaticFiles();
 
             app.UseRouting();
+
+
 
             app.UseAuthorization();
 

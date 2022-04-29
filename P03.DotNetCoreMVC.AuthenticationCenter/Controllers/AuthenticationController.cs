@@ -60,8 +60,9 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Controllers
         {
             return new List<int>() { 1, 2, 3, 4, 6, 7 };
         }
-        //https://localhost:44356/api/Authentication/login?name=Admin&&password=123&&s=hs
-        //https://localhost:44397/api/Authentication/login?name=Admin&&password=123&&s=hs
+        //https://localhost:44396/api/Authentication/login?name=Admin&&password=123
+        //https://localhost:44396/api/Authentication/login?name=Admin&&password=123&&s=hs
+        //https://localhost:44396/api/Authentication/login?name=Admin&&password=123&&s=rs
         [Route("Login")]
         [HttpPost]
         public string Login(string name, string password, string s="")

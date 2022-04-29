@@ -18,6 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\P03.DotNetCoreMVC.Utility\P03.DotNetCoreMVC.Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Protos\CoursePackage.proto">
       <GrpcServices>Server</GrpcServices>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

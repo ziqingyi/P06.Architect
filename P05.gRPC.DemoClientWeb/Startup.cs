@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using P05.gRPC.DemoServer;
+using P03.DotNetCoreMVC.Utility.gRPC;
 
 namespace P05.gRPC.DemoClientWeb
 {
@@ -32,6 +33,8 @@ namespace P05.gRPC.DemoClientWeb
                 options =>
                 {
                     options.Address = new Uri("https://localhost:5001");
+                    //add interceptor
+                    options.Interceptors.Add(new CustomClientLoggerInterceptor());
                 }
                 );
 

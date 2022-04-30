@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 using System.Text;
@@ -9,6 +10,8 @@ using Grpc.Net.Client;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using P03.DotNetCoreMVC.Utility.ApiHelper;
+using P03.DotNetCoreMVC.Utility.Models;
 using P05.gRPC.DemoServer;//server project 
 
 namespace P05.gRPC.DemoClientWeb.Controllers
@@ -56,21 +59,18 @@ namespace P05.gRPC.DemoClientWeb.Controllers
             }
             {
                 string URI = "https://localhost:44396/api/Authentication/login";
-                string myParameters = "name=Admin&&password=123&&s=hs";
-                jResult result;
-                using (WebClient wcclient = new WebClient())
-                {
-                    wcclient.QueryString.Add("name", "Admin");
-                    wcclient.QueryString.Add("password", "123");
-                    wcclient.QueryString.Add("s", "hs");
+                //string myParameters = "name=Admin&&password=123&&s=hs";
 
-                    var bytesValues = wcclient.UploadValues(URI,"POST",wcclient.QueryString);
+                Dictionary<string, string> pa = new Dictionary<string, string>();
+                pa.Add("name", "Admin");
+                pa.Add("password", "123");
+                pa.Add("s", "hs");
 
-                    var stringvalue = UnicodeEncoding.UTF8.GetString(bytesValues);
 
-                    result= JsonConvert.DeserializeObject<jResult>(stringvalue);
 
-                }
+
+                JWTTokenResult result = HttpClientHelper.GetJWTTokenWebClient(pa,URI);
+                
 
                 string token = result?.token;
 
@@ -100,9 +100,5 @@ namespace P05.gRPC.DemoClientWeb.Controllers
     }
 
 
-    public class jResult
-    {
-        public string result { get; set; }
-        public string token { get; set; }
-    }
+
 }

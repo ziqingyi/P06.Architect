@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Grpc.Core;
 using P03.DotNetCoreMVC.Utility.ApiHelper;
@@ -53,7 +54,8 @@ namespace P05.gRPC.DemoClientWeb
                     options.Interceptors.Add(new CustomClientLoggerInterceptor());
                 }
                 )
-                //.ConfigureChannel(grpcOption =>
+                //add token header at start
+                //.ConfigureChannel(grpcOption =>  
                 //{
                 //    var callCredentials = CallCredentials.FromInterceptor(async (context, metadata) =>
                 //    {
@@ -80,7 +82,19 @@ namespace P05.gRPC.DemoClientWeb
                     //add interceptor
                     options.Interceptors.Add(new CustomClientLoggerInterceptor());
                 }
-            );
+                )
+                ////nginx
+                //.ConfigureChannel(grpcOptions =>
+                //    {
+                //        grpcOptions.HttpClient = new HttpClient(
+                //            new HttpClientHandler
+                //            {
+                //                ServerCertificateCustomValidationCallback = (msg,cert,chain,error)=>true
+                //            }
+                //        );
+                //    }
+                //)
+                ;
             #endregion
 
             

@@ -16,6 +16,7 @@ namespace P05.gRPC.DemoUserServer.Services
 
         public override Task<UserReply> FindUser(UserRequest request, ServerCallContext context)
         {
+            Console.WriteLine("-----DemoUserServer, user service called...");
             return Task.FromResult(new UserReply
             {
                 User = new UserReply.Types.UserModel()

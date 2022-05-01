@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Grpc.Core;
 using Microsoft.AspNetCore.Authorization;
 
@@ -9,6 +10,7 @@ namespace P05.gRPC.DemoServer.Services
         [Authorize(Roles = "Admin")]
         public override Task<CourseReply> getCourse(CourseRequest request, ServerCallContext context)
         {
+            Console.WriteLine(" -----DemoServer   CourseService.getCourse called ");
             return Task.FromResult(new CourseReply()
             {
                 CourseInfo = new CourseReply.Types.CourseModel()

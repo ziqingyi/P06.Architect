@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:50868",
+      "applicationUrl": "http://localhost:50868/grpc/index",
       "sslPort": 44376
     }
   },

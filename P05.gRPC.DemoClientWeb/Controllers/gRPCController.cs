@@ -12,17 +12,19 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using P03.DotNetCoreMVC.Utility.ApiHelper;
 using P03.DotNetCoreMVC.Utility.Models;
+using P05.gRPC.DemoClientWeb.ProjectUtility;
 using P05.gRPC.DemoServer;//server project 
 
 namespace P05.gRPC.DemoClientWeb.Controllers
 {
-    public class gRPCController : Controller
+
+    public class GRpcController : Controller
     {
-        private readonly ILogger<gRPCController> _logger;
+        private readonly ILogger<GRpcController> _logger;
         private readonly CustomMath.CustomMathClient _customMathClient;
         private readonly Course.CourseClient _courseClient;
 
-        public gRPCController(ILogger<gRPCController> logger, 
+        public GRpcController(ILogger<GRpcController> logger,
             CustomMath.CustomMathClient customMathClient,
             Course.CourseClient courseClient)
         {
@@ -30,7 +32,7 @@ namespace P05.gRPC.DemoClientWeb.Controllers
             this._customMathClient = customMathClient;
             this._courseClient = courseClient;
         }
-
+        //[HttpGet("Index")]
         public async Task<IActionResult> Index()
         {
             #region create channel in controller
@@ -48,7 +50,7 @@ namespace P05.gRPC.DemoClientWeb.Controllers
 
             #endregion
 
-            #region test 
+            #region test unary call and get token for authentication.
 
             Debug.WriteLine("-----------------unary call with Aop---------------------");
             {
@@ -58,45 +60,28 @@ namespace P05.gRPC.DemoClientWeb.Controllers
                 Debug.WriteLine("--------------------------------------");
             }
             {
-                string URI = "https://localhost:44396/api/Authentication/login";
-                //string myParameters = "name=Admin&&password=123&&s=hs";
+                //get token first and tehn call the api
 
-                Dictionary<string, string> pa = new Dictionary<string, string>();
-                pa.Add("name", "Admin");
-                pa.Add("password", "123");
-                pa.Add("s", "hs");
+                string token = GetTokenHelper.GetToken()?.token;
+
+                var header = new Metadata { { "Authorization", $"Bearer {token}" } };
 
 
-
-
-                JWTTokenResult result = HttpClientHelper.GetJWTTokenWebClient(pa,URI);
-                
-
-                string token = result?.token;
-
-                var header = new Metadata { {"Authorization", $"Bearer {token}"} };
-            
-
-                var replyCourse = await this._courseClient.getCourseAsync(new CourseRequest() { Id = 123 }, headers:header   );
+                var replyCourse = await this._courseClient.getCourseAsync(new CourseRequest() { Id = 123 }, headers: header);
                 Debug.WriteLine($"Course Client: {Thread.CurrentThread.ManagedThreadId}  reply result :{replyCourse.CourseInfo.Id + ". " + replyCourse.CourseInfo.Name + ". " + replyCourse.CourseInfo.Remark} ");
                 Debug.WriteLine("--------------------------------------");
             }
 
 
-
             #endregion
-
-
-
-
-
-
-
-
-
 
             return View();
         }
+
+
+
+
+
     }
 
 

@@ -6,10 +6,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Grpc.Core;
+using P03.DotNetCoreMVC.Utility.ApiHelper;
 using P05.gRPC.DemoServer;
 using P03.DotNetCoreMVC.Utility.gRPC;
+using P03.DotNetCoreMVC.Utility.Models;
+using P05.gRPC.DemoClientWeb.ProjectUtility;
 using P05.gRPC.DemoUserServer;
 
 namespace P05.gRPC.DemoClientWeb
@@ -47,7 +52,27 @@ namespace P05.gRPC.DemoClientWeb
                     //add interceptor
                     options.Interceptors.Add(new CustomClientLoggerInterceptor());
                 }
-            );
+                )
+                //.ConfigureChannel(grpcOption =>
+                //{
+                //    var callCredentials = CallCredentials.FromInterceptor(async (context, metadata) =>
+                //    {
+                        
+                //        JWTTokenResult result = GetTokenHelper.GetToken();
+
+                //        Debug.Print("-----------------------Token from startUp: " + result.token);
+
+                //        string token = result?.token;
+                //        if (!string.IsNullOrEmpty(token))
+                //        {
+                //            metadata.Add("Authorization", $"Bearer {token}");
+                //        }
+
+                //    });
+
+                //    grpcOption.Credentials = ChannelCredentials.Create(new SslCredentials(), callCredentials);
+                //})
+                ;
             services.AddGrpcClient<User.UserClient>(
                 options =>
                 {
@@ -90,7 +115,8 @@ namespace P05.gRPC.DemoClientWeb
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=gRPC}/{action=Index}/{id?}");
+                    pattern: "{controller=GRpc}/{action=Index}/{id?}");
+
             });
         }
     }

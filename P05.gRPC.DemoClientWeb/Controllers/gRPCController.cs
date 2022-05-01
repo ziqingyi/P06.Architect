@@ -13,7 +13,8 @@ using Newtonsoft.Json;
 using P03.DotNetCoreMVC.Utility.ApiHelper;
 using P03.DotNetCoreMVC.Utility.Models;
 using P05.gRPC.DemoClientWeb.ProjectUtility;
-using P05.gRPC.DemoServer;//server project 
+using P05.gRPC.DemoServer;
+using P05.gRPC.DemoUserServer; //server project 
 
 namespace P05.gRPC.DemoClientWeb.Controllers
 {
@@ -23,14 +24,17 @@ namespace P05.gRPC.DemoClientWeb.Controllers
         private readonly ILogger<GRpcController> _logger;
         private readonly CustomMath.CustomMathClient _customMathClient;
         private readonly Course.CourseClient _courseClient;
+        private readonly User.UserClient _userClient;
 
         public GRpcController(ILogger<GRpcController> logger,
             CustomMath.CustomMathClient customMathClient,
-            Course.CourseClient courseClient)
+            Course.CourseClient courseClient,
+            User.UserClient userClient)
         {
             _logger = logger;
             this._customMathClient = customMathClient;
             this._courseClient = courseClient;
+            this._userClient = userClient;
         }
         //[HttpGet("Index")]
         public async Task<IActionResult> Index()
@@ -68,12 +72,36 @@ namespace P05.gRPC.DemoClientWeb.Controllers
 
 
                 var replyCourse = await this._courseClient.getCourseAsync(new CourseRequest() { Id = 123 }, headers: header);
-                Debug.WriteLine($"Course Client: {Thread.CurrentThread.ManagedThreadId}  reply result :{replyCourse.CourseInfo.Id + ". " + replyCourse.CourseInfo.Name + ". " + replyCourse.CourseInfo.Remark} ");
+                Debug.WriteLine($"------Course Client: {Thread.CurrentThread.ManagedThreadId}  reply result :{replyCourse.CourseInfo.Id + ". " + replyCourse.CourseInfo.Name + ". " + replyCourse.CourseInfo.Remark} ");
                 Debug.WriteLine("--------------------------------------");
+            }
+
+            #endregion
+
+
+
+            #region User client
+
+            {
+                var replyUser = await this._userClient.FindUserAsync(new UserRequest(){Id = 888});
+                Debug.WriteLine($"------Course Client: {Thread.CurrentThread.ManagedThreadId}  reply result :{replyUser.User.Id + ". " + replyUser.User.Name + ". " + replyUser.User.Account} ");
+                Debug.WriteLine("--------------------------------------");
+
             }
 
 
             #endregion
+
+
+
+
+
+
+
+
+
+
+
 
             return View();
         }

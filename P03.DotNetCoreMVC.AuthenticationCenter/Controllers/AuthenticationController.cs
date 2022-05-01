@@ -94,6 +94,8 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Controllers
                     result = true,
                     token
                 });
+
+                Console.WriteLine("user: " + userInfo.Name +" Log in Successfully, token: "+token);
                 return jToken;
             }
             else
@@ -104,8 +106,10 @@ namespace P03.DotNetCoreMVC.AuthenticationCenter.Controllers
                     result = false,
                     token =""
                 });
-                return jToken;
 
+                Console.WriteLine("user: " + name + "failed to Log in");
+
+                return jToken;
 
             }
 

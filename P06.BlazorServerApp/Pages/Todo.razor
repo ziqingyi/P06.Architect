@@ -1,0 +1,48 @@
+﻿@page "/Todo"
+@using P06.BlazorServerApp.Data
+
+<h3>Todo</h3>
+
+<ul>
+
+    @foreach (var item in Todos)
+    {
+        <li>@item.Todo  ---   @item.DueDate</li>
+     
+    }
+
+</ul>
+
+<input @bind="NewTodo" @bind:event = "oninput" placeholder="What do you need to do?"/>
+<input @bind="NewDueDate"  @bind:format = "yyyyMMdd" placeholder="Due Date"/>
+<button @onclick="Save">Save</button>
+
+@if (!string.IsNullOrEmpty(NewTodo))
+{
+    <p> @NewTodo Due: @NewDueDate?.ToLongDateString()</p>
+}
+
+@code {
+
+    private List<TodoItem> Todos = new List<TodoItem>();
+
+    private string NewTodo = string.Empty;
+
+    private DateTime? NewDueDate = null;
+
+    private void Save()
+    {
+        if (string.IsNullOrEmpty(NewTodo)) return;
+
+        Todos.Add(new TodoItem()
+        {
+            Todo = NewTodo,
+            DueDate = NewDueDate
+        } );
+        NewTodo = string.Empty;
+        NewDueDate = null;
+    }
+
+
+
+}

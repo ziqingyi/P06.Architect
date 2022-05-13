@@ -12,12 +12,13 @@ startup.ConfigureServices(builder.Services);
 #endregion
 
 
-
 var app = builder.Build();
 
-app.UseStaticFiles();
 
-app.UseRouting();
+#region add startup
 
+startup.Configure(app, app.Environment);
+
+#endregion
 
 app.Run();

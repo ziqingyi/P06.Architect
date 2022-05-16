@@ -1,8 +1,9 @@
 ﻿
 
-<h3>Welcome to the @Department Department</h3>
+<h3 style="color:blue">Welcome to the @Department Department</h3>
 
 @code {
+    //must be public and decorate with [Parameter], for passing from parent component to child.
     [Parameter]
     public string Department{ get; set; }
 

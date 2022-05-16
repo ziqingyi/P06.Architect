@@ -1,0 +1,14 @@
+﻿<div class="ml-5">
+
+<h3>Component2</h3>
+
+<p> 
+    Component2 ReceivedCounterValue: @ReceivedCounterValue
+</p>
+
+
+</div>
+@code {
+    [CascadingParameter(Name = "Counter")] //get cascading value from parameter
+    public int ReceivedCounterValue { get; set; }
+}

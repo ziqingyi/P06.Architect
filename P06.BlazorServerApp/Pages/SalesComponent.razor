@@ -1,12 +1,27 @@
 ﻿@page "/Sales"
 
+
+@inherits DateTimeBaseComponent
+
+
+<TitleComponent Department="Sales"></TitleComponent>
+
 <h3>SalesComponent</h3>
 
-//page component must be routable, by url
-//there is also  no-page component 
+page component must be routable, by url
+otherwise  no-page component 
 
 <br/><br/>
+
+ Date from DateTimeBaseComponent : @dateTime
+
+<br/><br/>
+
 <DateComponent></DateComponent>
+
+<br/><br/>
+
+<Counter></Counter>
 
 
 @code {

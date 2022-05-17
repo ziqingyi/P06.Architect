@@ -1,6 +1,6 @@
 ﻿<div class="ml-5">
 
-<h3>Component2</h3>
+<h3 style="color: @Color">Component2</h3>
 
 <p> 
     Component2 ReceivedCounterValue: @ReceivedCounterValue
@@ -11,4 +11,9 @@
 @code {
     [CascadingParameter(Name = "Counter")] //get cascading value from parameter
     public int ReceivedCounterValue { get; set; }
+
+
+    [CascadingParameter(Name = "TitleColor")]
+    public string Color { get; set; }
+
 }

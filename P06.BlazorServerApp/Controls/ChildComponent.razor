@@ -16,7 +16,13 @@
     [Parameter]
     public EventCallback<int> SetCurrentCount{ get; set; }
 
+    [Parameter]
+    public Action<int> SetCount{ get;  set; }
+
     private int currentCount = 0;
+
+
+
 
     //protected override void OnParametersSet()
     //{
@@ -28,7 +34,12 @@
     {
         currentCount+= 2;
 
+        //invoke EventCallback, value is not necessay
         SetCurrentCount.InvokeAsync(currentCount);
+
+        //invoke action, delegate must have value, otherwise will have error
+        SetCount(currentCount);
+
     }
 }
 

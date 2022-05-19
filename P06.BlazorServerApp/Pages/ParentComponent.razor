@@ -5,11 +5,19 @@
 <h3>ParentComponent</h3>
 
 <p>
-    Current Count: @currentCount
+    Parent Current Count: @currentCount
+</p>
+
+<p>
+    delegate Count: @delegateCount
 </p>
 
 
-<ChildComponent SetCurrentCount="SetCurrentCountFunction"></ChildComponent>
+
+<ChildComponent 
+   SetCurrentCount="SetCurrentCountFunction"
+   SetCount="FunctionToChildDelegate" 
+></ChildComponent>
 
 
 
@@ -17,10 +25,18 @@
 @code {
     private int currentCount;
 
+    private int delegateCount;
 
     private void SetCurrentCountFunction(int value)
     {
         currentCount = value;
+    }
+
+
+    private void FunctionToChildDelegate(int value)
+    {
+        delegateCount = value + 10;
+        StateHasChanged();
     }
 
 }

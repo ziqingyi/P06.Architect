@@ -1,0 +1,26 @@
+﻿@page "/parent"
+
+
+
+<h3>ParentComponent</h3>
+
+<p>
+    Current Count: @currentCount
+</p>
+
+
+<ChildComponent SetCurrentCount="SetCurrentCountFunction"></ChildComponent>
+
+
+
+
+@code {
+    private int currentCount;
+
+
+    private void SetCurrentCountFunction(int value)
+    {
+        currentCount = value;
+    }
+
+}

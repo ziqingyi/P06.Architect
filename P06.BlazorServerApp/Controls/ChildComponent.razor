@@ -1,0 +1,35 @@
+﻿<h3>ChildComponent</h3>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+<br />
+<br />
+
+
+<p> 
+    ChildComponent CounterValue: @currentCount
+</p>
+
+
+@code {
+
+    [Parameter]
+    public EventCallback<int> SetCurrentCount{ get; set; }
+
+    private int currentCount = 0;
+
+    //protected override void OnParametersSet()
+    //{
+    //    currentCount = 0;
+    //    base.OnParametersSet();
+    //}
+
+    private void IncrementCount()
+    {
+        currentCount+= 2;
+
+        SetCurrentCount.InvokeAsync(currentCount);
+    }
+}
+
+

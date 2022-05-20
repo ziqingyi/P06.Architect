@@ -23,6 +23,17 @@
 ></ChildComponent>
 
 
+<br/>
+<br/>
+
+<button class="button" @onclick="updateDialogComponent"> show dialog </button>
+
+<DialogComponent 
+@ref="dialogRef">  
+
+</DialogComponent>
+
+
 
 
 @code {
@@ -39,7 +50,7 @@
     private void FunctionToChildDelegate(int value)
     {
         delegateCount = value + 10;
-        StateHasChanged();
+        //StateHasChanged();
     }
 
 
@@ -47,8 +58,17 @@
 
     private void updateChildComponent()
     {
-        childRef.ShowStatusUpdate();
+        childRef.DiaplayStatusChange();
     }
 
+
+
+    private DialogComponent dialogRef;
+
+    public void updateDialogComponent()
+    {
+        dialogRef.DiaplayStatusChange();
+        
+    }
 
 }

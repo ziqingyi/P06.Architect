@@ -1,0 +1,39 @@
+﻿@if(display)
+{ 
+<div class="modal is-active">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title">Modal title</p>
+      <button class="delete" 
+      aria-label="close"
+      @onclick="closeButtonClick"
+      ></button>
+    </header>
+    <section class="modal-card-body">
+      <!-- Content ... -->
+    </section>
+    <footer class="modal-card-foot">
+      <button class="button is-success">Save changes</button>
+      <button class="button">Cancel</button>
+    </footer>
+  </div>
+</div>
+}
+
+@code {
+
+    private bool display = false;
+
+    public void DiaplayStatusChange()
+    {
+        this.display = !this.display;
+        StateHasChanged();
+    }
+
+    public void closeButtonClick()
+    {
+        this.display = false;
+    }
+
+}

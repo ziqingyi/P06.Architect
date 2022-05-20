@@ -13,8 +13,11 @@
 </p>
 
 
+<button class="button" @onclick= "updateChildComponent"> Show Child Component </button>
+
 
 <ChildComponent 
+   @ref="childRef"
    SetCurrentCount="SetCurrentCountFunction"
    SetCount="FunctionToChildDelegate" 
 ></ChildComponent>
@@ -38,5 +41,14 @@
         delegateCount = value + 10;
         StateHasChanged();
     }
+
+
+    private ChildComponent childRef;
+
+    private void updateChildComponent()
+    {
+        childRef.ShowStatusUpdate();
+    }
+
 
 }

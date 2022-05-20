@@ -1,9 +1,11 @@
 ﻿@page "/parent"
 
-
-
 <h3>ParentComponent</h3>
 
+<br/>
+<br/>
+
+<h5>show counter: </h5>
 <p>
     Parent Current Count: @currentCount
 </p>
@@ -12,9 +14,7 @@
     delegate Count: @delegateCount
 </p>
 
-
 <button class="button" @onclick= "updateChildComponent"> Show Child Component </button>
-
 
 <ChildComponent 
    @ref="childRef"
@@ -23,15 +23,41 @@
 ></ChildComponent>
 
 
-<br/>
-<br/>
 
+
+<br/>
+<br/>
+<h5>show Dialog: </h5>
 <button class="button" @onclick="updateDialogComponent"> show dialog </button>
 
 <DialogComponent 
 @ref="dialogRef">  
 
 </DialogComponent>
+
+
+
+<br/>
+<br/>
+
+<h5>show Render Fragment component: </h5>
+<FieldComponent Label="Name">
+    <Control>
+        <input class="input" type="email" placeholder="Name">
+    </Control>
+</FieldComponent>
+
+<FieldComponent Label="Title">
+    <Control>
+        <input class="input" type="email" placeholder="Title">
+    </Control>
+</FieldComponent>
+
+<FieldComponent Label="Department">
+    <Control>
+        <input class="input" type="email" placeholder="Department">
+    </Control>
+</FieldComponent>
 
 
 

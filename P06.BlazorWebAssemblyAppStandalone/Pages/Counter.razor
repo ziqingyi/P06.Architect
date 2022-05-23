@@ -9,10 +9,41 @@
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
 @code {
+
     private int currentCount = 0;
+    private Timer timer;
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        timer = new Timer(2000);
+        timer.Elapsed += OnTimeEvent;
+        timer.Enabled = true;
+    }
+
+
+    private void OnTimeEvent(object source, ElapsedEventArgs e)
+    {
+        IncrementCount();
+        Console.WriteLine($"Counter value: {this.currentCount}");
+    }
 
     private void IncrementCount()
     {
+        //not UI event
         currentCount++;
     }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        Console.WriteLine("OnAfterRender()");  
+    }
+
+
+
+
+
 }

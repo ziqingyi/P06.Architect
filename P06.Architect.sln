@@ -111,6 +111,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P06.BlazorWebAssemblyApp.Cl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P06.BlazorWebAssemblyApp.Shared", "P06.BlazorWebAssemblyApp\Shared\P06.BlazorWebAssemblyApp.Shared.csproj", "{D4D6492B-059C-4132-9C26-2793EDAD7613}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P06.BlazorWebAssemblyAppStandalone", "P06.BlazorWebAssemblyAppStandalone\P06.BlazorWebAssemblyAppStandalone.csproj", "{778890F4-9019-40E8-8B2E-DB8E30369EB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -317,6 +319,10 @@ Global
 		{D4D6492B-059C-4132-9C26-2793EDAD7613}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4D6492B-059C-4132-9C26-2793EDAD7613}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4D6492B-059C-4132-9C26-2793EDAD7613}.Release|Any CPU.Build.0 = Release|Any CPU
+		{778890F4-9019-40E8-8B2E-DB8E30369EB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{778890F4-9019-40E8-8B2E-DB8E30369EB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{778890F4-9019-40E8-8B2E-DB8E30369EB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{778890F4-9019-40E8-8B2E-DB8E30369EB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

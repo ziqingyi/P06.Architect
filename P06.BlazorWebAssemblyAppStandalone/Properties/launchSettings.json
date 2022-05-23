@@ -9,6 +9,7 @@
   },
   "profiles": {
     "P06.BlazorWebAssemblyAppStandalone": {
+      "hotReloadEnabled": true,
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

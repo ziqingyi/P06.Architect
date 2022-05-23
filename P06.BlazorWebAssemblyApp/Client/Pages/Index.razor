@@ -1,9 +1,46 @@
 ﻿@page "/"
 
+
 <PageTitle>Index</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+
+<RepeaterComponent Items="customers">
+    <Row Context="customer" >
+        <div><b>@customer.CompanyName</b></div>
+        <div class="ml-5">@customer.ContactName</div>
+        <div class="ml-5">@customer.PhoneNumber</div>
+        <br/>
+    </Row>
+</RepeaterComponent>
+
+
+@code{
+    private List<Customer> customers;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        customers = new List<Customer>();
+
+        customers.AddRange(
+        new Customer[]
+        {
+            new Customer{ContactName="User1", PhoneNumber="111 111", CompanyName="Company1"},
+            new Customer{ContactName="User2", PhoneNumber="222 222", CompanyName="Company2"},
+            new Customer{ContactName="User3", PhoneNumber="333 333", CompanyName="Company3"},
+        } );
+
+
+
+
+    }
+
+
+
+
+}

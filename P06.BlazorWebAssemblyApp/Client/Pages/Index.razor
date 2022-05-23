@@ -9,12 +9,19 @@ Welcome to your new app.
 
 
 <RepeaterComponent Items="customers">
+    <header>
+        <h2>Customers List</h2>
+    </header>
     <Row Context="customer" >
         <div><b>@customer.CompanyName</b></div>
         <div class="ml-5">@customer.ContactName</div>
         <div class="ml-5">@customer.PhoneNumber</div>
         <br/>
     </Row>
+    <footer>
+
+    </footer>
+
 </RepeaterComponent>
 
 

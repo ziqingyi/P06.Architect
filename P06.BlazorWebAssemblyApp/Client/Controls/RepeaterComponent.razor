@@ -1,16 +1,19 @@
 ﻿@typeparam TItem
 
-
+@header
 @foreach(var item in Items)
 {
     @Row(item)
-
-
-
 }
-
+@footer
 
 @code {
+
+    [Parameter]
+    public RenderFragment header{ get; set; }
+
+    [Parameter]
+    public RenderFragment footer{ get; set; }
 
     [Parameter]
     public RenderFragment<TItem> Row{ get; set; }
@@ -19,4 +22,8 @@
     public List<TItem> Items{ get; set; }
 
 
+
+
+    [Parameter]
+    public TItem ItemToEdit{ get; set; }
 }

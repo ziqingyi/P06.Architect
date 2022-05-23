@@ -1,4 +1,4 @@
-namespace P06.BlazorWebAssemblyApp.Shared
+namespace P06.BlazorWebAssemblyApp.Shared.Models
 {
     public class WeatherForecast
     {

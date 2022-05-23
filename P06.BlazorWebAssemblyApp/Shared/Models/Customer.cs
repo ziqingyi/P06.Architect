@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace P06.BlazorWebAssemblyApp.Shared
+namespace P06.BlazorWebAssemblyApp.Shared.Models
 {
     public class Customer
     {

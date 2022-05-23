@@ -5,7 +5,15 @@
 {
     @Row(item)
 }
+
+<br/>
+@if(this.ItemToEdit != null)
+{
+    @EditTemplate(ItemToEdit)  
+}
 @footer
+
+
 
 @code {
 
@@ -25,5 +33,10 @@
 
 
     [Parameter]
+    public RenderFragment<TItem> EditTemplate{ get; set; }
+
+
     public TItem ItemToEdit{ get; set; }
+
+
 }

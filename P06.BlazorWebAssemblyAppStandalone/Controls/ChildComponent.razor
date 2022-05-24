@@ -1,10 +1,16 @@
 ﻿<h3>ChildComponent</h3>
 
+
+Counter Value: @CounterParameter
+
+
 <button @onclick="ClickEvent"> Click in ChildComponent</button>
 
 <br/><br/>
 
 @BodyTemplate
+
+
 
 
 
@@ -26,6 +32,11 @@
     [Parameter]
     public RenderFragment BodyTemplate { get; set; }
 
+
+
+
+    [Parameter]
+    public int CounterParameter { get; set; }
 
 
 }

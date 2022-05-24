@@ -6,10 +6,15 @@
 
 <p role="status">Current count: @currentCount</p>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<p role="status">Current count manual: @currentCountManual </p>
 
 
-<ChildComponent>
+<button class="btn btn-primary" @onclick="IncrementCount"> IncrementCount </button>
+
+<button class="btn btn-primary" @onclick="IncrementCountManual"> IncrementCountManual </button>
+
+
+<ChildComponent CounterParameter="currentCountManual">
     <BodyTemplate>
         <button @onclick="ClickBody"> click in ChildComponent RenderFragment inside Counter</button>
 
@@ -23,8 +28,11 @@
 @code {
 
     private int currentCount = 0;
+
     private Timer timer;
 
+
+    private int currentCountManual = 0;
 
     protected override void OnInitialized()
     {
@@ -46,8 +54,14 @@
     {
         //not UI event, so not trigger rendering 
         currentCount++;
+        
     }
-
+    
+    private void IncrementCountManual()
+    {   
+        //update manual count
+        currentCountManual = currentCountManual + 10;
+    }
     protected override void OnAfterRender(bool firstRender)
     {
         base.OnAfterRender(firstRender);
@@ -58,7 +72,7 @@
 
     private void ClickBody()
     {
-
+        Console.WriteLine($"Counter ClickBody() at{DateTime.Now.ToString("hh:mm:ss.fff")}");
     }
 
 }

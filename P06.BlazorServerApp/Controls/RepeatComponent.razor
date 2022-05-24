@@ -1,0 +1,25 @@
+﻿@typeparam TItem
+
+@foreach(var item in Items)
+{
+    @Row(item)
+}
+
+
+@code{
+
+    [Parameter]
+    public RenderFragment<TItem> Row{ get; set; }
+
+    [Parameter]
+    public List<TItem> Items{ get; set; }
+
+
+    protected override Task OnInitializedAsync()
+    {
+        var count = this.Items.Count;
+        return base.OnInitializedAsync();
+    }
+
+
+}

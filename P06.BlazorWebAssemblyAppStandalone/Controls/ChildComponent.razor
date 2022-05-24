@@ -1,0 +1,32 @@
+﻿<h3>ChildComponent</h3>
+
+<button @onclick="ClickEvent"> Click in ChildComponent</button>
+
+<br/><br/>
+
+@BodyTemplate
+
+
+
+@code {
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        Console.WriteLine($"child Component OnAfterRender at{DateTime.Now.ToString("hh:mm:ss.fff")}");
+    }
+
+    private void ClickEvent()
+    {
+        Console.WriteLine($"child Component ClickEvent at{DateTime.Now.ToString("hh:mm:ss.fff")}");
+    }
+
+
+
+    [Parameter]
+    public RenderFragment BodyTemplate { get; set; }
+
+
+
+}
+

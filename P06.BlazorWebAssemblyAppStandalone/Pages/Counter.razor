@@ -8,6 +8,18 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+
+<ChildComponent>
+    <BodyTemplate>
+        <button @onclick="ClickBody"> click in ChildComponent RenderFragment inside Counter</button>
+
+    </BodyTemplate>
+
+</ChildComponent>
+
+
+
+
 @code {
 
     private int currentCount = 0;
@@ -32,18 +44,21 @@
 
     private void IncrementCount()
     {
-        //not UI event
+        //not UI event, so not trigger rendering 
         currentCount++;
     }
 
     protected override void OnAfterRender(bool firstRender)
     {
         base.OnAfterRender(firstRender);
-        Console.WriteLine("OnAfterRender()");  
+        Console.WriteLine("Counter OnAfterRender()");  
     }
 
 
 
+    private void ClickBody()
+    {
 
+    }
 
 }

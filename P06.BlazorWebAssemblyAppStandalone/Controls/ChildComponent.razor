@@ -2,7 +2,7 @@
 
 
 Counter Value: @CounterParameter
-
+non Parameter Counter : @nonParameterCounter
 
 <button @onclick="ClickEvent"> Click in ChildComponent</button>
 
@@ -37,6 +37,14 @@ Counter Value: @CounterParameter
 
     [Parameter]
     public int CounterParameter { get; set; }
+
+
+    public int nonParameterCounter { get; set; }
+
+    public void Refresh()
+    {
+        this.StateHasChanged();
+    }
 
 
 }

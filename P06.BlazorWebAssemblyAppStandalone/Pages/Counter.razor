@@ -23,6 +23,17 @@
 </ChildComponent>
 
 
+<h3>-------------------------------------------------------------------</h3>
+
+
+<button class="btn btn-primary" @onclick="updateChildNonParameterCounter"> updateChildNonParameterCounter </button>
+<button class="btn btn-primary" @onclick="updateChildNonParameterCounterNORefresh"> updateChildNonParameterCounterNORefresh </button>
+<ChildComponent @ref="child" ></ChildComponent>
+
+
+
+<h3>-------------------------------------------------------------------</h3>
+
 
 
 @code {
@@ -33,6 +44,10 @@
 
 
     private int currentCountManual = 0;
+
+
+    private ChildComponent child;
+
 
     protected override void OnInitialized()
     {
@@ -50,6 +65,18 @@
         Console.WriteLine($"Counter value: {this.currentCount}");
     }
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        Console.WriteLine("Counter OnAfterRender()");  
+    }
+
+    private void ClickBody()
+    {
+        Console.WriteLine($"Counter ClickBody() at{DateTime.Now.ToString("hh:mm:ss.fff")}");
+    }
+
+
     private void IncrementCount()
     {
         //not UI event, so not trigger rendering 
@@ -62,17 +89,21 @@
         //update manual count
         currentCountManual = currentCountManual + 10;
     }
-    protected override void OnAfterRender(bool firstRender)
+
+
+    private void updateChildNonParameterCounter()
     {
-        base.OnAfterRender(firstRender);
-        Console.WriteLine("Counter OnAfterRender()");  
+        child.nonParameterCounter = child.nonParameterCounter + 9;
+        child.Refresh();
+        Console.WriteLine($"Counter updateChildCounterParameter() at{DateTime.Now.ToString("hh:mm:ss.fff")}");
     }
 
-
-
-    private void ClickBody()
+    
+    private void updateChildNonParameterCounterNORefresh()
     {
-        Console.WriteLine($"Counter ClickBody() at{DateTime.Now.ToString("hh:mm:ss.fff")}");
+        child.nonParameterCounter = child.nonParameterCounter + 9;
+        //child.Refresh();
+        Console.WriteLine($"Counter updateChildCounterParameter() at{DateTime.Now.ToString("hh:mm:ss.fff")}");
     }
 
 }

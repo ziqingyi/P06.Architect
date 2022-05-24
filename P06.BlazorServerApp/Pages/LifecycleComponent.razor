@@ -3,6 +3,84 @@
 
 <h3>LifecycleComponent</h3>
 
+
+<ChildLifecycleComponent></ChildLifecycleComponent>
+<br/>
+<br/>
+<button @onclick="ClickBody" > click  </button>
+
 @code {
 
+    public override Task SetParametersAsync(ParameterView parameters)
+    {
+        Console.WriteLine($"LifecycleComponent ---- SetParametersAsync {DateTime.Now.ToString("hh:mm:ss.fff")}");
+        return base.SetParametersAsync(parameters);
+    }
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine($"LifecycleComponent ---- OnInitialized {DateTime.Now.ToString("hh:mm:ss.fff")}");
+        base.OnInitialized();
+    }
+
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine($"LifecycleComponent ---- OnParametersSets {DateTime.Now.ToString("hh:mm:ss.fff")}");
+        base.OnParametersSet();
+    }
+
+
+    protected override bool ShouldRender()
+    {
+        Console.WriteLine($"LifecycleComponent ---- ShouldRender {DateTime.Now.ToString("hh:mm:ss.fff")}");
+        return base.ShouldRender();
+    }
+
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Console.WriteLine($"LifecycleComponent ---- OnAfterRender {DateTime.Now.ToString("hh:mm:ss.fff")}");
+        base.OnAfterRender(firstRender);
+    }
+
+
+
+    private void ClickBody()
+    {
+        Console.WriteLine($"LifecycleComponent ClickBody() at{DateTime.Now.ToString("hh:mm:ss.fff")}");
+    }
+
+
+
+/*
+
+Parent -   SetParametersAsync
+           OnInitialized
+           OnParametersSet
+
+           Child - SetParametersAsync
+                   OnInitialized
+                   OnParametersSet
+
+Parent -   SetParametersAsync
+           OnInitialized
+           OnParametersSet
+
+           Child - SetParametersAsync
+                   OnInitialized
+                   OnParametersSet
+
+Parent - OnAfterRender
+         Child - OnAfterRender
+
+
+*/
+
 }
+
+
+
+
+
+
+

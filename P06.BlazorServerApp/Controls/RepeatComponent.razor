@@ -1,9 +1,13 @@
 ﻿@typeparam TItem
 
-@foreach(var item in Items)
+@if (Items != null)
 {
-    @Row(item)
+    @foreach (var item in Items)
+    {
+        @Row(item)
+    }
 }
+
 
 
 @code{
@@ -17,7 +21,13 @@
 
     protected override Task OnInitializedAsync()
     {
-        var count = this.Items.Count;
+        if (this.Items != null)
+        {
+            var count = this.Items.Count;
+        }
+        
+
+
         return base.OnInitializedAsync();
     }
 

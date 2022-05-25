@@ -1,0 +1,57 @@
+﻿@page "/FormEdit"
+
+<h3>FormEditComponent</h3>
+@using System.ComponentModel.DataAnnotations
+@using System.Reflection.PortableExecutable
+
+<EditForm Model="p" OnValidSubmit="ValidFormSubmitted">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    
+    <label>
+        Employee Number: :<br/>
+        <InputNumber id="emp_number"  TValue="int" @bind-Value="p.EmployeeId" > </InputNumber>
+    </label>
+    <br/>
+    <br/>
+        
+    <label>
+        First Name:<br/>
+        <InputText id="fname" @bind-Value="p.FirstName"  > </InputText>
+    </label>
+    <br/>
+    <br/>
+
+    <label>
+        Last Name:<br/>
+        <InputText id="lname" @bind-Value="p.LastName"  > </InputText>
+    </label>
+    <br/>
+    <br/>
+
+    <label>
+        Email:<br/>
+        <InputText id="email" @bind-Value="p.Email"  > </InputText>
+    </label>
+    <br/>
+    <br/>
+
+    <input type="submit" value="Submit">
+</EditForm>
+
+
+@code {
+
+    public Person p = new Person();
+
+
+    private void ValidFormSubmitted()
+    {
+
+    }
+
+
+
+
+
+}

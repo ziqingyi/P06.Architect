@@ -2,8 +2,10 @@
 @page "/StateManagement"
 
 
-@inject CounterStore counterStore
 
+@inject CounterStore counterStore
+@inject CounterStoreWithDispatcher counterStoreWithDispatcher
+@inject IActionDispatcher actionDispatcher
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
@@ -13,8 +15,9 @@
 
 <p>  Current Count: @currentCount   </p>
 
-
 <p>  Counter Store: @counterStore.GetState().Count   </p>
+
+<p>  Counter Store WithDispatcher: @counterStoreWithDispatcher.GetState().Count   </p>
 
 
 @code {
@@ -27,14 +30,19 @@
 
         counterStore.AddStateChangeListeners(UpdateView);
 
+        counterStoreWithDispatcher.AddStateChangeListeners(UpdateView);
+
     }
 
 
     private void IncrementCount()
     {
-        currentCount += 2;
+        currentCount++;
 
         counterStore.IncrementCount();
+
+
+        actionDispatcher.Dispatch(new IncrementAction());
 
     }
 

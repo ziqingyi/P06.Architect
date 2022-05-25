@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using P06.BlazorServerApp.Stores;
 using P06.BlazorServerApp.Stores.CounterStore;
 
 namespace P06.BlazorServerApp
@@ -33,6 +34,9 @@ namespace P06.BlazorServerApp
 
 
             services.AddScoped<CounterStore>();
+
+            services.AddScoped<CounterStoreWithDispatcher>();
+            services.AddScoped<IActionDispatcher, ActionDispatcher>();
 
         }
 

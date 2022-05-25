@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using P06.BlazorServerApp.Stores.CounterStore;
 
 namespace P06.BlazorServerApp
 {
@@ -29,7 +30,10 @@ namespace P06.BlazorServerApp
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
-            
+
+
+            services.AddScoped<CounterStore>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

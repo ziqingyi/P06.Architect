@@ -1,4 +1,6 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@inject CounterStore counterStore
+
+<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">P06.BlazorServerApp</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
@@ -69,7 +71,7 @@
         
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="StateManagement">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> StateManagement
+                <span class="oi oi-list-rich" aria-hidden="true"></span> StateManagement: @counterStore.GetState().Count
             </NavLink>
         </li>
     </ul>
@@ -79,6 +81,14 @@
     private bool collapseNavMenu = true;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        counterStore.AddStateChangeListeners(() => {StateHasChanged();});
+    }
+
 
     private void ToggleNavMenu()
     {

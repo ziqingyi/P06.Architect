@@ -2,10 +2,40 @@
 @page "/StateManagement"
 
 
+@inject CounterStore counterStore
 
 
-<h3>StateManagementComponent</h3>
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+<br />
+<br />
+
+
+<p>  Current Count: @currentCount   </p>
+
+
+<p>  Counter Store: @counterStore.GetState().Count   </p>
+
 
 @code {
+    private int currentCount = 0;
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        counterStore.AddStateChangeListeners(()=>{ StateHasChanged();  });
+
+    }
+
+
+    private void IncrementCount()
+    {
+        currentCount += 2;
+
+        counterStore.IncrementCount();
+
+    }
 
 }

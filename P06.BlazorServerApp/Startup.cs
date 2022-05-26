@@ -36,6 +36,8 @@ namespace P06.BlazorServerApp
             services.AddScoped<CounterStore>();//scope to the connection,update when page refresh.
 
             services.AddScoped<CounterStoreWithDispatcher>();
+            services.AddScoped<CounterStoreWithDispatcherWithInput>();
+
             services.AddScoped<IActionDispatcher, ActionDispatcher>();
 
         }

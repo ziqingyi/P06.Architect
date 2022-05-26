@@ -5,10 +5,16 @@
 
 @inject CounterStore counterStore
 @inject CounterStoreWithDispatcher counterStoreWithDispatcher
+@inject CounterStoreWithDispatcherWithInput  counterStoreWithDispatcherWithInput
 @inject IActionDispatcher actionDispatcher
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+<br />
+<br />
+
+        Input Step:<br/>
+        <input @bind="@counterStoreWithDispatcherWithInput.Step"/>
 <br />
 <br />
 
@@ -20,9 +26,13 @@
 <p>  Counter Store WithDispatcher: @counterStoreWithDispatcher.GetState().Count   </p>
 
 
+<p>  Counter Store WithDispatcher with Input: @counterStoreWithDispatcherWithInput.GetState().Count   </p>
+
+
+
 @code {
     private int currentCount = 0;
-
+  
 
     protected override void OnInitialized()
     {
@@ -32,7 +42,7 @@
         //get notified and refreshed when the stores have changes
         counterStore.AddStateChangeListeners(UpdateView);
         counterStoreWithDispatcher.AddStateChangeListeners(UpdateView);
-
+        counterStoreWithDispatcherWithInput.AddStateChangeListeners(UpdateView);
     }
 
 
@@ -58,6 +68,8 @@
         counterStore.RemoveStateChangeListeners(UpdateView);
 
         counterStoreWithDispatcher.RemoveStateChangeListeners(UpdateView);
+
+        counterStoreWithDispatcherWithInput.RemoveStateChangeListeners(UpdateView);
     }
 
 

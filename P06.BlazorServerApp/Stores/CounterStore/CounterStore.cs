@@ -13,11 +13,70 @@ namespace P06.BlazorServerApp.Stores.CounterStore
 
     }
 
+    public class CounterStoreWithDispatcherWithInput: CounterStoreWithDispatcher
+    {
+        public int Step { get; set; } = 0;
+        public CounterStoreWithDispatcherWithInput(IActionDispatcher actionDispatcher) :base(actionDispatcher)
+        {
+
+
+        }
+
+        ~CounterStoreWithDispatcherWithInput()
+        {
+            this._actionDispatcher.Unsubscript(HandleActions);
+        }
+
+
+        protected override void HandleActions(IAction action)
+        {
+            switch (action.Name)
+            {
+                case IncrementAction.INCREMENT:
+                    IncrementCount(this.Step);
+                    break;
+                case DecrementAction.DECREMENT:
+                    DecrementCount(this.Step);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+        #region increase and decrease state count, make it private. handle by IActionDispatcher
+
+        private void IncrementCount(int step)
+        {
+            var count = this._state.Count;
+            count += step;
+            this._state = new CounterState(count);
+            BroadcastStateChange();
+        }
+
+        private void DecrementCount(int step)
+        {
+            var count = this._state.Count;
+            count -= step;
+            this._state = new CounterState(count);
+            BroadcastStateChange();
+        }
+
+        #endregion
+
+
+        #region observer pattern
+        //from super class
+        #endregion
+
+    }
+
+
     public class CounterStoreWithDispatcher
     {
-        private CounterState _state;
+        protected CounterState _state;
 
-        private readonly IActionDispatcher _actionDispatcher;
+        protected readonly IActionDispatcher _actionDispatcher;
 
         //inject dispatcher instance and register own emthod of handing events.
         public CounterStoreWithDispatcher(IActionDispatcher actionDispatcher)
@@ -38,7 +97,7 @@ namespace P06.BlazorServerApp.Stores.CounterStore
             return _state;
         }
 
-        private void HandleActions(IAction action)
+        protected virtual void HandleActions(IAction action)
         {
             switch (action.Name)
             {
@@ -89,7 +148,7 @@ namespace P06.BlazorServerApp.Stores.CounterStore
             _listeners -= listener;
         }
 
-        private void BroadcastStateChange()
+        protected void BroadcastStateChange()
         {
             _listeners.Invoke();
         }

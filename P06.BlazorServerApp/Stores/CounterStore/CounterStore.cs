@@ -19,6 +19,7 @@ namespace P06.BlazorServerApp.Stores.CounterStore
 
         private readonly IActionDispatcher _actionDispatcher;
 
+        //inject dispatcher instance and register own emthod of handing events.
         public CounterStoreWithDispatcher(IActionDispatcher actionDispatcher)
         {
             _state = new CounterState(0);
@@ -54,7 +55,7 @@ namespace P06.BlazorServerApp.Stores.CounterStore
 
 
 
-        #region increase and decrease state count
+        #region increase and decrease state count, make it private. handle by IActionDispatcher
 
         private void IncrementCount()
         {

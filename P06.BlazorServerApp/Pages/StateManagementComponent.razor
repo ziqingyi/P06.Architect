@@ -28,8 +28,9 @@
     {
         base.OnInitialized();
 
-        counterStore.AddStateChangeListeners(UpdateView);
 
+        //get notified and refreshed when the stores have changes
+        counterStore.AddStateChangeListeners(UpdateView);
         counterStoreWithDispatcher.AddStateChangeListeners(UpdateView);
 
     }
@@ -39,19 +40,24 @@
     {
         currentCount++;
 
+        //notify counterStore directly
         counterStore.IncrementCount();
 
 
+        //do not use countStore method directly, 
+        //use dispatcher to dispatch actions to all instance registerrd. 
         actionDispatcher.Dispatch(new IncrementAction());
 
     }
 
 
 
-    //fix memory leaking. 
+    //fix memory leaking. remove ref from teh counter store, let the StateManagement component being disposed. 
     public void Dispose()
     {
         counterStore.RemoveStateChangeListeners(UpdateView);
+
+        counterStoreWithDispatcher.RemoveStateChangeListeners(UpdateView);
     }
 
 

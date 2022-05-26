@@ -33,7 +33,7 @@ namespace P06.BlazorServerApp
             services.AddSingleton<WeatherForecastService>();
 
 
-            services.AddScoped<CounterStore>();
+            services.AddScoped<CounterStore>();//scope to the connection,update when page refresh.
 
             services.AddScoped<CounterStoreWithDispatcher>();
             services.AddScoped<IActionDispatcher, ActionDispatcher>();

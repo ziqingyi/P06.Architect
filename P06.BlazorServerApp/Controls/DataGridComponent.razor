@@ -19,9 +19,22 @@
 
             }
 
-
         </tr>
     </thead>
+    <tbody>
+        @foreach(TItem item in DataItems)
+        {
+            <tr>
+                @foreach (var col in Columns)
+                {
+                    <td> @typeof(TItem).GetProperty(col.DataField).GetValue(item)  </td>
+                }
+            </tr>
+        }
+
+
+    </tbody>
+
 </table>
 
 

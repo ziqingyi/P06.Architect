@@ -1,0 +1,74 @@
+﻿@page "/"
+@page "/DataGridShow"
+
+<h3>DataGridShow page</h3>
+
+<br/>
+<br/>
+<DataGridComponent 
+    TItem="Employee"
+    DataItems="listEmployees"
+Columns="columnDefinitions">
+
+
+</DataGridComponent>
+
+
+
+@code {
+    private GetEmployeeListService getEmployeeListService = new GetEmployeeListService();
+    private List<Employee> listEmployees;
+    private List<ColumnDefinition> columnDefinitions;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Initilize();
+    }
+
+
+
+    private void Initilize()
+    {
+        if(columnDefinitions == null)
+        {
+            columnDefinitions = new List<ColumnDefinition>();
+            columnDefinitions.AddRange(
+            new ColumnDefinition[]
+            {
+                new ColumnDefinition{DataField="Name", Caption="Name"},
+                new ColumnDefinition{DataField="Title", Caption="Title"},
+                new ColumnDefinition{DataField="Department", Caption="Department"},
+                new ColumnDefinition{DataField="EmploymentDate", Caption="Employment Date"},
+                new ColumnDefinition{DataField="Salary", Caption="Annual Salary", DataType=DataType.Number},
+            }
+
+            );
+        }
+
+        if(listEmployees == null)
+        {
+            listEmployees = getEmployeeListService.GetEmployeeList();
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

@@ -1,4 +1,6 @@
-﻿namespace P06.BlazorServerApp.Data
+﻿using System;
+
+namespace P06.BlazorServerApp.Data
 {
 
     public class Employee
@@ -8,5 +10,8 @@
         public string Title { get; set; }
         public string Department { get; set; }
 
+        public DateTime EmploymentDate { get; set; }
+
+        public int Salary { get; set; }
     }
 }

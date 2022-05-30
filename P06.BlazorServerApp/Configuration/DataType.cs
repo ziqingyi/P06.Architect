@@ -1,4 +1,4 @@
-﻿namespace P06.BlazorServerApp.Data
+﻿namespace P06.BlazorServerApp.Configuration
 {
     public enum DataType
     {

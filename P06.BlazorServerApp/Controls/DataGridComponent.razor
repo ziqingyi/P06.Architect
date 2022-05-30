@@ -49,15 +49,53 @@
             <tr>
                 @foreach (var col in Columns)
                 {
-                    if(col.Alignment != Alignment.NotSet)
+                    string rawValue = typeof(TItem).GetProperty(col.DataField).GetValue(item).ToString();
+
+                    // if the format is set
+                    @if (!string.IsNullOrWhiteSpace(col.Format) && col.DataType != DataType.NotSet)
                     {
-                        <td align="@col.Alignment.ToString().ToLower()">@typeof(TItem).GetProperty(col.DataField).GetValue(item)</td>
+
+                        string value = string.Empty;
+
+                        switch (col.DataType)
+                        {
+                            case DataType.Date:
+                            case DataType.DateTime:
+                                DateTime dtValue = DateTime.Parse(rawValue);
+                                value = dtValue.ToString(col.Format);
+                                break;
+                            case DataType.Boolean:
+                                Boolean bValue = bool.Parse(rawValue);
+                                value = bValue.ToString();
+                                break;
+                            case DataType.Currency:
+                                double dValue = double.Parse(rawValue);
+                                value = Math.Round(dValue, 2).ToString("c");
+                                break;
+                            default:
+                                break;
+                        }
+
+                        if (col.Alignment != Alignment.NotSet)
+                        {
+                            <td align="@col.Alignment.ToString().ToLower()">@value</td>
+                        }
+                        else
+                        {
+                            <td> @value  </td>
+                        }
                     }
-                    else
+                    else  // if there is no format
                     {
-                        <td> @typeof(TItem).GetProperty(col.DataField).GetValue(item)  </td>                    
+                        if (col.Alignment != Alignment.NotSet)
+                        {
+                            <td align="@col.Alignment.ToString().ToLower()">@rawValue</td>
+                        }
+                        else
+                        {
+                            <td> @rawValue  </td>
+                        }
                     }
-                    
                 }
             </tr>
         }

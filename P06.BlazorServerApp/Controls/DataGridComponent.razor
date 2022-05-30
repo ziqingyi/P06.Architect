@@ -15,7 +15,23 @@
                                     
                     if(column.Alignment != Alignment.NotSet)
                     {
-                        <td align="@column.Alignment.ToString().ToLower()">@column.Caption</td>                   
+                        switch(column.Alignment)
+                        {
+                            case Alignment.Left:
+                                <th class="align-left">@column.Caption</th>
+                                break;
+                            case Alignment.Right:
+                                <th class="align-right">@column.Caption</th>
+                                break;
+                            case Alignment.Center:
+                                <th class="align-center">@column.Caption</th>
+                                break;
+                            case Alignment.NotSet:
+                            default:
+                                 <th>@column.Caption</th>
+                                break;
+                        }
+                        @*<th align="@column.Alignment.ToString().ToLower()">@column.Caption</th>  *@                 
                     }
                     else
                     {

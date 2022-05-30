@@ -6,15 +6,21 @@
             @if(Columns == null || Columns.Count <=0)
             {
                 //create header with reflection
-
-
             }
             else
             {
                 //Create header based on column definitions.
                 foreach(var column in Columns)
                 {
-                    <th> @column.Caption </th>
+                                    
+                    if(column.Alignment != Alignment.NotSet)
+                    {
+                        <td align="@column.Alignment.ToString().ToLower()">@column.Caption</td>                   
+                    }
+                    else
+                    {
+                         <th> @column.Caption </th>             
+                    }                                
                 }
 
             }
@@ -27,7 +33,15 @@
             <tr>
                 @foreach (var col in Columns)
                 {
-                    <td> @typeof(TItem).GetProperty(col.DataField).GetValue(item)  </td>
+                    if(col.Alignment != Alignment.NotSet)
+                    {
+                        <td align="@col.Alignment.ToString().ToLower()">@typeof(TItem).GetProperty(col.DataField).GetValue(item)</td>
+                    }
+                    else
+                    {
+                        <td> @typeof(TItem).GetProperty(col.DataField).GetValue(item)  </td>                    
+                    }
+                    
                 }
             </tr>
         }

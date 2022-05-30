@@ -40,8 +40,8 @@ Columns="columnDefinitions">
                 new ColumnDefinition{DataField="Name", Caption="Name"},
                 new ColumnDefinition{DataField="Title", Caption="Title"},
                 new ColumnDefinition{DataField="Department", Caption="Department"},
-                new ColumnDefinition{DataField="EmploymentDate", Caption="Employment Date"},
-                new ColumnDefinition{DataField="Salary", Caption="Annual Salary", DataType=DataType.Number},
+                new ColumnDefinition{DataField="EmploymentDate", Caption="Employment Date", Format="yyyy/MM/dd",DataType=DataType.Date},
+                new ColumnDefinition{DataField="Salary", Caption="Annual Salary", DataType=DataType.Currency, Alignment=Alignment.Right,Format="c"},
             }
 
             );

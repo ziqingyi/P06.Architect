@@ -113,6 +113,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P06.BlazorWebAssemblyApp.Sh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P06.BlazorWebAssemblyAppStandalone", "P06.BlazorWebAssemblyAppStandalone\P06.BlazorWebAssemblyAppStandalone.csproj", "{778890F4-9019-40E8-8B2E-DB8E30369EB9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P06.AzureFunctionApp", "P06.AzureFunctionApp\P06.AzureFunctionApp.csproj", "{EAC595CC-ED63-4E8B-B2E1-F3423BBE339A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -323,6 +325,10 @@ Global
 		{778890F4-9019-40E8-8B2E-DB8E30369EB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{778890F4-9019-40E8-8B2E-DB8E30369EB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{778890F4-9019-40E8-8B2E-DB8E30369EB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAC595CC-ED63-4E8B-B2E1-F3423BBE339A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAC595CC-ED63-4E8B-B2E1-F3423BBE339A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAC595CC-ED63-4E8B-B2E1-F3423BBE339A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAC595CC-ED63-4E8B-B2E1-F3423BBE339A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

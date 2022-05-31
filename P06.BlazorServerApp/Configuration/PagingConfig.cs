@@ -81,7 +81,7 @@ namespace P06.BlazorServerApp.Configuration
         {
             int maxPageNumber = 0;
 
-            double numberOfPages = (double)(totoalItemsCount / PageSize);
+            double numberOfPages = (double)totoalItemsCount / PageSize;
             if(numberOfPages == Math.Floor(numberOfPages) &&  numberOfPages>0)
             {
                 maxPageNumber = (int)numberOfPages;

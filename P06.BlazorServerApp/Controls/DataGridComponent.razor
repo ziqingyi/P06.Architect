@@ -107,6 +107,7 @@
 </table>
 
 <div class="level">
+    <div class="level-left"> </div>
     <div class="level-right">
         <div class="level-item">
             @if(Paging != null && Paging.Enabled)
@@ -130,7 +131,7 @@
 
 @code {
     [Parameter]
-    public int CurrentPageNumber { get; set; } = 0;
+    public int CurrentPageNumber { get; set; } = 1;
 
 
 
@@ -160,7 +161,7 @@
 
     private void Initilize()
     { 
-        this.Paging = new PagingConfig(this.DataItems.Count,3,true,false);     
+        this.Paging = new PagingConfig(this.DataItems.Count,5,true,false);     
     }
 
 

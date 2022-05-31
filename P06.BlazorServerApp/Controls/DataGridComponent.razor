@@ -118,8 +118,16 @@
                     }
                     else
                     {
+                        <span style="font-size:14px; cursor:pointer" @onclick="GoToPrevPage"> <b> &lt; Previous  </b>  </span>
+
                         <button class="button"@onclick="GoToPrevPage">Previous</button>
+
+                        <span> &nbsp;&nbsp;  Page @CurrentPageNumber  of @Paging.MaxPageNumber &nbsp;&nbsp; </span>
+
                         <button class="button"@onclick="GoToNextPage">Next</button>
+
+                        <span style="font-size:14px; cursor:pointer" @onclick="GoToNextPage"> <b> Previous  &gt; </b>  </span>
+
                     }
             }
         </div>

@@ -5,10 +5,30 @@
 
 <br/>
 <br/>
-<DataGridComponent 
+<DataGridComponent @ref="grid"
     TItem="Employee"
     DataItems="listEmployees"
 Columns="columnDefinitions">
+
+<CustomPager>
+    <button class="btn btn-primary"  @onclick="PrevPage" > prev  </button>
+
+    <span> 
+        
+        &nbsp;&nbsp;  
+        
+        <input type="number" max="@grid.MaxPageNumber"  min="1" @bind-value="@grid.CurrentPageNumber"/>  
+        of
+        @grid.MaxPageNumber
+
+        &nbsp;&nbsp;  
+
+    </span>
+
+    <button class="btn btn-primary"  @onclick="NextPage" > next  </button>
+
+</CustomPager>
+
 
 
 </DataGridComponent>
@@ -16,6 +36,8 @@ Columns="columnDefinitions">
 
 
 @code {
+    private DataGridComponent<Employee> grid;
+
     private GetEmployeeListService getEmployeeListService = new GetEmployeeListService();
     private List<Employee> listEmployees;
     private List<ColumnDefinition> columnDefinitions;
@@ -55,15 +77,15 @@ Columns="columnDefinitions">
     }
 
 
+    private void PrevPage()
+    {
+        grid.GoToPrevPage();
+    }
 
-
-
-
-
-
-
-
-
+    private void NextPage()
+    {
+        grid.GoToNextPage();
+    }
 
 
 

@@ -169,7 +169,7 @@
 
     private void Initilize()
     { 
-        this.Paging = new PagingConfig(this.DataItems.Count,5,true,false);     
+        this.Paging = new PagingConfig(this.DataItems.Count,5,true, true);     
     }
 
 
@@ -182,7 +182,10 @@
     {
         CurrentPageNumber = Paging.NextPageNumber(CurrentPageNumber);
     }
-
+    public int MaxPageNumber
+    {
+        get => Paging.MaxPageNumber;
+    }
 }
 
 

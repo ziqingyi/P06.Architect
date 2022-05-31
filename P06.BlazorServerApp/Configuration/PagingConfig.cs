@@ -37,7 +37,7 @@ namespace P06.BlazorServerApp.Configuration
 
         public int NumOfItemsToSkip(int pageNumber)
         {
-            if(Enabled)
+            if(Enabled && pageNumber >1)
             {
                 return (pageNumber - 1) * PageSize;
             }

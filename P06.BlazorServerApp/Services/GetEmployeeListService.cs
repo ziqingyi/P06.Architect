@@ -39,7 +39,73 @@ namespace P06.BlazorServerApp.Services
                 },
                    new Employee
                 {
-                    Name = "User1",
+                    Name = "User4",
+                    Title="Developer",
+                    Department="Software Dev",
+                    EmploymentDate=DateTime.Now,
+                    Salary=11000
+                },
+                   new Employee
+                {
+                    Name = "User5",
+                    Title="Developer",
+                    Department="Software Dev",
+                    EmploymentDate=DateTime.Now,
+                    Salary=100000
+                },
+
+                 new Employee
+                {
+                    Name = "User6",
+                    Title="Developer",
+                    Department="Software Dev",
+                    EmploymentDate=DateTime.Now,
+                    Salary=90000
+                },
+                  new Employee
+                {
+                    Name = "User7",
+                    Title="Devops",
+                    Department="IT",
+                    EmploymentDate=DateTime.Now,
+                    Salary=8000
+                },
+                   new Employee
+                {
+                    Name = "User8",
+                    Title="Developer",
+                    Department="Software Dev",
+                    EmploymentDate=DateTime.Now,
+                    Salary=11000
+                },
+                   new Employee
+                {
+                    Name = "User9",
+                    Title="Developer",
+                    Department="Software Dev",
+                    EmploymentDate=DateTime.Now,
+                    Salary=100000
+                },
+
+                 new Employee
+                {
+                    Name = "User10",
+                    Title="Developer",
+                    Department="Software Dev",
+                    EmploymentDate=DateTime.Now,
+                    Salary=90000
+                },
+                  new Employee
+                {
+                    Name = "User11",
+                    Title="Devops",
+                    Department="IT",
+                    EmploymentDate=DateTime.Now,
+                    Salary=8000
+                },
+                   new Employee
+                {
+                    Name = "User12",
                     Title="Developer",
                     Department="Software Dev",
                     EmploymentDate=DateTime.Now,

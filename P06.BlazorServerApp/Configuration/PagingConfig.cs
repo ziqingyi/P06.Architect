@@ -6,21 +6,35 @@ namespace P06.BlazorServerApp.Configuration
     {
         public bool Enabled { get; set; } = false;
 
+        private int _pageSize = 10000;
         public int PageSize
         {
             get
             {
-                return this.PageSize;
+                return this._pageSize;
             }
             set
             {
                 if (value <= 0)
-                    this.PageSize = 0;
+                    _pageSize = 10000;
                 else
-                    PageSize = value;
+                    _pageSize = value;
             }
+        } 
 
+        public bool CustomPager { get; set; } = false;
+
+
+        public int MaxPageNumber { get; }
+
+        public PagingConfig(int totoalItemsCount, int pagesize, bool enable, bool customerpager)
+        {
+            this.PageSize = pagesize;
+            this.Enabled = enable;
+            this.CustomPager = customerpager;
+            MaxPageNumber = CalculateMaxPageNumber(totoalItemsCount);
         }
+
         public int NumOfItemsToSkip(int pageNumber)
         {
             if(Enabled)
@@ -41,31 +55,34 @@ namespace P06.BlazorServerApp.Configuration
 
         public int PrevPageNumber(int currentPageNumber)
         {
-            if (currentPageNumber > 1)
+            if (currentPageNumber > 1 && Enabled)
                 return currentPageNumber - 1;
             else
                 return 1;
         }
 
-        public int NextPageNumber(int currentPageNumber, int totoalItemsCount)
+        public int NextPageNumber(int currentPageNumber)
         {
-            if(currentPageNumber > MaxPageNumber(totoalItemsCount))
+            if (Enabled == false)
+                return 1;
+
+            if(currentPageNumber < MaxPageNumber)
             {
                 return currentPageNumber + 1;
             }
             else
             {
-                return currentPageNumber;
+                return MaxPageNumber;
             }
 
         }
         //calculate the max page number based on total items count and page per size. 
-        public int MaxPageNumber(int totoalItemsCount)
+        private int CalculateMaxPageNumber(int totoalItemsCount)
         {
             int maxPageNumber = 0;
 
             double numberOfPages = (double)(totoalItemsCount / PageSize);
-            if(numberOfPages == Math.Floor(numberOfPages))
+            if(numberOfPages == Math.Floor(numberOfPages) &&  numberOfPages>0)
             {
                 maxPageNumber = (int)numberOfPages;
             }

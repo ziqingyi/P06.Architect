@@ -5,11 +5,11 @@
         <tr>
             @if(Columns == null || Columns.Count <=0)
             {
-                //create header with reflection
+                
             }
             else
             {
-                //Create header based on column definitions.
+                //Create header based on column definitions with reflection.
                 foreach(var column in Columns)
                 {
                                     
@@ -44,7 +44,10 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(TItem item in DataItems)
+        @foreach(TItem item in DataItems.
+                              Skip(Paging.NumOfItemsToSkip(CurrentPageNumber) )
+                              .Take(Paging.NumOfItemsToTake(DataItems.Count) )   
+                 )
         {
             <tr>
                 @foreach (var col in Columns)
@@ -99,23 +102,77 @@
                 }
             </tr>
         }
-
-
     </tbody>
 
 </table>
+
+<div class="level">
+    <div class="level-right">
+        <div class="level-item">
+            @if(Paging != null && Paging.Enabled)
+            {
+                    @if(Paging.CustomPager)
+                    {
+                        @CustomPager
+                    }
+                    else
+                    {
+                        <button class="button"@onclick="GoToPrevPage">Previous</button>
+                        <button class="button"@onclick="GoToNextPage">Next</button>
+                    }
+            }
+        </div>
+    </div>
+</div>
 
 
 
 
 @code {
+    [Parameter]
+    public int CurrentPageNumber { get; set; } = 0;
+
+
 
     [Parameter]
-    public List<TItem> DataItems{ get; set; }
+    public PagingConfig Paging { get;  set; }
+
+    [Parameter]
+    public List<TItem> DataItems{get;set;}
 
 
     [Parameter]
     public List<ColumnDefinition> Columns{ get; set; }
+
+
+
+    [Parameter]
+    public RenderFragment CustomPager { get; set; }
+
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Initilize();
+    }
+
+    private void Initilize()
+    { 
+        this.Paging = new PagingConfig(this.DataItems.Count,3,true,false);     
+    }
+
+
+    public void GoToPrevPage()
+    {
+        CurrentPageNumber = Paging.PrevPageNumber(CurrentPageNumber);
+    }
+
+    public void GoToNextPage()
+    {
+        CurrentPageNumber = Paging.NextPageNumber(CurrentPageNumber);
+    }
 
 }
 

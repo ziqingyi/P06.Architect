@@ -17,9 +17,9 @@ Columns="columnDefinitions">
         
         &nbsp;&nbsp;  
         
-        <input type="number" max="@grid.MaxPageNumber"  min="1" @bind-value="@grid.CurrentPageNumber"/>  
+        <input type="number" max="@grid.DGMaxPageNumber"  min="1" @bind-value="@grid.CurrentPageNumber"/>  
         of
-        @grid.MaxPageNumber
+        @grid.DGMaxPageNumber
 
         &nbsp;&nbsp;  
 
@@ -59,7 +59,7 @@ Columns="columnDefinitions">
             columnDefinitions.AddRange(
             new ColumnDefinition[]
             {
-                new ColumnDefinition{DataField="Name", Caption="Name"},
+                new ColumnDefinition{DataField="Name", Caption="Name", SortDirection = SortDirection.Desc},
                 new ColumnDefinition{DataField="Title", Caption="Title"},
                 new ColumnDefinition{DataField="Department", Caption="Department"},
                 new ColumnDefinition{DataField="EmploymentDate", Caption="Employment Date", Format="yyyy/MM/dd",DataType=DataType.Date},
@@ -84,7 +84,7 @@ Columns="columnDefinitions">
 
     private void NextPage()
     {
-        grid.GoToNextPage();
+       grid.GoToNextPage();
     }
 
 

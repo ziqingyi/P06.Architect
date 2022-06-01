@@ -18,24 +18,41 @@
                         switch(column.Alignment)
                         {
                             case Alignment.Left:
-                                <th class="align-left">@column.Caption</th>
-                                break;
+                                <th @onclick="@( ()=> SortData(column) )" class="align-left">
+                                    @column.Caption 
+                                    <span style="float:right" class="@( SortClass(column) )"></span> 
+                                </th>
+                            break;
                             case Alignment.Right:
-                                <th class="align-right">@column.Caption</th>
-                                break;
+                                <th @onclick="@( ()=> SortData(column) )" class="align-right">
+                                    @column.Caption 
+                                    <span style="float:right" class="@( SortClass(column) )"></span> 
+                                </th>
+                            break;
                             case Alignment.Center:
-                                <th class="align-center">@column.Caption</th>
-                                break;
+                                <th @onclick="@( ()=> SortData(column) )" class="align-center">
+                                    @column.Caption 
+                                    <span style="float:right" class="@( SortClass(column) )"></span> 
+                                </th>
+                            break;
                             case Alignment.NotSet:
                             default:
-                                 <th>@column.Caption</th>
-                                break;
+                                 <th @onclick="@( ()=> SortData(column) )">
+                                     @column.Caption 
+                                     <span style="float:right" class="@( SortClass(column) )"></span> 
+                                 </th>
+                            break;
                         }
                         @*<th align="@column.Alignment.ToString().ToLower()">@column.Caption</th>  *@                 
                     }
                     else
                     {
-                         <th> @column.Caption </th>             
+                         <th @onclick="@( ()=> SortData(column) )"> 
+
+                             @column.Caption 
+
+                             <span style="float:right" class="@( SortClass(column) )"></span>
+                         </th>             
                     }                                
                 }
 
@@ -172,6 +189,14 @@
         this.Paging = new PagingConfig(this.DataItems.Count,5,true, true);     
     }
 
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        SortData();
+    }
+
+
+
 
     public void GoToPrevPage()
     {
@@ -182,10 +207,84 @@
     {
         CurrentPageNumber = Paging.NextPageNumber(CurrentPageNumber);
     }
-    public int MaxPageNumber
+    public int DGMaxPageNumber
     {
         get => Paging.MaxPageNumber;
     }
+
+
+    private string SortClass(ColumnDefinition column)
+    {
+        if(column.SortDirection != SortDirection.NotSet)
+        {
+            return $"sort {column.SortDirection.ToString().ToLower()}";
+        }
+        return "no-sort";
+    }
+
+    private void SortData(ColumnDefinition sortByColumn = null)
+    {
+        if(sortByColumn == null)
+        {
+            sortByColumn = Columns.FirstOrDefault(x => x.SortDirection != SortDirection.NotSet);
+            if (sortByColumn == null)
+            {
+                return;
+            }
+        }
+
+        foreach (var col in Columns)
+        {
+            if(col.DataField != sortByColumn.DataField)
+            {
+                col.SortDirection = SortDirection.NotSet;
+            }
+        }
+
+        switch(sortByColumn.SortDirection)
+        {
+            case SortDirection.NotSet:
+                sortByColumn.SortDirection = SortDirection.Asc;
+                break;
+            case SortDirection.Asc:
+                sortByColumn.SortDirection = SortDirection.Desc;
+                break;
+            case SortDirection.Desc:
+                sortByColumn.SortDirection = SortDirection.Asc;
+                break;
+            default:
+                sortByColumn.SortDirection = SortDirection.Asc;
+                break;
+        }
+
+        if(sortByColumn.SortDirection == SortDirection.Asc)
+        {
+            DataItems.Sort( 
+                (x,y) => typeof(TItem)
+                .GetProperty(sortByColumn.DataField).GetValue(x).ToString()
+                .CompareTo(
+                    typeof(TItem)
+                    .GetProperty(sortByColumn.DataField).GetValue(y).ToString()
+                )   
+            );
+        }
+        else
+        {
+            DataItems.Sort( 
+                (x,y) => typeof(TItem)
+                .GetProperty(sortByColumn.DataField).GetValue(y).ToString()
+                .CompareTo(
+                    typeof(TItem)
+                    .GetProperty(sortByColumn.DataField).GetValue(x).ToString()
+                )   
+            );
+
+        }
+
+
+    }
+
+
 }
 
 

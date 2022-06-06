@@ -25,5 +25,22 @@ namespace P03.DotNetCoreMVC.WebNUnitTestProject
         }
 
 
+
+        [Test]
+        public void Divide_PositiveNumbers_ReturnsPositiveQuotient()
+        {
+            var expectValue = 5;
+            var dividend = 10;
+            var divisor = 2;
+
+            //
+            int actuallValue = Mathematics.Divide(dividend, divisor);
+
+            Assert.AreEqual(expectValue, actuallValue);
+
+        }
+
+
+
     }
 }

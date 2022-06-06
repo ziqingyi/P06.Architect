@@ -26,16 +26,10 @@ namespace P03.DotNetCoreMVC.WebNUnitTestProject
                 string content = result.Content.ReadAsStringAsync().Result;
 
             }
-
-
-
-
-
-
-
-
-
             //Assert.Pass();
         }
+
+
+
     }
 }

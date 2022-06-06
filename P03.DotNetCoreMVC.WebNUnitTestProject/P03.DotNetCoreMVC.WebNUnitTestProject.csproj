@@ -14,4 +14,8 @@
     <PackageReference Include="coverlet.collector" Version="3.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\P03.DotNetCoreMVC.Utility\P03.DotNetCoreMVC.Utility.csproj" />
+  </ItemGroup>
+
 </Project>

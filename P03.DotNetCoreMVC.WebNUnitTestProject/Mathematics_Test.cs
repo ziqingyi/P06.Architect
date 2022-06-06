@@ -14,13 +14,15 @@ namespace P03.DotNetCoreMVC.WebNUnitTestProject
         [Test]
         public void Test_Divide()
         {
+            //Arrange
             var expectValue = 5;
             var dividend = 10;
             var divisor = 2;
 
-            //
+            //Act
             int actuallValue = Mathematics.Divide(dividend, divisor);
 
+            //Assert
             Assert.AreEqual(expectValue, actuallValue);
         }
 

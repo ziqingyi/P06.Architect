@@ -8,12 +8,43 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModels.TestProject
     {
         static void Main(string[] args)
         {
+            TestLinqSql();
+            TestDeleteAndCreate();
+
             QueryTest.Show();
 
         }
+        private static void TestLinqSql()
+        {
+            
+            using (advanced7Context context = new advanced7Context())
+            {
+                int i = 0;
+                var list1 = context.User.Where(u => u.Id > 200);
+
+                var a = list1.First();
+                foreach (var item in list1)
+                {
+                    Console.WriteLine(i++ + "--"+item.Account);
+                }
+
+            }
+            using (advanced7Context context = new advanced7Context())
+            {
+                int i = 0;
+                var list2 = context.User.AsEnumerable<User>().Where(u => u.Id > 200);
+
+                var b = list2.First();
+                foreach (var item in list2)
+                {
+                    Console.WriteLine(i++ + "--" + item.Account);
+                }
+            }
 
 
-        private void Test1()
+        }
+
+        private static void TestDeleteAndCreate()
         {
             using (advanced7ContextNew context = new advanced7ContextNew())
             {

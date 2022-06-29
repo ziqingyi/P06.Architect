@@ -1,5 +1,6 @@
 ﻿using P03.DotNetCoreMVC.EntityFrameworkModelsDBFirst.ModelsFromDB;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace P03.DotNetCoreMVC.EntityFrameworkModels.TestProject
@@ -8,12 +9,68 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModels.TestProject
     {
         static void Main(string[] args)
         {
+
+            TestEnumerable();
+            TestPerformance();
+
             TestLinqSql();
             TestDeleteAndCreate();
 
             QueryTest.Show();
 
         }
+        private static void TestPerformance()
+        {
+
+            var seq = Enumerable.Range(0,10);
+            var a = seq.First();
+            var b = seq.Select(s => s/2 == 0);
+            foreach (var item in b)
+            {
+                Console.WriteLine(item);
+            }
+
+        }
+        private static void TestEnumerable()
+        {    
+            
+            var numbers = GetNumbers();
+            foreach (var item in numbers)
+            {
+                Console.WriteLine(item);
+            }
+
+
+            var count = numbers.Count();
+            var s = numbers.Sum();
+            var max = numbers.Max();
+            var min = numbers.Min();
+
+            #region test
+            /*        
+            var res = Enumerable.Range(0, 5);
+            foreach (var item in res)
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine("-----------");
+            var res2 = res.Select(n => rand.Next(0, 10));
+            foreach (var item in res2)
+            {
+                Console.WriteLine(item);
+            }
+            */
+            #endregion
+
+        }
+        private static Random rand = new Random();
+        private static IEnumerable<int> GetNumbers()
+        {
+            var count = rand.Next(0,10);
+            return Enumerable.Range(0, count).Select(n => rand.Next(0,10));
+        }
+
+
         private static void TestLinqSql()
         {
             

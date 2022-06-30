@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic;
 
 namespace P03.DotNetCoreMVC.EntityFrameworkModels.TestProject
 {
@@ -10,8 +11,8 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModels.TestProject
         static void Main(string[] args)
         {
 
-            TestEnumerable();
-            TestPerformance();
+            //TestEnumerable();
+            //TestPerformance();
 
             TestLinqSql();
             TestDeleteAndCreate();
@@ -83,6 +84,22 @@ namespace P03.DotNetCoreMVC.EntityFrameworkModels.TestProject
                 foreach (var item in list1)
                 {
                     Console.WriteLine(i++ + "--"+item.Account);
+                }
+                Console.WriteLine("************************************************");
+                var b1 = context.User.Where(u => u.Id > 200).OrderBy(m => m.Id);
+
+                i = 0;
+                foreach (var item in b1)
+                {
+                    Console.WriteLine(i++ + "--" + item.Account);
+                }
+
+                var b2 = context.User.Where(u => u.Id > 200).OrderBy("Id asc");
+
+                i = 0;
+                foreach (var item in b2)
+                {
+                    Console.WriteLine(i++ + "--" + item.Account);
                 }
 
             }

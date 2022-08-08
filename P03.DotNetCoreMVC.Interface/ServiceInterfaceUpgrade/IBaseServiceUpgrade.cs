@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace P03.DotNetCoreMVC.Interface.ServiceInterfaceUpgrade
 {
@@ -17,6 +18,7 @@ namespace P03.DotNetCoreMVC.Interface.ServiceInterfaceUpgrade
         //can search from both read and write database
         public T Find<T>(int id, WriteAndReadEnum writeAndReadEnum = WriteAndReadEnum.Read) where T : class;
 
+        public ValueTask<T> FindAsync<T>(int id, WriteAndReadEnum writeAndReadEnum = WriteAndReadEnum.Read) where T : class;
 
         public IQueryable<T> Set<T>() where T : class;
 

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using P03.DotNetCoreMVC.Utility.Interface;
 using P03.DotNetCoreMVC.Interface.ServiceInterfaceUpgrade;
+using System.Threading.Tasks;
 
 namespace P03.DotNetCoreMVC.Services.ServicesUpgrade
 {
@@ -40,6 +41,12 @@ namespace P03.DotNetCoreMVC.Services.ServicesUpgrade
             ReadDbContext = dbContextFactory.ConnWriteOrRead(writeAndReadEnum);
             return this.ReadDbContext.Set<T>().Find(id);
         }
+        public ValueTask<T> FindAsync<T>(int id, WriteAndReadEnum writeAndReadEnum = WriteAndReadEnum.Read) where T : class
+        {
+            ReadDbContext = dbContextFactory.ConnWriteOrRead(writeAndReadEnum);
+            return this.ReadDbContext.Set<T>().FindAsync(id);
+        }
+
 
         [Obsolete("avoid using this,better to use query with Expression tree, using(...)")]
         public IQueryable<T> Set<T>() where T : class

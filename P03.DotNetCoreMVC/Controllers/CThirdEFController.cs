@@ -20,7 +20,11 @@ namespace P03.DotNetCoreMVC.Controllers
         {
             Conmpany c1 = _companyServiceUpdate.Find<Conmpany>(1);
 
+            var c3 = _companyServiceUpdate.FindAsync<Conmpany>(1);
+
             Conmpany c2 = _companyServiceUpdate.Find<Conmpany>(3, Utility.DbContextExtension.WriteAndReadEnum.Write);
+
+
 
             return View();
         }

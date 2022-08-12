@@ -115,7 +115,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P06.BlazorWebAssemblyAppSta
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P06.AzureFunctionApp", "P06.AzureFunctionApp\P06.AzureFunctionApp.csproj", "{EAC595CC-ED63-4E8B-B2E1-F3423BBE339A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03.DotNetCoreMVC.WebMSTestProject", "P03.DotNetCoreMVC.WebMSTestProject\P03.DotNetCoreMVC.WebMSTestProject.csproj", "{0F63C423-4A2E-4840-BFB7-AB9FA091FDBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.WebMSTestProject", "P03.DotNetCoreMVC.WebMSTestProject\P03.DotNetCoreMVC.WebMSTestProject.csproj", "{0F63C423-4A2E-4840-BFB7-AB9FA091FDBF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

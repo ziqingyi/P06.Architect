@@ -15,11 +15,11 @@
 
 
     <div onclick="console.log('JS Top level clicked')">
-        <h1>Top level</h1>
+        <h1>JS Top level</h1>
         <div onclick="console.log('JS Second level clicked')">
-            <h2>Second level</h2>
+            <h2>JS Second level</h2>
             <div onclick="console.log('JS Third level clicked')">
-                <h3>Third level</h3>
+                <h3>JS Third level</h3>
             </div>
         </div>
     </div>
@@ -32,13 +32,27 @@
 
 @code {
 
+    //asynchronous,call StateHasChanged() to re-render page
+    [Parameter]
+    public EventCallback<int> callBack { get; set; }
+
+    //.net delegate, not re-render
+    [Parameter]
+    public Action<int> callAction { get; set; }
+
+
     private void TopLevelClicked()
     {
         Debug.WriteLine("Top level clicked");
+
+        callBack.InvokeAsync(10);
+
     }
     private void SecondLevelClicked()
     {
         Debug.WriteLine("Second level clicked");
+
+        callAction.Invoke(100);
     }
 
     private void ThirdLevelClicked()
@@ -47,3 +61,11 @@
     }
 
 }
+/*
+Because JavaScript invocation of C# methods is asynchronous, 
+this means that in C# methods we cannot cancel events as we can in JavaScript. 
+This is because cancelling browser DOM events is a synchronous operation, 
+by the time our C# has been asynchronously invoked 
+it is already too late to cancel the event .
+
+*/

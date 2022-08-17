@@ -2,7 +2,7 @@
 <html>
 <body>
     <h3>----------------------Component3---------------------------</h3>
-    <div @onclick=TopLevelClicked>
+    <div @onclick=@TopLevelClicked>
         <h1>Top level</h1>
         <div @onclick=SecondLevelClicked @onclick:stopPropagation>
             <h2>Second level</h2>

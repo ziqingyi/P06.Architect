@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using P06.BlazorWebAssemblyApp.Shared;
+using P06.BlazorWebAssemblyApp.Shared.Models;
 
 namespace P06.BlazorWebAssemblyApp.Server.Controllers
 {

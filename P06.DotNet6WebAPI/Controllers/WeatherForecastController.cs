@@ -1,9 +1,13 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using P06.DotNet6WebAPI.Auth;
+using P06.DotNet6WebAPI.Models;
 
 namespace P06.DotNet6WebAPI.Controllers
 {
+    [Authorize(Roles = UserRoles.Admin)]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]

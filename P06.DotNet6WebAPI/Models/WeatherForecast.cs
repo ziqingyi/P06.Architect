@@ -1,4 +1,4 @@
-namespace P06.DotNet6WebAPI
+namespace P06.DotNet6WebAPI.Models
 {
     public class WeatherForecast
     {

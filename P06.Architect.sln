@@ -117,7 +117,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P06.AzureFunctionApp", "P06
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.WebMSTestProject", "P03.DotNetCoreMVC.WebMSTestProject\P03.DotNetCoreMVC.WebMSTestProject.csproj", "{0F63C423-4A2E-4840-BFB7-AB9FA091FDBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P06.DotNet6WebAPI", "P06.DotNet6WebAPI\P06.DotNet6WebAPI.csproj", "{065394FE-4913-42E7-BBC3-5135C07F666C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P06.DotNet6WebAPI", "P06.DotNet6WebAPI\P06.DotNet6WebAPI.csproj", "{065394FE-4913-42E7-BBC3-5135C07F666C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

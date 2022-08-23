@@ -2,6 +2,7 @@
 <html>
 <body>
     <h3>----------------------Component3---------------------------</h3>
+
     <div @onclick=@TopLevelClicked>
         <h1>Top level</h1>
         <div @onclick=SecondLevelClicked @onclick:stopPropagation>
@@ -26,7 +27,7 @@
 
 
 
-
+    <h3>----------------------Component3---------------------------</h3>
 </body>
 </html>
 
@@ -59,13 +60,12 @@
     {
         Debug.WriteLine("Third level clicked");
     }
-
-}
 /*
 Because JavaScript invocation of C# methods is asynchronous, 
 this means that in C# methods we cannot cancel events as we can in JavaScript. 
 This is because cancelling browser DOM events is a synchronous operation, 
 by the time our C# has been asynchronously invoked 
 it is already too late to cancel the event .
-
 */
+
+}

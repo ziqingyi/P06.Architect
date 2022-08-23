@@ -1,0 +1,31 @@
+﻿
+
+
+<button class="btn btn-primary" @onclick=IncrementCount>Component4 button</button>
+
+<p> c4 current count: @currentCountC4   </p>
+
+
+
+@code {
+
+    [Parameter]
+    public int currentCountC4 { get; set; } = 0;
+
+
+    [Parameter]
+    public EventCallback<int> currentCountC4Changed{ get; set; }
+
+    async Task IncrementCount()
+    {
+        currentCountC4++;
+
+        await currentCountC4Changed.InvokeAsync(currentCountC4);
+    }
+
+    
+
+
+
+
+}

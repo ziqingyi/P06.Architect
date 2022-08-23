@@ -7,22 +7,43 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+
 <br />
 <br />
 
 <CascadingValue Name="Counter" Value="@currentCount">  
-    <CascadingValue Name="TitleColor" Value="@("yellow")" IsFixed="true">
+    <CascadingValue Name="TitleColor" Value="@("green")" IsFixed="true">
 
         <Component1>  </Component1>
 
     </CascadingValue>
 </CascadingValue>
 
+<br />
+<br />
+
 
 <Component3 
     callBack=@IncrementCountnew
     callAction=@IncrementCountnew
 ></Component3>
+
+
+<br />
+<br />
+
+<h3>-------------------Component4  Two-way binding----------------------</h3>
+
+
+<button class="btn btn-primary" @onclick="IncrementCountC4">Click me for updating Component4</button>
+<p> currentCountToC4 : @currentCountToC4  </p>
+<Component4 currentCountC4=@currentCountToC4></Component4>
+
+<Component4 @bind-currentCountC4=currentCountToC4></Component4>
+
+
+
+<h3>-------------------Component4  Two-way binding----------------------</h3>
 
 
 
@@ -54,5 +75,9 @@
         currentCount+= i;
     }
 
-
+    private int currentCountToC4 = 0;
+    private void IncrementCountC4()
+    {
+        currentCountToC4 += 1;
+    }
 }

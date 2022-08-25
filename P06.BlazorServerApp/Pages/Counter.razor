@@ -1,5 +1,6 @@
 ﻿@page "/counter"
 @page "/counter/{startingValue:int}"
+@using System.Globalization
 @layout MainLayout
 
 <h1>Counter</h1>
@@ -42,6 +43,15 @@
 <Component4 @bind-currentCountC4=currentCountToC4></Component4>
 
 
+<label>Name = @Name</label><br/>
+<input @bind-value=Name @bind-value:event="oninput"></input><br/>
+
+<label> Date of birth(yyyy-MM-dd)= @DateOfBirth?.ToString("MMMM d, yyyy")</label><br/>
+<input @bind-value=DateOfBirth @bind-value:format="yyyy-MM-dd"/><br/>
+
+
+<label>Bank balance =$@BankBalance </label><br/>
+<input @bind-value=BankBalance @bind-value:culture=Australian/><br/>
 
 <h3>-------------------Component4  Two-way binding----------------------</h3>
 
@@ -55,6 +65,16 @@
 
     [Parameter]
     public int IncrementBy { get; set; } = 2;
+
+
+
+    #region two way binding, assigning values to directive attribute (form: @directive:attribute)
+    private string Name;
+    private DateTime? DateOfBirth;
+    private decimal? BankBalance;
+    private CultureInfo Australian = CultureInfo.GetCultureInfo("en-AU");
+    #endregion
+
 
 
     protected override void OnParametersSet()

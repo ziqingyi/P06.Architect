@@ -119,7 +119,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P03.DotNetCoreMVC.WebMSTest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P06.DotNet6WebAPI", "P06.DotNet6WebAPI\P06.DotNet6WebAPI.csproj", "{065394FE-4913-42E7-BBC3-5135C07F666C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P07.IO", "P07.IO\P07.IO.csproj", "{25302F5A-A0FE-4E5C-A29C-0431CDD5D8D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P07.IO", "P07.IO\P07.IO.csproj", "{25302F5A-A0FE-4E5C-A29C-0431CDD5D8D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P07.Stream", "P07.Stream\P07.Stream.csproj", "{AEE1BEC2-FB2E-4E39-BB5F-B4D7DEE9E58E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -347,6 +349,10 @@ Global
 		{25302F5A-A0FE-4E5C-A29C-0431CDD5D8D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25302F5A-A0FE-4E5C-A29C-0431CDD5D8D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25302F5A-A0FE-4E5C-A29C-0431CDD5D8D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AEE1BEC2-FB2E-4E39-BB5F-B4D7DEE9E58E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AEE1BEC2-FB2E-4E39-BB5F-B4D7DEE9E58E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AEE1BEC2-FB2E-4E39-BB5F-B4D7DEE9E58E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AEE1BEC2-FB2E-4E39-BB5F-B4D7DEE9E58E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

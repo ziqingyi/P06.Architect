@@ -1,0 +1,2 @@
+#define P08CPLUSPLUSDLL_API __declspec(dllexport)
+#define P08CPLUSPLUSDLL_API __declspec(dllimport)

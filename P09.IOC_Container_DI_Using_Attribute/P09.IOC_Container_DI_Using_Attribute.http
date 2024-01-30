@@ -1,0 +1,6 @@
+@P09.IOC_Container_DI_Using_Attribute_HostAddress = http://localhost:5265
+
+GET {{P09.IOC_Container_DI_Using_Attribute_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

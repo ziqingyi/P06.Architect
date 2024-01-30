@@ -131,6 +131,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppTwo", "AppTwo\AppTwo.csp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "P08.CPlusPlusDll", "P08.CPlusPlusDll\P08.CPlusPlusDll.vcxproj", "{E67B0FCE-A5D5-4448-8875-7E236C852642}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P09.IOC_Container_DI_Using_Attribute", "P09.IOC_Container_DI_Using_Attribute\P09.IOC_Container_DI_Using_Attribute.csproj", "{555C6AC5-DFDD-4952-BACB-1F2850715687}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -849,6 +851,18 @@ Global
 		{E67B0FCE-A5D5-4448-8875-7E236C852642}.Release|x64.Build.0 = Release|x64
 		{E67B0FCE-A5D5-4448-8875-7E236C852642}.Release|x86.ActiveCfg = Release|Win32
 		{E67B0FCE-A5D5-4448-8875-7E236C852642}.Release|x86.Build.0 = Release|Win32
+		{555C6AC5-DFDD-4952-BACB-1F2850715687}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{555C6AC5-DFDD-4952-BACB-1F2850715687}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{555C6AC5-DFDD-4952-BACB-1F2850715687}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{555C6AC5-DFDD-4952-BACB-1F2850715687}.Debug|x64.Build.0 = Debug|Any CPU
+		{555C6AC5-DFDD-4952-BACB-1F2850715687}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{555C6AC5-DFDD-4952-BACB-1F2850715687}.Debug|x86.Build.0 = Debug|Any CPU
+		{555C6AC5-DFDD-4952-BACB-1F2850715687}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{555C6AC5-DFDD-4952-BACB-1F2850715687}.Release|Any CPU.Build.0 = Release|Any CPU
+		{555C6AC5-DFDD-4952-BACB-1F2850715687}.Release|x64.ActiveCfg = Release|Any CPU
+		{555C6AC5-DFDD-4952-BACB-1F2850715687}.Release|x64.Build.0 = Release|Any CPU
+		{555C6AC5-DFDD-4952-BACB-1F2850715687}.Release|x86.ActiveCfg = Release|Any CPU
+		{555C6AC5-DFDD-4952-BACB-1F2850715687}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
